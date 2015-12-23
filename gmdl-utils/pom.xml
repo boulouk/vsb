@@ -1,0 +1,11 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>eu.chorevolution.vsb</groupId>
+    <artifactId>vsb</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>gmdl-utils</artifactId>
+  <name>gmdl-utils</name>
+  <description>GMDL Utils provides classes to parse and instantiate a GMDL representation of a system to be binded, based on its description file</description>
+</project>

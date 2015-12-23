@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>eu.chorevolution.vsb</groupId>
+    <artifactId>vsb</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>bc-generators</artifactId>
+  <name>bc-generators</name>
+  <description>bc-generators provides classes to generate a BC WAR and generic interface which each concrete protocol implementation MUST implement to generate its concrete endpoints or clients</description>
+  <dependencies>
+    <!-- Chorevolution -->
+    <dependency>
+      <groupId>eu.chorevolution.vsb</groupId>
+      <artifactId>gmdl-utils</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>eu.chorevolution.vsb</groupId>
+      <artifactId>gm-api</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+    <!-- CodeModel -->
+    <dependency>
+      <groupId>com.sun.codemodel</groupId>
+      <artifactId>codemodel</artifactId>
+      <version>2.6</version>
+    </dependency>
+  </dependencies>
+</project>

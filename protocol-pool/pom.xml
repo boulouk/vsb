@@ -1,0 +1,23 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>eu.chorevolution.vsb</groupId>
+    <artifactId>vsb</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>protocol-pool</artifactId>
+  <name>protocol-pool</name>
+  <packaging>pom</packaging>
+  <modules>
+  	<module>gm-rest</module>
+  	<module>gm-soap</module>
+  </modules>
+  <dependencies>
+    <!-- Chorevolution -->
+    <dependency>
+	  <groupId>eu.chorevolution.vsb</groupId>
+	  <artifactId>gmdl-utils</artifactId>
+	  <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+</project>

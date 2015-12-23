@@ -1,0 +1,66 @@
+/* TrafficLights REST Service (Legacy) */
+{
+  "host_address": "127.0.0.1:8282",
+  "protocol": "REST",
+  "operations": {
+    "operation_1": {
+      "operation_type": "one_way",
+      "role": "server",
+      "scope": {
+        "verb": "POST",
+        "name": "postTrafficLight",
+        "uri": "/traffic-lights"
+      },
+      "get_data": [
+        {
+          "data_name": "light",
+          "type": "object",
+          "$ref": "#/definitions/TrafficLight",
+          "context": "body" // could be body, path, query, form, header, multipart/url-encode (for files)
+        }
+      ]
+    },
+    "operation_2": {
+      "operation_type": "two_way_sync",
+      "role": "server",
+      "scope": {
+        "verb": "GET",
+        "name": "getTrafficLight",
+        "uri": "/traffic-lights/{id}"
+      },
+      "get_data": [
+        {
+          "data_name": "id",
+          "type": "integer",
+          "context":"path" // could be body, path, query, form, header, multipart/url-encode (for files)
+        }
+      ],
+      "post_data": [
+        {
+          "data_name": "light",
+          "type": "object",
+          "$ref": "#/definitions/TrafficLight"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "TrafficLight": {
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "address": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
