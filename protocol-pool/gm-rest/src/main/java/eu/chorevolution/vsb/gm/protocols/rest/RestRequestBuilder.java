@@ -1,5 +1,6 @@
 package eu.chorevolution.vsb.gm.protocols.rest;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.restlet.Request;
@@ -36,7 +37,13 @@ public class RestRequestBuilder implements RequestBuilder {
     buildRequestForm(request, datas);
     buildRequestBody(request, datas);
     
-    request.setResourceRef(builder.toString());
+    try {
+		request.setResourceRef(java.net.URLDecoder.decode(builder.toString(), "UTF-8"));
+	} catch (UnsupportedEncodingException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+    
     request.setMethod(method);
     
     return request;
