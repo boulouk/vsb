@@ -27,6 +27,7 @@
     <module>vsb-manager</module>
     <module>bc-manager</module>
     <module>scenarios-end-to-end-test</module>
+    <module>restlibrary</module>
   </modules>
   <description>VSB provides tools to generate and use Binding-Component</description>
     <build>
