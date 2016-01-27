@@ -53,6 +53,7 @@
 		<module>vsb-manager</module>
 		<module>bc-manager</module>
 		<module>scenarios-end-to-end-test</module>
+		<module>binding-components</module>
 	</modules>
 
 	<build>
