@@ -1,4 +1,4 @@
-package eu.chorevolution.vsb.weather;
+package eu.chorevolution.vsb.bcs.weather;
 
 import eu.chorevolution.vsb.bc.manager.BcManager;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
