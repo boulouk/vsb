@@ -19,7 +19,7 @@ public class BCStarter {
 		configuration.setComponentRole("SERVER");
 		configuration.setServiceAddress("http://93.62.202.227");
 		configuration.setServiceName("BindingComponent");
-		configuration.setTargetNamespace("eu.chorevolution.vsb.weather.bc");
+		configuration.setTargetNamespace("eu.chorevolution.vsb.bcs.weather.bc");
 		// END test purpose
 
 		BcManager manager = new BcManager(configuration);
