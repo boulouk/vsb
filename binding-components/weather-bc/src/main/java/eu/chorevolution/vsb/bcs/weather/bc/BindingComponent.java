@@ -1,6 +1,7 @@
 package eu.chorevolution.vsb.bcs.weather.bc;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -29,8 +30,15 @@ public class BindingComponent {
         datas.add(new Data<Double>("latitude", "Double", true, latitude, "PATH"));
         datas.add(new Data<Double>("longitude", "Double", true, longitude, "PATH"));
         datas.add(new Data<Double>("radius", "Double", true, radius, "PATH"));
+        
+        String request = "Request to REST for parameters:  " + "period: " + period + ", latitude: " + latitude + ", longitude: " + longitude + " and radius: " + radius;
+        System.out.println(request);
+        
         String serializedrootClass = this.apiRef.mgetTwowaySync("/mes/get_metadata_in_area?collection=weather&period={period}&lat={latitude}&lon={longitude}&radius={radius}", datas);
-        System.out.println("Answer from REST: " + serializedrootClass);
+        
+        String response = "Response from REST: " + serializedrootClass;
+        System.out.println(response);
+        
         return ResponseBuilder.unmarshalObject("application/json", serializedrootClass, RootClass.class);
     }
 
@@ -38,8 +46,15 @@ public class BindingComponent {
     public RootClass getMeteoInfo(Integer period) {
         List<Data<?>> datas = new ArrayList<Data<?>>();
         datas.add(new Data<Integer>("period", "Integer", true, period, "PATH"));
+        
+        String request = "Request to REST for parameters:  " + "period: " + period;
+        System.out.println(request);
+        
         String serializedrootClass = this.apiRef.mgetTwowaySync("/mes/get_metadata_in_area?collection=weather&period={period}", datas);
-        System.out.println("Answer from REST: " + serializedrootClass);
+        
+        String response = "Response from REST: " + serializedrootClass;
+        System.out.println(response);
+        
         return ResponseBuilder.unmarshalObject("application/json", serializedrootClass, RootClass.class);
     }
 

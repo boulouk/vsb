@@ -6,14 +6,20 @@ import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
 /**
  * @author Georgios Bouloukakis (boulouk@gmail.com)
  * 
- *         BCManager.java Created: 27 janv. 2016 Description:
+ *         BCStarter.java Created: 27 janv. 2016 Description:
  */
 public class BCStarter {
 
-	public static void main(String[] args) {
-
+	private String messageStart = "";
+	private String messageStop = "";
+	private BcManager manager;
+	
+	
+	public BCStarter() {
+		manager = null;
+		
 		// Should parse the local config file and instantiate the
-		BcConfiguration configuration = new BcConfiguration(/* path/to/local/config/file */);
+		BcConfiguration configuration = new BcConfiguration(/** path/to/local/config/file*/);
 
 		// test purpose: should be extract when parsing the config file
 		configuration.setComponentRole("SERVER");
@@ -22,19 +28,46 @@ public class BCStarter {
 		configuration.setTargetNamespace("eu.chorevolution.vsb.bcs.weather.bc");
 		// END test purpose
 
-		BcManager manager = new BcManager(configuration);
+		manager = new BcManager(configuration);
+		manager.setEndpointAddress("http://localhost:8888/BindingComponent");
+	}
+	
+	
 
-		// should be called remotely via Manager REST interface
-		
-		manager.setEndpointAddress("http://localhost:8888/BindingComponent"); 
-		manager.start();
+	public String start() {
+		try {
+			
 
-		/*
-		 * try { Thread.sleep(10000); } catch (InterruptedException e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); }
-		 * 
-		 * manager.stop();
-		 */
+			// should be called remotely via Manager REST interface
+			
+			manager.start();
+
+			System.out.println("aaa");
+			
+			messageStart = "The BC is started. The SOAP endopoint is published on: http://localhost:8888/BindingComponent";
+
+		} catch (Exception ex) {
+			// TODO handle custom exceptions here
+			messageStart = "The BC is not started. Check:" + ex;
+		}
+
+		return messageStart;
+	}
+
+	public String stop() {
+
+		try {
+
+			manager.stop();
+
+			messageStop = "The BC is shut down";
+
+		} catch (Exception ex) {
+			// TODO handle custom exceptions here
+			messageStop = "The BC is not shut down. Check:" + ex;
+		}
+
+		return messageStop;
 	}
 
 }
