@@ -13,13 +13,16 @@ public class BCStarter {
 	private String messageStart = "";
 	private String messageStop = "";
 	private BcManager manager;
-	
-	
+
 	public BCStarter() {
 		manager = null;
-		
+
 		// Should parse the local config file and instantiate the
-		BcConfiguration configuration = new BcConfiguration(/** path/to/local/config/file*/);
+		BcConfiguration configuration = new BcConfiguration(/**
+		 * 
+		 * path/to/local/config/file
+		 */
+		);
 
 		// test purpose: should be extract when parsing the config file
 		configuration.setComponentRole("SERVER");
@@ -31,20 +34,14 @@ public class BCStarter {
 		manager = new BcManager(configuration);
 		manager.setEndpointAddress("http://localhost:8888/BindingComponent");
 	}
-	
-	
 
 	public String start() {
 		try {
-			
 
 			// should be called remotely via Manager REST interface
-			
-			manager.start();
 
-			System.out.println("aaa");
-			
-			messageStart = "The BC is started. The SOAP endopoint is published on: http://localhost:8888/BindingComponent";
+			manager.start();
+			messageStart = "http://localhost:8888/BindingComponent";
 
 		} catch (Exception ex) {
 			// TODO handle custom exceptions here
@@ -57,9 +54,7 @@ public class BCStarter {
 	public String stop() {
 
 		try {
-
 			manager.stop();
-
 			messageStop = "The BC is shut down";
 
 		} catch (Exception ex) {
