@@ -24,7 +24,7 @@ public class BcSoapGeneratorTest {
     BcConfiguration compConfServer = new BcConfiguration();
     compConfServer.setComponentRole("SERVER");
     compConfServer.setServiceAddress("http://127.0.0.1:8282");
-    compConfServer.setGeneratedCodePath("src/test/resources/generated");
+    compConfServer.setGeneratedCodePath("src/test/resources/generated/traffic");
     compConfServer.setTargetNamespace("");
     
     GmComponentRepresentation serviceDefinition = new GmComponentRepresentation();
@@ -50,7 +50,7 @@ public class BcSoapGeneratorTest {
     oneWayOperation.addGetData(getData1);
     serviceDefinition.addOperation(oneWayOperation);
     
-    /*TWOWAY OP*/    
+    /*TWOWAY OP*/
     Scope scope2 = new Scope();
     scope2.setName("getTrafficLight");
     scope2.setVerb(Verb.GET);
@@ -68,12 +68,12 @@ public class BcSoapGeneratorTest {
   @Test
   public void testEndpointGeneration() {
     this.soapGenerator.generateBc();
-    DifferentiaAssert.assertSourcesEqual("src/test/resources/expected/BindingComponent.java", "src/test/resources/generated/BindingComponent.java");
+    DifferentiaAssert.assertSourcesEqual("src/test/resources/expected/BindingComponent.java", "src/test/resources/generated/traffic/BindingComponent.java");
   }
   
   @Test
   public void testPojoGeneration() {
     this.soapGenerator.generateBc();
-    DifferentiaAssert.assertSourcesEqual("src/test/resources/expected/TrafficLight.java", "src/test/resources/generated/TrafficLight.java");
+    DifferentiaAssert.assertSourcesEqual("src/test/resources/expected/TrafficLight.java", "src/test/resources/generated/traffic/TrafficLight.java");
   }
 }

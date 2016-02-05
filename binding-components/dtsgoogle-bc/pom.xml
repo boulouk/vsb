@@ -1,0 +1,77 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>binding-components</artifactId>
+    <groupId>eu.chorevolution.vsb</groupId>
+    <version>0.0.1-SNAPSHOT</version>
+    <relativePath>..</relativePath>
+  </parent>
+  <artifactId>dtsgoogle-bc</artifactId>
+  <name>dtsgoogle-bc</name>
+  <description>Binding Component for the dtsgoogle rest service</description>
+  
+  <build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<repositories>
+	    <!-- REST library: Restlet -->
+	    <repository>
+	      <id>maven-restlet</id>
+	      <name>Public online Restlet repository</name>
+	      <url>http://maven.restlet.org</url>
+	    </repository>
+    </repositories>
+    
+    <dependencies>
+		<!-- Chorevolution -->
+		<dependency>
+			<groupId>eu.chorevolution.vsb</groupId>
+			<artifactId>gm-rest</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>eu.chorevolution.vsb</groupId>
+			<artifactId>gm-soap</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>eu.chorevolution.vsb</groupId>
+			<artifactId>bc-manager</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<!-- jackson -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.6.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.6.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.6.4</version>
+		</dependency>
+		<!-- RestLet -->
+		<dependency>
+			<groupId>org.restlet.jse</groupId>
+			<artifactId>org.restlet</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+	</dependencies>
+  
+</project>

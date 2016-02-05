@@ -46,11 +46,6 @@
 		</dependency>
 		<dependency>
 			<groupId>eu.chorevolution.vsb</groupId>
-			<artifactId>weather-bc</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>eu.chorevolution.vsb</groupId>
 			<artifactId>gm-rest</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
@@ -62,6 +57,16 @@
 		<dependency>
 			<groupId>eu.chorevolution.vsb</groupId>
 			<artifactId>bc-manager</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>eu.chorevolution.vsb</groupId>
+			<artifactId>weather-bc</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>eu.chorevolution.vsb</groupId>
+			<artifactId>dtsgoogle-bc</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<!-- CodeModel -->

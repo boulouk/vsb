@@ -21,11 +21,18 @@ public class WarGenerator {
 
 		File[] files = Maven.resolver().loadPomFromFile("pom.xml").importRuntimeDependencies().resolve().withTransitivity().asFile();
 
-		WebArchive archive = ShrinkWrap.create(WebArchive.class, "BindingComponent.war");
+		WebArchive archive = ShrinkWrap.create(WebArchive.class, "WeatherBindingComponent.war");
 
 		archive.setWebXML(new File(WEBAPP_SRC, "WEB-INF/web.xml"));
+		
+		//For weather
 		archive.addPackage(eu.chorevolution.vsb.bcs.weather.BCStarter.class.getPackage());
 		archive.addPackage(eu.chorevolution.vsb.bcs.weather.bc.BindingComponent.class.getPackage());
+		
+		//For DTSGoogle
+//		archive.addPackage(eu.chorevolution.vsb.bcs.dtsgoogle.BCStarter.class.getPackage());
+//		archive.addPackage(eu.chorevolution.vsb.bcs.dtsgoogle.bc.BindingComponent.class.getPackage());
+		
 		archive.addPackage(eu.chorevolution.vsb.bc.war.BCStarterServlet.class.getPackage());
 		archive.addAsLibraries(files);
 		archive.addAsWebResource(new File(WEBAPP_SRC, "index.jsp"));
