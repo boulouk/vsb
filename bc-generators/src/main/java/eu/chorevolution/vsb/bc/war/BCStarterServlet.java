@@ -1,12 +1,12 @@
 package eu.chorevolution.vsb.bc.war;
 
 //For weather
-import eu.chorevolution.vsb.bcs.weather.BCStarter;
-import eu.chorevolution.vsb.bcs.weather.bc.RestServer;
+//import eu.chorevolution.vsb.bcs.weather.BCStarter;
+//import eu.chorevolution.vsb.bcs.weather.bc.RestServer;
 
 //For DTSGoogle
-//import eu.chorevolution.vsb.bcs.dtsgoogle.BCStarter;
-//import eu.chorevolution.vsb.bcs.dtsgoogle.bc.RestServer;
+import eu.chorevolution.vsb.bcs.dtsgoogle.BCStarter;
+import eu.chorevolution.vsb.bcs.dtsgoogle.bc.RestServer;
 
 import java.io.IOException;
 import java.io.PrintWriter;

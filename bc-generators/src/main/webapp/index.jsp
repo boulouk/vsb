@@ -55,8 +55,7 @@
                                                 }
 
                                             } else {
-                                                alert("An error has occured: "
-                                                        + request.statusText);
+                                                //alert("An error has occured: "+ request.statusText);
                                             }
                                         } else {
                                         }

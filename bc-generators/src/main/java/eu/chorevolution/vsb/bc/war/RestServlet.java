@@ -58,7 +58,7 @@ public class RestServlet extends HttpServlet {
 					String message = result.getText();
 					if (!message.equals("empty")) {
 						System.err.println("message: " + message);
-						out.print(StringUtils.abbreviate(message, 140));
+						out.print(StringUtils.abbreviate(message, 480));
 					}
 				}
 			} else
