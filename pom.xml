@@ -54,8 +54,8 @@
 		<module>bc-manager</module>
 		<module>scenarios-end-to-end-test</module>
 		<module>binding-components</module>
-    <module>webapp-bc-generator</module>
-  </modules>
+    <module>playgrounds</module>
+	</modules>
 
 	<build>
 		<plugins>
