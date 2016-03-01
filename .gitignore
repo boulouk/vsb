@@ -6,3 +6,4 @@ bin/
 *.png
 *.lck
 .settings
+activemq-data/
