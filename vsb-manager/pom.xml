@@ -17,7 +17,7 @@
     </dependency>
     <dependency>
       <groupId>eu.chorevolution.vsb</groupId>
-      <artifactId>bc-generators</artifactId>
+      <artifactId>artifact-generators</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>

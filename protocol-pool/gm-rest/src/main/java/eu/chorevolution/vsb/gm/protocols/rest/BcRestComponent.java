@@ -11,7 +11,6 @@ import org.restlet.data.MediaType;
 import org.restlet.data.Method;
 import org.restlet.data.Protocol;
 import org.restlet.representation.StringRepresentation;
-import org.restlet.ext.json.JsonRepresentation;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,7 +19,6 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import eu.chorevolution.vsb.gm.protocols.primitives.BcGmComponent;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
 import eu.chorevolution.vsb.gmdl.utils.Data;
-import eu.chorevolution.vsb.gui.ConversionWindow;
 
 public class BcRestComponent extends BcGmComponent {
   private Client client;
@@ -65,8 +63,8 @@ public class BcRestComponent extends BcGmComponent {
     if(values.length>1) {
       obj.put("id", json.split(",")[0]);
       obj.put("value", json.split(",")[1]);
-      ConversionWindow.center.setVisible(true);
-      ConversionWindow.right.setText(String.format("<html><div WIDTH=%d>%s</div><div WIDTH=%d>%s</div><html>", 83, obj.toJSONString().substring(0, 13),90,obj.toJSONString().substring(13)));
+//      ConversionWindow.center.setVisible(true);
+//      ConversionWindow.right.setText(String.format("<html><div WIDTH=%d>%s</div><div WIDTH=%d>%s</div><html>", 83, obj.toJSONString().substring(0, 13),90,obj.toJSONString().substring(13)));
       
     }
     System.out.println("rec: " + obj.toJSONString());

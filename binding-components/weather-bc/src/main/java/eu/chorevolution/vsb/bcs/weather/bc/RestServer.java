@@ -26,9 +26,7 @@ public class RestServer {
 	private static ArrayList<String> list = null;
 
 	public void start() {
-
-		list = new ArrayList<String>();
-
+	  list = new ArrayList<String>();
 		this.server = new Server(Protocol.HTTP, 8585);
 		this.component = new Component();
 		this.component.getServers().add(server);

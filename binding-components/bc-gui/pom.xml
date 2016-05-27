@@ -11,7 +11,6 @@
   <groupId>eu.chorevolution.vsb</groupId>
   <artifactId>bc-gui</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>pom</packaging>
 
   <name>bc-gui</name>
   <url>http://maven.apache.org</url>

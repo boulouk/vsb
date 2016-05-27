@@ -73,4 +73,5 @@
 			<version>2.3.1</version>
 		</dependency>
 	</dependencies>
+	<groupId>eu.chorevolution.vsb</groupId>
 </project>

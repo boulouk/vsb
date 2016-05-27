@@ -27,7 +27,6 @@
   <modules>
 		<module>rest-playground</module>
 		<module>coap-playground</module>
-		<module>websockets-playground</module>	
 		<module>soap-playground</module>			
 	</modules>
 </project>
