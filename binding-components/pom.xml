@@ -11,7 +11,9 @@
 	<description>Manual binding components for various services, using the VSB libraries</description>
 	<packaging>pom</packaging>
 	<modules>
+		<module>bc-gui</module>
 		<module>weather-bc</module>
 		<module>dtsgoogle-bc</module>
-	</modules>
+		<module>rest-bc</module>
+  </modules>
 </project>

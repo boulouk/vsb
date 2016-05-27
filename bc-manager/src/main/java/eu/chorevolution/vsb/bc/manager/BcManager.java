@@ -1,9 +1,9 @@
 package eu.chorevolution.vsb.bc.manager;
 
 import eu.chorevolution.vsb.gm.protocols.Manageable;
+import eu.chorevolution.vsb.gm.protocols.soap.BcSoapComponent;
 import eu.chorevolution.vsb.gm.protocols.primitives.BcGmComponent;
 import eu.chorevolution.vsb.gm.protocols.rest.BcRestComponent;
-import eu.chorevolution.vsb.gm.protocols.soap.BcSoapComponent;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
 
 public class BcManager implements Manageable {

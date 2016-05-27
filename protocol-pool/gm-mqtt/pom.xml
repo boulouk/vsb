@@ -5,8 +5,8 @@
     <artifactId>protocol-pool</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>gm-soap</artifactId>
-  <name>gm-soap</name>
+  <artifactId>gm-mqtt</artifactId>
+  <name>gm-mqtt</name>
   <description>provides SOAP implementation of GM primitives and generator classes to generate a SOAP endpoint and generic interface which each concrete protocol implementation MUST implement to generate its concrete endpoints or clients</description>
     <build>
         <plugins>

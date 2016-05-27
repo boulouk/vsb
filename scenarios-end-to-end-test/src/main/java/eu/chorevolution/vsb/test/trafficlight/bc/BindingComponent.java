@@ -7,8 +7,8 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 
 import eu.chorevolution.vsb.gm.protocols.builders.ResponseBuilder;
+import eu.chorevolution.vsb.gm.protocols.mqtt.BcSoapComponent;
 import eu.chorevolution.vsb.gm.protocols.primitives.BcGmComponent;
-import eu.chorevolution.vsb.gm.protocols.soap.BcSoapComponent;
 import eu.chorevolution.vsb.gmdl.utils.Data;
 
 /**

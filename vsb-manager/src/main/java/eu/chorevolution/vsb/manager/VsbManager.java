@@ -1,7 +1,7 @@
 package eu.chorevolution.vsb.manager;
 
 import eu.chorevolution.vsb.bc.generators.JarGenerator;
-import eu.chorevolution.vsb.gm.protocols.soap.BcSoapGenerator;
+import eu.chorevolution.vsb.gm.protocols.mqtt.BcSoapGenerator;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
 import eu.chorevolution.vsb.gmdl.utils.GmComponentRepresentation;
 import eu.chorevolution.vsb.gmdl.utils.parsers.ComponentDescriptionParser;

@@ -8,4 +8,11 @@
   <artifactId>gmdl-utils</artifactId>
   <name>gmdl-utils</name>
   <description>GMDL Utils provides classes to parse and instantiate a GMDL representation of a system to be binded, based on its description file</description>
+  <dependencies>
+  <dependency>
+    <groupId>com.googlecode.json-simple</groupId>
+    <artifactId>json-simple</artifactId>
+    <version>1.1.1</version>
+  </dependency>
+  </dependencies>
 </project>

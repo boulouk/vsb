@@ -12,5 +12,7 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>pub-sub</module>
-	</modules>
+		<module>client-server</module>
+    <module>str</module>
+  </modules>
 </project>

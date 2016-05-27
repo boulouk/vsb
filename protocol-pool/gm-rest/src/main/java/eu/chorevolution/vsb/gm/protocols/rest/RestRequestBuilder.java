@@ -21,11 +21,11 @@ public class RestRequestBuilder implements RequestBuilder {
   public static Request buildRestPostRequest(final String destination, final String scope, final List<Data<?>> datas) {
     return buildRestRequest(Method.POST, destination, scope, datas);
   }
-  
+
   public static Request buildRestGetRequest(final String destination, final String scope, final List<Data<?>> datas) {
     return buildRestRequest(Method.GET, destination, scope, datas);
   }
-    
+
   private static Request buildRestRequest(final Method method, final String destination, final String scope, final List<Data<?>> datas) {
     Request request = new Request();
 
@@ -36,16 +36,16 @@ public class RestRequestBuilder implements RequestBuilder {
     buildRequestQuery(request, datas);
     buildRequestForm(request, datas);
     buildRequestBody(request, datas);
-    
+
     try {
-		request.setResourceRef(java.net.URLDecoder.decode(builder.toString(), "UTF-8"));
-	} catch (UnsupportedEncodingException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-    
+      request.setResourceRef(java.net.URLDecoder.decode(builder.toString(), "UTF-8"));
+    } catch (UnsupportedEncodingException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
     request.setMethod(method);
-    
+
     return request;
   }
 

@@ -54,8 +54,10 @@
 		<module>bc-manager</module>
 		<module>scenarios-end-to-end-test</module>
 		<module>binding-components</module>
+		<module>gui</module>
     <module>playgrounds</module>
-	</modules>
+    <module>gmdl-tools</module>
+  </modules>
 
 	<build>
 		<plugins>
