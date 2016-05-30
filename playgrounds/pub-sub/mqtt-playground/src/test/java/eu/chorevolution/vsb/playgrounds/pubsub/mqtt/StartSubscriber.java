@@ -26,17 +26,19 @@ public class StartSubscriber {
     } catch (JMSException e) {
       e.printStackTrace();
     }
-    
+
     while(true) {
       synchronized (sub.msgQueue) {
         if(sub.msgQueue.size()>0) {
           Message msg = sub.msgQueue.poll();
           System.out.println(msg.getMsg());
         } 
-        try {
-          sub.msgQueue.wait();
-        } catch (InterruptedException e) {
-          e.printStackTrace();
+        else {
+          try {
+            sub.msgQueue.wait();
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
         }
       }
     }

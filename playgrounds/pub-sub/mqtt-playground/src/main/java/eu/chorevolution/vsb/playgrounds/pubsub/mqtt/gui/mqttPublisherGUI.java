@@ -31,14 +31,14 @@ public class mqttPublisherGUI {
       final JLabel idLabel = new JLabel("Id:");
       idLabel.setBounds(3, 44, 50, 30);
 
-      final JTextField txt2 = new JTextField("12");
+      final JTextField txt2 = new JTextField("23");
       txt2.setBounds(55, 44, 250, 30);
       txt2.setEditable(false);
 
       final JLabel valueLabel = new JLabel("Value:");
       valueLabel.setBounds(3, 83, 50, 30);
 
-      final JTextField txt3 = new JTextField("");
+      final JTextField txt3 = new JTextField("some_message");
       txt3.setBounds(55, 83, 250, 30);
 
       JButton button = new JButton("Publish");

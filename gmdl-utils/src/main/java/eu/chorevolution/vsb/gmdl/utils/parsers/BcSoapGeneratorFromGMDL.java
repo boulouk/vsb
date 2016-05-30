@@ -77,14 +77,13 @@ public class BcSoapGeneratorFromGMDL {
 
         definitonMap.put(defintionName, data);
       }
-      
-      
+
       definitionsIterator = definitions.iterator();
       while(definitionsIterator.hasNext()) {
         JSONObject definition = (JSONObject) definitionsIterator.next();
         String defintionName = (String)definition.get("definition_name");
         Data<?> parentData = definitonMap.get(defintionName); 
-      
+
         Set<String> requiredProperties = new HashSet<String>();
         JSONArray required = (JSONArray) jsonObject.get("required");
         Iterator<String> requiredIterator = required.iterator();
@@ -92,7 +91,7 @@ public class BcSoapGeneratorFromGMDL {
           String property = (String) requiredIterator.next();
           requiredProperties.add(property);
         }
-        
+
         JSONArray properties = (JSONArray) jsonObject.get("properties");
         Iterator<JSONObject> propertiesIterator = properties.iterator();
         while(propertiesIterator.hasNext()) {
@@ -119,9 +118,9 @@ public class BcSoapGeneratorFromGMDL {
           }
         }
       }
-      
+
       BcConfiguration compConfServer = new BcConfiguration();
-      
+
       compConfServer.setServiceAddress(host_address);
       compConfServer.setGeneratedCodePath("src/test/resources/generated/dtsgoogle");
       compConfServer.setTargetNamespace("");
@@ -145,7 +144,7 @@ public class BcSoapGeneratorFromGMDL {
         }
         String role = (String) operation.get("role");  
         compConfServer.setComponentRole(role.toUpperCase());
-        
+
         JSONObject scopeObj = (JSONObject) operation.get("scope");
         String verb = (String) scopeObj.get("verb");
         String name = (String) scopeObj.get("name");

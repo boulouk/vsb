@@ -33,7 +33,7 @@ public class SubscriberGUI {
       final JLabel topicLabel = new JLabel("Topic:");
       topicLabel.setBounds(3, 44, 50, 30);
 
-      final JTextField txt2 = new JTextField("12");
+      final JTextField txt2 = new JTextField("topic");
       txt2.setBounds(80, 44, 225, 30);
 
       messageLabel = new JLabel("Msg:");
@@ -114,7 +114,9 @@ public class SubscriberGUI {
             System.out.println("gui : " + msg.getMsg());
 
           }
-          sub.msgQueue.wait();
+          else {
+            sub.msgQueue.wait();
+          }
         }
       } catch (InterruptedException e) {
         e.printStackTrace();
