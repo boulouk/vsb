@@ -13,13 +13,24 @@ public class Broker {
   private BrokerService broker;
   private BlockingConnection connection;  
   
+  private String ip;
+  private int port;
+  
   public Broker() {
     this.broker = new BrokerService();
+    this.ip = "localhost";
+    this.port = 1883;
+  }
+  
+  public Broker(String ip, int port) {
+    this.broker = new BrokerService();
+    this.ip = ip;
+    this.port = port;
   }
   
   public void start() {
     try {
-      broker.addConnector("mqtt://localhost:1883");
+      broker.addConnector("mqtt://"+ ip + ":" + port);
     } catch (Exception e1) {
       e1.printStackTrace();
     }

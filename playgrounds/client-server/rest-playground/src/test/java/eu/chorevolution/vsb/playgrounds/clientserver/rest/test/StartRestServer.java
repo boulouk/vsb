@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 
 import eu.chorevolution.vsb.playgrounds.clientserver.rest.RestServer;
 
-public class StartRestServer extends JPanel {  
+public class StartRestServer {  
   public static void main(String[] args) {
     RestServer rs = new RestServer();
     rs.startServer(1111);
