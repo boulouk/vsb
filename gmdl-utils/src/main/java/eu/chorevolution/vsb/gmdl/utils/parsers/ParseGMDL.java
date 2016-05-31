@@ -23,25 +23,29 @@ import eu.chorevolution.vsb.gmdl.utils.enums.OperationType;
 import eu.chorevolution.vsb.gmdl.utils.enums.Protocol;
 import eu.chorevolution.vsb.gmdl.utils.enums.Verb;
 
-public class BcSoapGeneratorFromGMDL {
+public class ParseGMDL {
 
   private static Data<?> getDataObject(JSONObject getData, Map<String, Data<?>> definitonMap) {
-    String data_name = (String) getData.get("verb");
-    String data_type = (String) getData.get("name");   
-    String context = (String) getData.get("uri");
+    String data_name = (String) getData.get("data_name");
+    String data_type = (String) getData.get("data_type");   
+    String context = (String) getData.get("context");
     String $ref = (String) getData.get("$ref");
 
     Context con = null;
     if(context.equals("body")) {
       con = Context.BODY;
     }
-    else {
+    else if(context.equals("path")) {
       con = Context.PATH;
+    } 
+    else {
+      System.out.println("unknown context");
     }
 
     Data<?> data = null;
     if(data_type.equals("object")) {
-      data = definitonMap.get($ref);
+      data = new Data<>(definitonMap.get($ref));
+      data.setName(data_name);
     } 
     else {
       data = new Data<>(data_name, data_type, true, "application/json", con, true);
@@ -81,18 +85,18 @@ public class BcSoapGeneratorFromGMDL {
       definitionsIterator = definitions.iterator();
       while(definitionsIterator.hasNext()) {
         JSONObject definition = (JSONObject) definitionsIterator.next();
-        String defintionName = (String)definition.get("definition_name");
-        Data<?> parentData = definitonMap.get(defintionName); 
+        String definitionName = (String)definition.get("definition_name");
+        Data<?> parentData = definitonMap.get(definitionName); 
 
         Set<String> requiredProperties = new HashSet<String>();
-        JSONArray required = (JSONArray) jsonObject.get("required");
+        JSONArray required = (JSONArray) definition.get("required");
         Iterator<String> requiredIterator = required.iterator();
         while(requiredIterator.hasNext()) {
           String property = (String) requiredIterator.next();
           requiredProperties.add(property);
         }
 
-        JSONArray properties = (JSONArray) jsonObject.get("properties");
+        JSONArray properties = (JSONArray) definition.get("properties");
         Iterator<JSONObject> propertiesIterator = properties.iterator();
         while(propertiesIterator.hasNext()) {
           JSONObject property = (JSONObject) propertiesIterator.next();
@@ -103,7 +107,8 @@ public class BcSoapGeneratorFromGMDL {
             boolean req = false;
             if(requiredProperties.contains(propertyName)) 
               req = true;
-            Data<?> data = definitonMap.get($ref);
+            
+            Data<?> data = new Data(definitonMap.get($ref));
             data.setName(propertyName);
             if(req)
               data.setIsRequired(true);

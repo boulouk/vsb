@@ -11,10 +11,22 @@ public class Data<T> {
   private final Context context;
   private final String mediaType;
   private boolean isRequired;
-  private final List<Data<?>> attributes = new ArrayList<Data<?>>();
+  private final List<Data<?>> attributes;
   private T object;
 
+  public Data(Data<T> another) {
+    this.name = another.name;
+    this.className = another.className;
+    this.isPrimitiveType = another.isPrimitiveType;
+    this.context = another.context;
+    this.mediaType = another.mediaType;
+    this.isRequired = another.isRequired;
+    this.attributes = another.attributes;
+    this.object = another.object;
+  }
+  
   public Data(String name, String className, boolean isPrimitiveType, String mediaType, Context context, boolean isRequired) {
+    attributes = new ArrayList<Data<?>>();
     this.name = name;
     this.className = className;
     this.isPrimitiveType = isPrimitiveType;
@@ -89,4 +101,6 @@ public class Data<T> {
   public enum Context {
     BODY, PATH, QUERY, FORM, HEADER;
   }
+  
+
 }
