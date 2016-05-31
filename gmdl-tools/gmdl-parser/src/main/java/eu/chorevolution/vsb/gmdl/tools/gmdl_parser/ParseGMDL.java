@@ -1,4 +1,4 @@
-package eu.chorevolution.vsb.gmdl.utils.parsers;
+package eu.chorevolution.vsb.gmdl.tools.gmdl_parser;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -44,11 +44,11 @@ public class ParseGMDL {
 
     Data<?> data = null;
     if(data_type.equals("object")) {
-      data = new Data<>(definitonMap.get($ref));
+      data = new Data(definitonMap.get($ref));
       data.setName(data_name);
     } 
     else {
-      data = new Data<>(data_name, data_type, true, "application/json", con, true);
+      data = new Data(data_name, data_type, true, "application/json", con, true);
     }
     return data;
   }
@@ -118,7 +118,7 @@ public class ParseGMDL {
             boolean req = false;
             if(requiredProperties.contains(propertyName)) 
               req = true;
-            Data<?> data = new Data<>(propertyName, propertyType, true, "application/json", Context.PATH, req);
+            Data<?> data = new Data(propertyName, propertyType, true, "application/json", Context.PATH, req);
             parentData.addAttribute(data);
           }
         }
