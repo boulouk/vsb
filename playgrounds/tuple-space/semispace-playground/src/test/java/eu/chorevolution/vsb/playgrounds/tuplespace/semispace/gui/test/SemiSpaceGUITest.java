@@ -1,6 +1,6 @@
 package eu.chorevolution.vsb.playgrounds.tuplespace.semispace.gui.test;
 
-import eu.chorevolution.vsb.playgrounds.tuplespace.semispace.SemiSpaceGUI;
+import eu.chorevolution.vsb.playgrounds.tuplespace.semispace.gui.SemiSpaceGUI;
 
 public class SemiSpaceGUITest {
   public static void main(String args[]) {

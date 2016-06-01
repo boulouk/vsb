@@ -1,4 +1,4 @@
-package eu.chorevolution.vsb.playgrounds.tuplespace.semispace;
+package eu.chorevolution.vsb.playgrounds.tuplespace.semispace.gui;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -9,6 +9,9 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
+
+import eu.chorevolution.vsb.playgrounds.tuplespace.semispace.TSpaceClient;
+import eu.chorevolution.vsb.playgrounds.tuplespace.semispace.TSpaceServer;
 
 @SuppressWarnings("serial")
 public class SemiSpaceGUI extends JFrame {

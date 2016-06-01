@@ -26,7 +26,7 @@
 	</dependencies>
 	<packaging>pom</packaging>
 	<modules>
-		<module>websockets-playground</module>
+		<module>semispace-playground</module>
 
 	</modules>
 
