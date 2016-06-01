@@ -15,5 +15,6 @@
 		<module>pub-sub</module>
 		<module>client-server</module>
 		<module>str</module>
+		<module>tuple-space</module>
 	</modules>
 </project>
