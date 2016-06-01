@@ -6,7 +6,7 @@ import eu.chorevolution.vsb.gmdl.utils.GmComponentRepresentation;
 import eu.chorevolution.vsb.gmdl.utils.parsers.ComponentDescriptionParser;
 
 public class VsbManager {
-  public void generateBindingComponent(final String gmdlDescription, final String bcConfiguration) {
+  public void generateBindingComponent(final String gmdlDescription, final String choreographyProtocol, final String bcConfiguration) {
     GmComponentRepresentation gmComponentDescription = ComponentDescriptionParser.getReprensentationFromGMDL(gmdlDescription);
     
     // TODO: instantiate the right generator based on the bcConfig
