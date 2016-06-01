@@ -24,6 +24,7 @@ import eu.chorevolution.vsb.gmdl.utils.enums.Protocol;
 import eu.chorevolution.vsb.gmdl.utils.enums.Verb;
 
 public class ParseGMDL {
+  
 
   private static Data<?> getDataObject(JSONObject getData, Map<String, Data<?>> definitonMap) {
     String data_name = (String) getData.get("data_name");
@@ -53,11 +54,12 @@ public class ParseGMDL {
     return data;
   }
 
-  public static void main(String[] args) {
+  public GmComponentRepresentation parse(String gmdlPath) {
     JSONParser parser = new JSONParser();
     Map<String, Data<?>> definitonMap = new HashMap<String, Data<?>>();
+    GmComponentRepresentation serviceDefinition = new GmComponentRepresentation();
     try {
-      JSONObject jsonObject = (JSONObject) parser.parse(new FileReader("/home/siddhartha/Documents/gmdl/dts-google.json"));
+      JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(gmdlPath));
       String host_address = (String) jsonObject.get("host_address");
       String protocol = (String) jsonObject.get("protocol");
 
@@ -130,7 +132,7 @@ public class ParseGMDL {
       compConfServer.setGeneratedCodePath("src/test/resources/generated/dtsgoogle");
       compConfServer.setTargetNamespace("");
 
-      GmComponentRepresentation serviceDefinition = new GmComponentRepresentation();
+      
       switch(protocol) {
       case "REST":
         serviceDefinition.setProtocol(Protocol.REST);
@@ -192,6 +194,7 @@ public class ParseGMDL {
     } catch (IOException | ParseException e) {
       e.printStackTrace();
     }
+    return serviceDefinition;
   }
 }
 
