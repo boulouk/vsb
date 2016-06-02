@@ -1,35 +1,41 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>eu.chorevolution.vsb</groupId>
-    <artifactId>vsb</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
-  <artifactId>vsb-manager</artifactId>
-  <name>vsb-manager</name>
-  <packaging>jar</packaging>
-  <description>vsb-manager expose a REST interface to generate a Binding-Component WAR based on the description (GMDL) of the system (client, server, publisher, consumer etc.) to bind</description>
-  <dependencies>
-    <!-- Chorevolution -->
-    <dependency>
-      <groupId>eu.chorevolution.vsb</groupId>
-      <artifactId>gmdl-utils</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>eu.chorevolution.vsb</groupId>
-      <artifactId>artifact-generators</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>eu.chorevolution.vsb</groupId>
-      <artifactId>gm-rest</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>eu.chorevolution.vsb</groupId>
-      <artifactId>gm-soap</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-  </dependencies>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>eu.chorevolution.vsb</groupId>
+		<artifactId>vsb</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>vsb-manager</artifactId>
+	<name>vsb-manager</name>
+	<packaging>jar</packaging>
+	<description>vsb-manager expose a REST interface to generate a Binding-Component WAR based on the description (GMDL) of the system (client, server, publisher, consumer etc.) to bind</description>
+	<dependencies>
+		<!-- Chorevolution -->
+		<dependency>
+			<groupId>eu.chorevolution.vsb</groupId>
+			<artifactId>gmdl-utils</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>eu.chorevolution.vsb</groupId>
+			<artifactId>artifact-generators</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>eu.chorevolution.vsb</groupId>
+			<artifactId>gm-rest</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>eu.chorevolution.vsb</groupId>
+			<artifactId>gm-soap</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>eu.chorevolution.vsb</groupId>
+			<artifactId>parser</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
 </project>

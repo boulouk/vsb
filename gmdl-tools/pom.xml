@@ -25,8 +25,9 @@
   </dependencies>
   <packaging>pom</packaging>
   <modules>
-		<module>gmdl-parser</module>
-		<module>wadl2gmdl</module>
+	<module>gmdl-parser</module>
+	<module>wadl2gmdl</module>
     	<module>wsdl2gmdl</module>
+	<module>parser</module>
   </modules>
 </project>
