@@ -2,7 +2,8 @@ package eu.chorevolution.vsb.playgrounds.clientserver.websockets.test;
 
 import java.net.InetSocketAddress;
 
-import eu.chorevolution.vsb.playgrounds.clientserver.websockets.WebSocketServer.WsServer;
+import eu.chorevolution.vsb.playgrounds.clientserver.websockets.WsServer;
+
 
 public class StartServer {
   public static void main(String[] args) {

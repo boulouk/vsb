@@ -1,6 +1,5 @@
 package eu.chorevolution.vsb.gmdl.utils.parsers;
 
-import eu.chorevolution.vsb.gmdl.tools.gmdl_parser.ParseGMDL;
 import eu.chorevolution.vsb.gmdl.utils.GmComponentRepresentation;
 
 // TODO NOTE: could be refactor with a Factory+Strategy Pattern
@@ -8,8 +7,9 @@ import eu.chorevolution.vsb.gmdl.utils.GmComponentRepresentation;
 public class ComponentDescriptionParser {
 
   public static final GmComponentRepresentation getReprensentationFromGMDL(String gmdl) {
-    ParseGMDL gmdlParser = new ParseGMDL();
-    return gmdlParser.parse(gmdl);
+//    ParseGMDL gmdlParser = new ParseGMDL();
+//    return gmdlParser.parse(gmdl);
+    return null;
   }
   
   public static final GmComponentRepresentation getReprensentationFromWSDL(String wsdl) {
