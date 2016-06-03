@@ -10,21 +10,28 @@ import org.apache.activemq.broker.*;
  * @author Georgios Bouloukakis (boulouk@gmail.com)
  *
  */
-public class Broker1 {
+public class Broker {
 	private BrokerService broker;
 	
-	public Broker1() {
+	public Broker(String ip, int port, String name) {
 		this.broker = new BrokerService();
+		try {
+			broker.addConnector("tcp://"+ip+":"+port);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+//		try {
+//			broker.addNetworkConnector("static:(tcp://localhost:61626)");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+		broker.setBrokerName(name);
 	}
 	
 	public void start() {
 		try {
-			broker.addConnector("tcp://localhost:61616");
-			broker.addNetworkConnector("static:(tcp://localhost:61626)");
-			broker.setBrokerName("apple");
 			broker.start();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -33,11 +40,7 @@ public class Broker1 {
 		try {
 			broker.stop();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	
-
 }

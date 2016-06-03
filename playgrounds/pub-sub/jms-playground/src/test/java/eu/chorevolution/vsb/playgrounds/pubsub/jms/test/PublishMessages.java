@@ -17,7 +17,7 @@ public class PublishMessages {
 	public static void main(String[] args) throws JMSException {
 		Publisher pub = new Publisher();
 
-		pub.create("publisher-durablesubscriber", "durablesubscriber.t");
+		pub.create("publisher-durablesubscriber", "durablesubscriber.t", "localhost", 61616);
 
 		String forSent = "blaa";
 		//while(true) {

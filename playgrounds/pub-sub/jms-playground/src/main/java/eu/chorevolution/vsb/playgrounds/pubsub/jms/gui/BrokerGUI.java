@@ -1,4 +1,4 @@
-package eu.chorevolution.vsb.playgrounds.pubsub.mqtt.gui;
+package eu.chorevolution.vsb.playgrounds.pubsub.jms.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,9 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import eu.chorevolution.vsb.playgrounds.pubsub.mqtt.Broker;
-import eu.chorevolution.vsb.playgrounds.pubsub.mqtt.mqttPublisher;
-import eu.chorevolution.vsb.playgrounds.pubsub.mqtt.gui.mqttPublisherGUI.Gui;
+import eu.chorevolution.vsb.playgrounds.pubsub.jms.Broker;
 
 public class BrokerGUI {
   
@@ -58,9 +56,9 @@ public class BrokerGUI {
 
   public BrokerGUI() {
     
-    broker = new Broker();
+    broker = new Broker("localhost", 61616, "broker");
 
-    JFrame frame1 = new JFrame("MQTT Broker");
+    JFrame frame1 = new JFrame("JMS Broker");
     frame1.getContentPane().add(new Gui());
 
     frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,7 +69,7 @@ public class BrokerGUI {
   
   public BrokerGUI(String ip, int port) {
     
-    broker = new Broker(ip, port);
+    broker = new Broker(ip, port, "broker");
 
     JFrame frame1 = new JFrame("MQTT Broker");
     frame1.getContentPane().add(new Gui());

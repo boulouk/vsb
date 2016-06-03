@@ -17,7 +17,7 @@ public class SetSubscriber {
 	public static void main(String[] args) throws JMSException {
 		DurableSubscriber subscriber = new DurableSubscriber();
 		
-		subscriber.create("subscriber-durablesubscriber", "durablesubscriber.t", "durablesubscriber1");
+		subscriber.create("subscriber-durablesubscriber", "durablesubscriber.t", "durablesubscriber1", "localhost", 61616);
 		
 		//For sync interaction
 //		subscriber.getNext(5000);

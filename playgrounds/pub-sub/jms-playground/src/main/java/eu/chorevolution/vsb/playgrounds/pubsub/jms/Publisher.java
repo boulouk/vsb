@@ -15,10 +15,6 @@ import javax.jms.Topic;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
-/**
- * @author Georgios Bouloukakis (boulouk@gmail.com)
- *
- */
 public class Publisher {
 
 	private String clientId;
@@ -26,11 +22,11 @@ public class Publisher {
 	private Session session;
 	private MessageProducer messageProducer;
 
-	public void create(String clientId, String topicName) throws JMSException {
+	public void create(String clientId, String topicName, String ip, int port) throws JMSException {
 		this.clientId = clientId;
 
 		// create a Connection Factory
-		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
+		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://"+ip+":"+port);
 
 		// create a Connection
 		connection = connectionFactory.createConnection();

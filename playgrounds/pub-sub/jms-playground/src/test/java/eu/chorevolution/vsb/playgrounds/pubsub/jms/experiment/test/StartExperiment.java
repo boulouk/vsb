@@ -6,8 +6,7 @@ package eu.chorevolution.vsb.playgrounds.pubsub.jms.experiment.test;
 
 import javax.jms.JMSException;
 
-import eu.chorevolution.vsb.playgrounds.pubsub.jms.Broker1;
-import eu.chorevolution.vsb.playgrounds.pubsub.jms.Broker2;
+import eu.chorevolution.vsb.playgrounds.pubsub.jms.Broker;
 import eu.chorevolution.vsb.playgrounds.pubsub.jms.DurableSubscriber;
 import eu.chorevolution.vsb.playgrounds.pubsub.jms.Publisher;
 
@@ -26,7 +25,7 @@ public class StartExperiment {
 		DurableSubscriber subscriber = new DurableSubscriber();
 
 		try {
-			subscriber.create("subscriber-durablesubscriber", "durablesubscriber.t", "durablesubscriber1");
+			subscriber.create("subscriber-durablesubscriber", "durablesubscriber.t", "durablesubscriber1", "localhost", 61616);
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
@@ -34,7 +33,7 @@ public class StartExperiment {
 		Publisher pub = new Publisher();
 
 		try {
-			pub.create("publisher-durablesubscriber", "durablesubscriber.t");
+			pub.create("publisher-durablesubscriber", "durablesubscriber.t", "localhost", 61616);
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}

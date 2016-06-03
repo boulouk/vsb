@@ -8,6 +8,8 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.logging.Level;
 
 import javax.jms.Connection;
@@ -29,19 +31,22 @@ import org.apache.activemq.ActiveMQConnectionFactory;
  */
 public class DurableSubscriber {
 
-	private String clientId;
+	public String clientId;
 	private Connection connection;
 	private Session session;
 	private MessageConsumer messageConsumer;
+	public Queue<String> msgQueue;
 
 	private String subscriptionName;
 
-	public void create(String clientId, String topicName, String subscriptionName) throws JMSException {
+	public void create(String clientId, String topicName, String subscriptionName, String ip, int port) throws JMSException {
 		this.clientId = clientId;
 		this.subscriptionName = subscriptionName;
-
+		
+		msgQueue = new ConcurrentLinkedQueue<String>();
+		
 		// create a Connection Factory
-		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61626");
+		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://"+ip+":"+port);
 
 		// create a Connection
 		connection = connectionFactory.createConnection();
@@ -57,7 +62,7 @@ public class DurableSubscriber {
 		messageConsumer = session.createDurableSubscriber(topic, subscriptionName);
 
 		// for async messages:
-		JMSMessageListener listener = new JMSMessageListener();
+		JMSMessageListener listener = new JMSMessageListener(msgQueue);
 		messageConsumer.setMessageListener(listener);
 
 		// start the connection in order to receive messages
@@ -103,6 +108,13 @@ public class DurableSubscriber {
 
 // JMS Message Listener
 class JMSMessageListener implements MessageListener {
+	
+	Queue<String> msgQueue;
+	
+	public JMSMessageListener(Queue<String> msgQueue) {
+		this.msgQueue = msgQueue;
+	}
+
 	@Override
 	public void onMessage(javax.jms.Message msg) {
 		System.out.println(System.nanoTime());
@@ -113,9 +125,10 @@ class JMSMessageListener implements MessageListener {
 			// retrieve the message content
 			String message = textMessage.getText();
 
-			
-			
-			System.out.println("text reseived:" + message);
+			 synchronized(msgQueue) {
+			        msgQueue.add(message);
+			        msgQueue.notify();
+			      }
 
 			// System.out.println("FUCK: "+msg.toString());
 		} catch (JMSException ex) {
