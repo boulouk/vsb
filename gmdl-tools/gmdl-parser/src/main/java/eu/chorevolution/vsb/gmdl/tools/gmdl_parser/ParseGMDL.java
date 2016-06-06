@@ -69,6 +69,8 @@ public class ParseGMDL {
       compConfServer.setServiceAddress(host_address);
       compConfServer.setGeneratedCodePath("src/test/generated");
       compConfServer.setTargetNamespace("");
+      
+      serviceDefinition.setHostAddress(host_address);
 
       switch(protocol) {
       case "REST":

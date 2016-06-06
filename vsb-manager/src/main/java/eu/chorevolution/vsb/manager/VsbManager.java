@@ -1,6 +1,13 @@
 package eu.chorevolution.vsb.manager;
 
 //import eu.chorevolution.vsb.bc.generators.JarGenerator;
+import java.io.FileReader;
+import java.io.IOException;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import eu.chorevolution.vsb.gm.protocols.mqtt.BcMQTTComponent;
 import eu.chorevolution.vsb.gm.protocols.primitives.BcGmComponent;
 import eu.chorevolution.vsb.gm.protocols.rest.BcRestComponent;
@@ -20,9 +27,17 @@ public class VsbManager {
     gmComponentRepresentation = ComponentDescriptionParser.getReprensentationFromGMDL(gmdlDescription);
     bcConfiguration = new BcConfiguration();
     
-    bcConfiguration.setServiceAddress("https://maps.googleapis.com");
-    bcConfiguration.setServiceName("BindingComponent");
-    bcConfiguration.setTargetNamespace("eu.chorevolution.vsb.bcs.dtsgoogle.bc");
+    bcConfiguration.setServiceAddress(gmComponentRepresentation.getHostAddress());
+    
+    JSONParser parser = new JSONParser();
+    JSONObject jsonObject = null;
+    try {
+      jsonObject = (JSONObject) parser.parse(new FileReader("/home/siddhartha/Downloads/chor/evolution-service-bus/bc-manager/src/main/resources/config.json"));
+    } catch (IOException | ParseException e) {
+      e.printStackTrace();
+    }
+    bcConfiguration.setServiceName((String) jsonObject.get("service_name"));
+    bcConfiguration.setTargetNamespace((String) jsonObject.get("target_namespace"));
  
     bcConfiguration.setComponentRole("SERVER");
     

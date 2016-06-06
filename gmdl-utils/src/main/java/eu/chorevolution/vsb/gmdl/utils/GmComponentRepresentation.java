@@ -7,6 +7,7 @@ import java.util.Map;
 import eu.chorevolution.vsb.gmdl.utils.enums.Protocol;
 
 public class GmComponentRepresentation {
+  private String host_address;
   private Protocol protocol;
   private final Map<String, Operation> operations = new HashMap<String, Operation>();
   private final Map<String, Data<?>> typeDefinitions = new HashMap<String, Data<?>>();
@@ -15,6 +16,14 @@ public class GmComponentRepresentation {
     this.protocol = protocol;
   }
   
+  public String getHostAddress() {
+    return host_address;
+  }
+
+  public void setHostAddress(String host_address) {
+    this.host_address = host_address;
+  }
+
   public Protocol getProtocol() {
     return protocol;
   }
