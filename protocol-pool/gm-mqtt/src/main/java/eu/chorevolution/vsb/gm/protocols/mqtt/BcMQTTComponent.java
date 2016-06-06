@@ -48,16 +48,16 @@ public class BcMQTTComponent extends BcGmComponent {
         e1.printStackTrace();
       }
       Runtime.getRuntime().addShutdownHook(new Thread(){
-          @Override
-          public void run() {
-              try {
-                  broker.stop();
-              } catch (Exception e) {
-                  e.printStackTrace();
-              }
+        @Override
+        public void run() {
+          try {
+            broker.stop();
+          } catch (Exception e) {
+            e.printStackTrace();
           }
+        }
       });
-      
+
       MqttClient client;
       try {
         client = new MqttClient("tcp://localhost:1883", "client");
@@ -68,7 +68,24 @@ public class BcMQTTComponent extends BcGmComponent {
       } catch (MqttException e) {
         e.printStackTrace();
       }
+
+      break;
+    case "CLIENT":  
       
+      
+      break;
+    default:
+      break;
+    }
+  }
+
+  @Override
+  public void stop() {
+    switch (this.bcConfiguration.getComponentRole()) {
+    case "SERVER":  
+      if(this.endpoint.isPublished()) {
+        this.endpoint.stop();
+      }
       break;
     case "CLIENT":   
       break;
@@ -76,70 +93,63 @@ public class BcMQTTComponent extends BcGmComponent {
       break;
     }
   }
-  
-  @Override
-  public void stop() {
-    if(this.endpoint.isPublished()) {
-      this.endpoint.stop();
-    }
-  }
-  
+
   @Override
   public void postOneway(final String destination, final String scope, final List<Data<?>> data, final long lease) {
     // TODO Auto-generated method stub
   }
-  
+
   @Override
   public void mgetOneway(final String scope, final Object exchange) {
-    
-    
-    
+
+
+
     this.nextComponent.postOneway(this.bcConfiguration.getServiceAddress(), scope, (List<Data<?>>)exchange, 0);
   }
-  
+
   @Override
   public void xmgetOneway(final String source, final String scope, final Object exchange) {
     this.nextComponent.postOneway(this.bcConfiguration.getServiceAddress(), scope, (List<Data<?>>)exchange, 0);
   }
-  
+
   @Override
   public <T> T postTwowaySync(final String destination, final String scope, final List<Data<?>> datas, final long lease) {
     // TODO Auto-generated method stub
     return null;
   }
-  
+
   @Override
   public void xtgetTwowaySync(final String destination, final String scope, final long timeout, final Object response) {
     // TODO Auto-generated method stub
   }
-  
+
   @Override
   public <T> T mgetTwowaySync(final String scope, final Object exchange) {
     return this.nextComponent.postTwowaySync(this.bcConfiguration.getServiceAddress(), scope, (List<Data<?>>)exchange, 0);
   }
-  
+
   @Override
   public void postTwowayAsync(final String destination, final String scope, final List<Data<?>> data, final long lease) {
     // TODO Auto-generated method stub
   }
-  
+
   @Override
   public void xgetTwowayAsync(final String destination, final String scope, final Object response) {
     // TODO Auto-generated method stub
   }
-  
+
   @Override
   public void mgetTwowayAsync(final String scope, final Object exchange) {
     this.nextComponent.postTwowayAsync(this.bcConfiguration.getServiceAddress(), scope, (List<Data<?>>)exchange, 0);
   }
-  
+
   @Override
   public void postBackTwowayAsync(final String source, final String scope, final Data<?> data, final long lease, final Object exchange) {
     // TODO Auto-generated method stub
   }
-  
+
   private final class SubscriberCallback implements MqttCallback {
-    
+
     public SubscriberCallback() {
       super();
     }
@@ -155,7 +165,7 @@ public class BcMQTTComponent extends BcGmComponent {
 
     @Override
     public void deliveryComplete(IMqttDeliveryToken arg0) {
-      
+
     }
   }
 }

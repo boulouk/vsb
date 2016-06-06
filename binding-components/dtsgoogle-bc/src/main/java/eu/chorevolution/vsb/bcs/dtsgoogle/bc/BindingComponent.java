@@ -41,19 +41,19 @@ public class BindingComponent {
 		datas.add(new Data<String>("destination", "String", true, destination, "PATH"));
 //		datas.add(new Data<String>("key", "String", true, key, "PATH"));
 		
-		String request = "Request to REST for parameters:  " + "origin: " + origin + " and destination: " + destination;
-    
-    Request restRequest = new Request(Method.POST, this.uri, new StringRepresentation(request));
-    this.client.handle(restRequest);
-    System.out.println(request);
+//		String request = "Request to REST for parameters:  " + "origin: " + origin + " and destination: " + destination;
+//    
+//    Request restRequest = new Request(Method.POST, this.uri, new StringRepresentation(request));
+//    this.client.handle(restRequest);
+//    System.out.println(request);
     
 		java.lang.String serializedrootClass = this.apiRef.mgetTwowaySync("/maps/api/directions/json?origin={origin}&destination={destination}&key=AIzaSyBhfNR1PHo8EsuxjLr3EO-sNnfoUDh4ilw", datas);
 		
-		String response = "Response from REST: " + serializedrootClass;
-    restRequest = new Request(Method.POST, this.uri, new StringRepresentation(response));
-    this.client.handle(restRequest);
-    System.out.println(response);
-		
+//		String response = "Response from REST: " + serializedrootClass;
+//    restRequest = new Request(Method.POST, this.uri, new StringRepresentation(response));
+//    this.client.handle(restRequest);
+//    System.out.println(response);
+		System.out.println(ResponseBuilder.unmarshalObject("application/json", serializedrootClass, RootClass.class));
 		return ResponseBuilder.unmarshalObject("application/json", serializedrootClass, RootClass.class);
 	}
 

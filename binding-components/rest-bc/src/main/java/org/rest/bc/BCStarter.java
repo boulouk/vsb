@@ -1,12 +1,5 @@
 package org.rest.bc;
 
-import java.awt.GridLayout;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 import eu.chorevolution.vsb.gm.protocols.mqtt.BcMQTTComponent;
 import eu.chorevolution.vsb.gm.protocols.rest.BcRestComponent;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;

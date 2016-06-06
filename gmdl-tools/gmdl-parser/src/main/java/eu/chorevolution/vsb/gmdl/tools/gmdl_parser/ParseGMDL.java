@@ -13,6 +13,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import eu.chorevolution.vsb.gm.protocols.generators.BcComponentGenerator;
+import eu.chorevolution.vsb.gm.protocols.soap.BcSoapGenerator;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
 import eu.chorevolution.vsb.gmdl.utils.Data;
 import eu.chorevolution.vsb.gmdl.utils.Data.Context;
@@ -24,7 +26,6 @@ import eu.chorevolution.vsb.gmdl.utils.enums.Protocol;
 import eu.chorevolution.vsb.gmdl.utils.enums.Verb;
 
 public class ParseGMDL {
-  
 
   private static Data<?> getDataObject(JSONObject getData, Map<String, Data<?>> definitonMap) {
     String data_name = (String) getData.get("data_name");
@@ -33,10 +34,10 @@ public class ParseGMDL {
     String $ref = (String) getData.get("$ref");
 
     Context con = null;
-    if(context.equals("body")) {
+    if("body".equals(context)) {
       con = Context.BODY;
     }
-    else if(context.equals("path")) {
+    else if("path".equals(context)) {
       con = Context.PATH;
     } 
     else {
@@ -44,7 +45,7 @@ public class ParseGMDL {
     }
 
     Data<?> data = null;
-    if(data_type.equals("object")) {
+    if("object".equals(data_type)) {
       data = new Data(definitonMap.get($ref));
       data.setName(data_name);
     } 
@@ -63,8 +64,28 @@ public class ParseGMDL {
       String host_address = (String) jsonObject.get("host_address");
       String protocol = (String) jsonObject.get("protocol");
 
+      BcConfiguration compConfServer = new BcConfiguration();
+
+      compConfServer.setServiceAddress(host_address);
+      compConfServer.setGeneratedCodePath("src/test/generated");
+      compConfServer.setTargetNamespace("");
+
+      switch(protocol) {
+      case "REST":
+        serviceDefinition.setProtocol(Protocol.REST);
+        break;
+      }
+
       JSONArray operations = (JSONArray) jsonObject.get("operations");
       JSONArray definitions = (JSONArray) jsonObject.get("definitions");
+
+      if(operations == null) {
+        operations = new JSONArray();
+      }
+
+      if(definitions == null) {
+        definitions = new JSONArray();
+      }
 
       Iterator<JSONObject> definitionsIterator = definitions.iterator();
       while(definitionsIterator.hasNext()) {
@@ -109,7 +130,7 @@ public class ParseGMDL {
             boolean req = false;
             if(requiredProperties.contains(propertyName)) 
               req = true;
-            
+
             Data<?> data = new Data(definitonMap.get($ref));
             data.setName(propertyName);
             if(req)
@@ -124,20 +145,9 @@ public class ParseGMDL {
             parentData.addAttribute(data);
           }
         }
+        serviceDefinition.addTypeDefinition(parentData);
       }
 
-      BcConfiguration compConfServer = new BcConfiguration();
-
-      compConfServer.setServiceAddress(host_address);
-      compConfServer.setGeneratedCodePath("src/test/resources/generated/dtsgoogle");
-      compConfServer.setTargetNamespace("");
-
-      
-      switch(protocol) {
-      case "REST":
-        serviceDefinition.setProtocol(Protocol.REST);
-        break;
-      }
       Iterator<JSONObject> operationsIterator = operations.iterator();
       while(operationsIterator.hasNext()) {
         JSONObject operation = (JSONObject) operationsIterator.next();
@@ -152,18 +162,34 @@ public class ParseGMDL {
         String role = (String) operation.get("role");  
         compConfServer.setComponentRole(role.toUpperCase());
 
-        JSONObject scopeObj = (JSONObject) operation.get("scope");
-        String verb = (String) scopeObj.get("verb");
-        String name = (String) scopeObj.get("name");
-        String uri = (String) scopeObj.get("uri");     
+        JSONObject scopeJSONObj = null;
+        Object scopeObj = operation.get("scope");
+        
         Scope scope = new Scope();
-        scope.setName(name);
-        switch(verb) {
-        case "GET":
-          scope.setVerb(Verb.GET);            
-          break;
+        try {
+          if(scopeObj.getClass() == Class.forName("java.lang.String")) {
+            String uri = (String) scopeObj;     
+            scope.setUri(uri);
+          }
+          else {
+            scopeJSONObj = (JSONObject) scopeObj;
+            String verb = (String) scopeJSONObj.get("verb");
+            String name = (String) scopeJSONObj.get("name");
+            String uri = (String) scopeJSONObj.get("uri");     
+
+            scope.setName(name);
+            switch(verb) {
+            case "GET":
+              scope.setVerb(Verb.GET);            
+              break;
+            }
+            scope.setUri(uri);
+          }
+        } catch (ClassNotFoundException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
         }
-        scope.setUri(uri);
+
 
         Operation op = new Operation(operation_name, scope, type);      
 
@@ -178,7 +204,7 @@ public class ParseGMDL {
 
         JSONArray post_data = (JSONArray) operation.get("post_data");
 
-        Iterator<JSONObject> postDataIterator = get_data.iterator();
+        Iterator<JSONObject> postDataIterator = post_data.iterator();
         while(postDataIterator.hasNext()) {
           JSONObject postData = (JSONObject) postDataIterator.next();
           Data<?> data = getDataObject(postData, definitonMap); 
@@ -188,13 +214,14 @@ public class ParseGMDL {
         serviceDefinition.addOperation(op);       
 
       }
-
-      //        this.soapGenerator = new BcSoapGenerator(serviceDefinition, compConfServer).setDebug(true); 
-
+            if(serviceDefinition.getProtocol() == Protocol.REST) {
+              BcComponentGenerator soapGenerator = new BcSoapGenerator(serviceDefinition, compConfServer).setDebug(true); 
+              soapGenerator.generateBc();
+            }
     } catch (IOException | ParseException e) {
       e.printStackTrace();
     }
     return serviceDefinition;
   }
-}
 
+}

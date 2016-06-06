@@ -38,5 +38,15 @@
     <artifactId>gmdl-utils</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     </dependency>
+    <dependency>
+    <groupId>eu.chorevolution.vsb</groupId>
+    <artifactId>gm-api</artifactId>
+  	<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+    <dependency>
+    <groupId>eu.chorevolution.vsb</groupId>
+  	 <artifactId>gm-soap</artifactId>
+  	<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
   </dependencies>
 </project>
