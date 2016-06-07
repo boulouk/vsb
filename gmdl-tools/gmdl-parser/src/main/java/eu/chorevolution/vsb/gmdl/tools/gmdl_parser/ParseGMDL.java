@@ -69,7 +69,7 @@ public class ParseGMDL {
       compConfServer.setServiceAddress(host_address);
       compConfServer.setGeneratedCodePath("src/test/generated");
       compConfServer.setTargetNamespace("");
-      
+
       serviceDefinition.setHostAddress(host_address);
 
       switch(protocol) {
@@ -166,7 +166,7 @@ public class ParseGMDL {
 
         JSONObject scopeJSONObj = null;
         Object scopeObj = operation.get("scope");
-        
+
         Scope scope = new Scope();
         try {
           if(scopeObj.getClass() == Class.forName("java.lang.String")) {
@@ -216,10 +216,12 @@ public class ParseGMDL {
         serviceDefinition.addOperation(op);       
 
       }
-            if(serviceDefinition.getProtocol() == Protocol.REST) {
-              BcComponentGenerator soapGenerator = new BcSoapGenerator(serviceDefinition, compConfServer).setDebug(true); 
-              soapGenerator.generateBc();
-            }
+      
+      if(serviceDefinition.getProtocol() == Protocol.REST) {
+        BcComponentGenerator soapGenerator = new BcSoapGenerator(serviceDefinition, compConfServer).setDebug(true); 
+        soapGenerator.generateBc();
+      }
+      
     } catch (IOException | ParseException e) {
       e.printStackTrace();
     }

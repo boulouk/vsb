@@ -1,4 +1,19 @@
 {
-	"service_name": "BindingComponent",
-	"target_namespace": "eu.chorevolution.vsb.bcs.dtsgoogle.bc"
+  "service_name": "BindingComponent",
+  "target_namespace": "eu.chorevolution.vsb.bcs.dtsgoogle.bc",
+  "sourceServiceAddress":"tcp://127.0.0.1",
+  "sourceServicePort":1884,
+  "sourceServiceParadigm":"PS",
+  "sourceServiceRole":"S",
+  "sourceServiceTopic":"http://www.lemonde.fr/international/rss_full.xml",
+  "connectorType":"fr.inria.arles.lsb.connectors.NewMQTT_Connector",
+  "connectorAddress":"tcp://127.0.0.1",
+  "connectorPort":8072,
+  "sourceBusAddress":"http://127.0.0.1",
+  "sourceBusPort":8092,
+  "destinationAddress":"http://127.0.0.1",
+  "destinationPort":8091,
+  "mediatorAddress":"http://127.0.0.1",
+  "mediatorPort":8080
+}
 }
