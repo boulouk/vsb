@@ -6,6 +6,8 @@ package eu.chorevolution.vsb.playgrounds.pubsub.jms.experiment.test;
 
 import javax.jms.JMSException;
 
+import org.junit.Test;
+
 import eu.chorevolution.vsb.playgrounds.pubsub.jms.Broker;
 import eu.chorevolution.vsb.playgrounds.pubsub.jms.DurableSubscriber;
 import eu.chorevolution.vsb.playgrounds.pubsub.jms.Publisher;
@@ -15,7 +17,8 @@ import eu.chorevolution.vsb.playgrounds.pubsub.jms.Publisher;
  *
  */
 public class StartExperiment {
-	public static void main(String[] args) {
+  @Test
+	public void startExperiment() {
 
 //		Broker2 broker2 = new Broker2();
 //		broker2.start();

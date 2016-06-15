@@ -1,6 +1,6 @@
 package eu.chorevolution.vsb.artifact.generators;
 
-import eu.chorevolution.vsb.gm.protocols.generators.BcComponentGenerator;
+import eu.chorevolution.vsb.gm.protocols.generators.BcSubcomponentGenerator;
 
 /* TODO
  * @see http://stackoverflow.com/questions/8522443/generate-jar-file-during-runtime
@@ -10,7 +10,7 @@ import eu.chorevolution.vsb.gm.protocols.generators.BcComponentGenerator;
  * */
 public class JarGenerator {
 
-  public static void generateBc(BcComponentGenerator componentGenerator) {
+  public static void generateBc(BcSubcomponentGenerator componentGenerator) {
     componentGenerator.generateBc();
     // TODO: package as an executable jar
   }

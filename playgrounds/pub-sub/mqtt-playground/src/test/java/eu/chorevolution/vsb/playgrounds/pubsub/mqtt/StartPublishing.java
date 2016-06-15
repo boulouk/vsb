@@ -12,10 +12,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 
+import org.junit.Test;
+
 import eu.chorevolution.vsb.playgrounds.pubsub.mqtt.mqttPublisher;
 
 public class StartPublishing {
-  public static void main(String[] args) {
+  @Test
+  public void startPublishing() {
     mqttPublisher pub = null;
     pub = new mqttPublisher("localhost",1883, "publisher");
     pub.publish("topic_name", "message");

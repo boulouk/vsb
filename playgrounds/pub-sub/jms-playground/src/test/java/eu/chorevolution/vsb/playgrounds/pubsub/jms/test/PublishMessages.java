@@ -6,6 +6,8 @@ package eu.chorevolution.vsb.playgrounds.pubsub.jms.test;
 
 import javax.jms.JMSException;
 
+import org.junit.Test;
+
 import eu.chorevolution.vsb.playgrounds.pubsub.jms.Publisher;
 
 /**
@@ -13,15 +15,23 @@ import eu.chorevolution.vsb.playgrounds.pubsub.jms.Publisher;
  *
  */
 public class PublishMessages {
-
-	public static void main(String[] args) throws JMSException {
+  @Test
+  public void startBrokerGUI() {
 		Publisher pub = new Publisher();
 
-		pub.create("publisher-durablesubscriber", "durablesubscriber.t", "localhost", 61616);
+		try {
+      pub.create("publisher-durablesubscriber", "durablesubscriber.t", "localhost", 61616);
+    } catch (JMSException e) {
+      e.printStackTrace();
+    }
 
 		String forSent = "blaa";
 		//while(true) {
-			pub.send(forSent);
+			try {
+        pub.send(forSent);
+      } catch (JMSException e) {
+        e.printStackTrace();
+      }
 		//}
 	}
 

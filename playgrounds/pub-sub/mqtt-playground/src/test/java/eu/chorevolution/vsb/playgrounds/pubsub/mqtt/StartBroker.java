@@ -1,7 +1,11 @@
 package eu.chorevolution.vsb.playgrounds.pubsub.mqtt;
 
-public class startBroker {
-  public static void main(String[] args) {
+import org.junit.Test;
+
+public class StartBroker {
+  @Test
+  public void startBrokerGUI() {
+
     Broker broker = new Broker();
     broker.start();
   }

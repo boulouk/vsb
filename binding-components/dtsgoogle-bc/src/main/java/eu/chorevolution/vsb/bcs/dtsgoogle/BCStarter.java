@@ -22,7 +22,7 @@ public class BCStarter {
 		BcConfiguration configuration = new BcConfiguration(/*path/to/local/config/file*/);
 
 		// test purpose: should be extract when parsing the config file
-		configuration.setComponentRole("SERVER");
+		configuration.setSubcomponentRole("SERVER");
 		configuration.setServiceAddress("https://maps.googleapis.com");
 		configuration.setServiceName("BindingComponent");
 		configuration.setTargetNamespace("eu.chorevolution.vsb.bcs.dtsgoogle.bc");

@@ -6,16 +6,16 @@ import eu.chorevolution.vsb.gm.protocols.Manageable;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
 import eu.chorevolution.vsb.gmdl.utils.Data;
 
-public abstract class BcGmComponent implements Manageable {
+public abstract class BcGmSubcomponent implements Manageable {
   
-  protected BcGmComponent nextComponent;
+  protected BcGmSubcomponent nextComponent;
   protected final BcConfiguration bcConfiguration;
   
-  public BcGmComponent(BcConfiguration bcConfiguration) {
+  public BcGmSubcomponent(BcConfiguration bcConfiguration) {
     this.bcConfiguration = bcConfiguration;
   }
   
-  public void setNextComponent(BcGmComponent nextComponent) {
+  public void setNextComponent(BcGmSubcomponent nextComponent) {
     this.nextComponent = nextComponent; 
   }
   

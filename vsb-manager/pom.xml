@@ -39,7 +39,7 @@
 		</dependency>
 		<dependency>
 			<groupId>eu.chorevolution.vsb</groupId>
-			<artifactId>parser</artifactId>
+			<artifactId>service-parser</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

@@ -1,13 +1,13 @@
 package eu.chorevolution.vsb.gm.protocols.rest;
 
-import eu.chorevolution.vsb.gm.protocols.generators.BcComponentGenerator;
+import eu.chorevolution.vsb.gm.protocols.generators.BcSubcomponentGenerator;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
 import eu.chorevolution.vsb.gmdl.utils.Data;
-import eu.chorevolution.vsb.gmdl.utils.GmComponentRepresentation;
+import eu.chorevolution.vsb.gmdl.utils.GmServiceRepresentation;
 
-public class BcRestGenerator extends BcComponentGenerator {
+public class BcRestGenerator extends BcSubcomponentGenerator {
 
-  public BcRestGenerator(GmComponentRepresentation componentDescription, BcConfiguration bcConfiguration) {
+  public BcRestGenerator(GmServiceRepresentation componentDescription, BcConfiguration bcConfiguration) {
     super(componentDescription, bcConfiguration);
   }
 

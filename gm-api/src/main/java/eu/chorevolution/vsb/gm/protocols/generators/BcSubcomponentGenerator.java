@@ -4,14 +4,14 @@ import java.util.Collection;
 
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
 import eu.chorevolution.vsb.gmdl.utils.Data;
-import eu.chorevolution.vsb.gmdl.utils.GmComponentRepresentation;
+import eu.chorevolution.vsb.gmdl.utils.GmServiceRepresentation;
 
-public abstract class BcComponentGenerator {
+public abstract class BcSubcomponentGenerator {
   protected final BcConfiguration bcConfiguration;
-  protected final GmComponentRepresentation componentDescription;
+  protected final GmServiceRepresentation componentDescription;
   protected boolean debug = false;
   
-  public BcComponentGenerator(GmComponentRepresentation componentDescription, BcConfiguration bcConfiguration) {
+  public BcSubcomponentGenerator(GmServiceRepresentation componentDescription, BcConfiguration bcConfiguration) {
     this.bcConfiguration = bcConfiguration;
     this.componentDescription = componentDescription;
   }
@@ -28,7 +28,7 @@ public abstract class BcComponentGenerator {
     }
   }
   
-  public BcComponentGenerator setDebug(boolean debug) {
+  public BcSubcomponentGenerator setDebug(boolean debug) {
     this.debug = debug;
     return this;
   }

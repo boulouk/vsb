@@ -5,8 +5,10 @@ import java.util.List;
 
 import org.json.simple.JSONObject;
 import org.restlet.Client;
+import org.restlet.Component;
 import org.restlet.Request;
 import org.restlet.Response;
+import org.restlet.Server;
 import org.restlet.data.MediaType;
 import org.restlet.data.Method;
 import org.restlet.data.Protocol;
@@ -16,23 +18,25 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
-import eu.chorevolution.vsb.gm.protocols.primitives.BcGmComponent;
+import eu.chorevolution.vsb.gm.protocols.primitives.BcGmSubcomponent;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
 import eu.chorevolution.vsb.gmdl.utils.Data;
 
-public class BcRestComponent extends BcGmComponent {
+public class BcRestSubcomponent extends BcGmSubcomponent {
   private Client client;
-
-  public BcRestComponent(BcConfiguration bcConfiguration) {
+  private Server server;  
+  private Component component;
+  
+  public BcRestSubcomponent(BcConfiguration bcConfiguration) {
     super(bcConfiguration);
-    switch (this.bcConfiguration.getComponentRole()) {
+    switch (this.bcConfiguration.getSubcomponentRole()) {
     case "SERVER":
-
-      
+      this.server = new Server(Protocol.HTTP, 0);
+      this.component = new Component();
+      this.component.getServers().add(server);
       break;
     case "CLIENT":   
       this.client = new Client(Protocol.HTTP);
-
       break;
     default:
       break;
@@ -41,10 +45,13 @@ public class BcRestComponent extends BcGmComponent {
 
   @Override
   public void start() {
-    switch (this.bcConfiguration.getComponentRole()) {
+    switch (this.bcConfiguration.getSubcomponentRole()) {
     case "SERVER":
-
-      
+      try {
+        this.component.start();
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
       break;
     case "CLIENT":   
       this.client = new Client(Protocol.HTTP);
@@ -61,7 +68,7 @@ public class BcRestComponent extends BcGmComponent {
 
   @Override
   public void stop() {
-    switch (this.bcConfiguration.getComponentRole()) {
+    switch (this.bcConfiguration.getSubcomponentRole()) {
     case "SERVER":
 
       break;

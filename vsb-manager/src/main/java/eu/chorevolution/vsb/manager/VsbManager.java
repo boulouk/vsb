@@ -8,23 +8,23 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import eu.chorevolution.vsb.gm.protocols.mqtt.BcMQTTComponent;
-import eu.chorevolution.vsb.gm.protocols.primitives.BcGmComponent;
-import eu.chorevolution.vsb.gm.protocols.rest.BcRestComponent;
-import eu.chorevolution.vsb.gm.protocols.soap.BcSoapComponent;
-import eu.chorevolution.vsb.gmdl.tools.parser.ComponentDescriptionParser;
+import eu.chorevolution.vsb.gm.protocols.mqtt.BcMQTTSubcomponent;
+import eu.chorevolution.vsb.gm.protocols.primitives.BcGmSubcomponent;
+import eu.chorevolution.vsb.gm.protocols.rest.BcRestSubcomponent;
+import eu.chorevolution.vsb.gm.protocols.soap.BcSoapSubcomponent;
+import eu.chorevolution.vsb.gmdl.tools.serviceparser.ServiceDescriptionParser;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
-import eu.chorevolution.vsb.gmdl.utils.GmComponentRepresentation;
+import eu.chorevolution.vsb.gmdl.utils.GmServiceRepresentation;
 import eu.chorevolution.vsb.gmdl.utils.enums.Protocol;
 
 public class VsbManager {
-  public void generateBindingComponent(final String gmdlDescription, final Protocol choreographyProtocol) {
-    GmComponentRepresentation gmComponentRepresentation = null;
-    BcGmComponent serverComponent = null;
-    BcGmComponent clientComponent = null;
+  public void generateBindingComponent(final String interfaceDescription, final Protocol choreographyProtocol) {
+    GmServiceRepresentation gmComponentRepresentation = null;
+    BcGmSubcomponent serverComponent = null;
+    BcGmSubcomponent clientComponent = null;
     BcConfiguration bcConfiguration = null;
     
-    gmComponentRepresentation = ComponentDescriptionParser.getReprensentationFromGMDL(gmdlDescription);
+    gmComponentRepresentation = ServiceDescriptionParser.getRepresentationFromGMDL(interfaceDescription);
     bcConfiguration = new BcConfiguration();
     
     bcConfiguration.setServiceAddress(gmComponentRepresentation.getHostAddress());
@@ -39,31 +39,31 @@ public class VsbManager {
     bcConfiguration.setServiceName((String) jsonObject.get("service_name"));
     bcConfiguration.setTargetNamespace((String) jsonObject.get("target_namespace"));
  
-    bcConfiguration.setComponentRole("SERVER");
+    bcConfiguration.setSubcomponentRole("SERVER");
     
     switch(choreographyProtocol) {
     case REST:
-      serverComponent = new BcRestComponent(bcConfiguration); 
+      serverComponent = new BcRestSubcomponent(bcConfiguration); 
       break;
     case SOAP:
-      serverComponent = new BcSoapComponent(bcConfiguration); 
+      serverComponent = new BcSoapSubcomponent(bcConfiguration); 
       break;
     case MQTT:
-      serverComponent = new BcMQTTComponent(bcConfiguration); 
+      serverComponent = new BcMQTTSubcomponent(bcConfiguration); 
       break;
     }
     
-    bcConfiguration.setComponentRole("CLIENT");
+    bcConfiguration.setSubcomponentRole("CLIENT");
     
     switch(gmComponentRepresentation.getProtocol()) {
     case REST:
-      clientComponent = new BcRestComponent(bcConfiguration); 
+      clientComponent = new BcRestSubcomponent(bcConfiguration); 
       break;
     case SOAP:
-      clientComponent = new BcSoapComponent(bcConfiguration); 
+      clientComponent = new BcSoapSubcomponent(bcConfiguration); 
       break;
     case MQTT:
-      clientComponent = new BcMQTTComponent(bcConfiguration); 
+      clientComponent = new BcMQTTSubcomponent(bcConfiguration); 
       break;
     }
     

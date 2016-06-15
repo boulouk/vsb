@@ -11,7 +11,7 @@ public class BindingComponentManager {
     BcConfiguration configuration = new BcConfiguration(/*path/to/local/config/file*/);
     
     // test purpose: should be extract when parsing the config file
-    configuration.setComponentRole("SERVER");
+    configuration.setSubcomponentRole("SERVER");
     configuration.setServiceAddress("http://93.62.202.227");
     configuration.setServiceName("BindingComponent");
     configuration.setTargetNamespace("eu.chorevolution.vsb.test.weather.bc");

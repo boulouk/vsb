@@ -13,12 +13,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
 
+import org.junit.Test;
+
 import eu.chorevolution.vsb.playgrounds.pubsub.mqtt.mqttPublisher;
 
 
 public class StartSubscriber {
 
-  public static void main(String[] args) {
+  @Test
+  public void startSubscriber() {
     Subscriber sub= null;
     sub = new Subscriber("localhost",1883, "subscriber");
     try {

@@ -1,7 +1,10 @@
 package eu.chorevolution.vsb.playgrounds.pubsub.mqtt.gui;
 
+import org.junit.Test;
+
 public class StartBrokerGUI {
-  public static void main(String[] args) {
+  @Test
+  public void startBrokerGUI() {
     BrokerGUI bgui = new BrokerGUI();
 
   }

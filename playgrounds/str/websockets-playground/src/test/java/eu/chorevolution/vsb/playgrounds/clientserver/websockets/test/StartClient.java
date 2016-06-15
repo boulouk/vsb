@@ -3,11 +3,14 @@ package eu.chorevolution.vsb.playgrounds.clientserver.websockets.test;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import org.junit.Test;
+
 import eu.chorevolution.vsb.playgrounds.clientserver.websockets.WebSocketClient.WsClient;
 
 public class StartClient {
   
-  public static void main(String[] args) {
+  @Test
+  public void startClient() {
     // create a client
     WsClient client = null;
     try {

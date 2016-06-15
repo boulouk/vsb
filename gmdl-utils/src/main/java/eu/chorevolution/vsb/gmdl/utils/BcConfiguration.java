@@ -1,8 +1,8 @@
 package eu.chorevolution.vsb.gmdl.utils;
 
 public class BcConfiguration {
-  private String componentAddress;
-  private String componentRole;
+  private String subcomponentAddress;
+  private String subcomponentRole;
   private String bindedSystemAddress;
   private String generatedCodePath = "src/main/resources";
   
@@ -14,20 +14,20 @@ public class BcConfiguration {
     // TODO Auto-generated constructor stub
   }
   
-  public String getComponentAddress() {
-    return componentAddress;
+  public String getSubcomponentAddress() {
+    return subcomponentAddress;
   }
 
-  public void setComponentAddress(String componentAddress) {
-    this.componentAddress = componentAddress;
+  public void setSubcomponentAddress(String subcomponentAddress) {
+    this.subcomponentAddress = subcomponentAddress;
   }
   
-  public String getComponentRole() {
-    return componentRole;
+  public String getSubcomponentRole() {
+    return subcomponentRole;
   }
 
-  public void setComponentRole(String componentRole) {
-    this.componentRole = componentRole;
+  public void setSubcomponentRole(String componentRole) {
+    this.subcomponentRole = componentRole;
   }
   
   public void setServiceAddress(String serviceAddress) {

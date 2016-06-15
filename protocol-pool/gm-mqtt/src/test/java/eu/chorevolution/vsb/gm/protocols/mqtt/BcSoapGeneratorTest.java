@@ -4,12 +4,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import pl.ncdc.differentia.DifferentiaAssert;
-import eu.chorevolution.vsb.gm.protocols.generators.BcComponentGenerator;
+import eu.chorevolution.vsb.gm.protocols.generators.BcSubcomponentGenerator;
 import eu.chorevolution.vsb.gm.protocols.mqtt.BcSoapGenerator;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
 import eu.chorevolution.vsb.gmdl.utils.Data;
 import eu.chorevolution.vsb.gmdl.utils.Data.Context;
-import eu.chorevolution.vsb.gmdl.utils.GmComponentRepresentation;
+import eu.chorevolution.vsb.gmdl.utils.GmServiceRepresentation;
 import eu.chorevolution.vsb.gmdl.utils.Operation;
 import eu.chorevolution.vsb.gmdl.utils.Scope;
 import eu.chorevolution.vsb.gmdl.utils.enums.OperationType;
@@ -18,17 +18,17 @@ import eu.chorevolution.vsb.gmdl.utils.enums.Verb;
 
 public class BcSoapGeneratorTest {
   
-  private BcComponentGenerator soapGenerator;
+  private BcSubcomponentGenerator soapGenerator;
   
   @Before
   public void initGenerator() {
     BcConfiguration compConfServer = new BcConfiguration();
-    compConfServer.setComponentRole("SERVER");
+    compConfServer.setSubcomponentRole("SERVER");
     compConfServer.setServiceAddress("http://127.0.0.1:8282");
     compConfServer.setGeneratedCodePath("src/test/resources/generated/traffic");
     compConfServer.setTargetNamespace("");
     
-    GmComponentRepresentation serviceDefinition = new GmComponentRepresentation();
+    GmServiceRepresentation serviceDefinition = new GmServiceRepresentation();
     serviceDefinition.setProtocol(Protocol.REST);
     
     /*Types Definitions*/

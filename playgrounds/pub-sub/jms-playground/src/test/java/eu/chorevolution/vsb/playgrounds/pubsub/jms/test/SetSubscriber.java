@@ -6,6 +6,8 @@ package eu.chorevolution.vsb.playgrounds.pubsub.jms.test;
 
 import javax.jms.JMSException;
 
+import org.junit.Test;
+
 import eu.chorevolution.vsb.playgrounds.pubsub.jms.DurableSubscriber;
 
 /**
@@ -13,11 +15,15 @@ import eu.chorevolution.vsb.playgrounds.pubsub.jms.DurableSubscriber;
  *
  */
 public class SetSubscriber {
-	
-	public static void main(String[] args) throws JMSException {
+  @Test
+  public void setSubscriber() {
 		DurableSubscriber subscriber = new DurableSubscriber();
 		
-		subscriber.create("subscriber-durablesubscriber", "durablesubscriber.t", "durablesubscriber1", "localhost", 61616);
+		try {
+      subscriber.create("subscriber-durablesubscriber", "durablesubscriber.t", "durablesubscriber1", "localhost", 61616);
+    } catch (JMSException e) {
+      e.printStackTrace();
+    }
 		
 		//For sync interaction
 //		subscriber.getNext(5000);

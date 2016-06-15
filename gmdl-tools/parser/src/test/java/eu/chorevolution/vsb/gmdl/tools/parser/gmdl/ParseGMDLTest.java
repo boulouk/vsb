@@ -1,4 +1,4 @@
-package eu.chorevolution.vsb.gmdl.tools.gmdl_parser;
+package eu.chorevolution.vsb.gmdl.tools.parser.gmdl;
 
 import eu.chorevolution.vsb.gmdl.utils.GmServiceRepresentation;
 import junit.framework.Test;
