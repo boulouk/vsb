@@ -1,4 +1,4 @@
-package eu.chorevolution.vsb.gmdl.tools.parser.gmdl;
+package eu.chorevolution.vsb.gmdl.tools.serviceparser.gmdl;
 
 import java.io.FileReader;
 import java.io.IOException;
