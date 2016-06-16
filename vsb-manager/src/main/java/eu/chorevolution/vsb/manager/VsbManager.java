@@ -8,6 +8,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import eu.chorevolution.vsb.bc.manager.BcManager;
 import eu.chorevolution.vsb.gm.protocols.mqtt.BcMQTTSubcomponent;
 import eu.chorevolution.vsb.gm.protocols.primitives.BcGmSubcomponent;
 import eu.chorevolution.vsb.gm.protocols.rest.BcRestSubcomponent;
@@ -23,24 +24,27 @@ public class VsbManager {
     BcGmSubcomponent serverComponent = null;
     BcGmSubcomponent clientComponent = null;
     BcConfiguration bcConfiguration = null;
-    
+
     gmComponentRepresentation = ServiceDescriptionParser.getRepresentationFromGMDL(interfaceDescription);
     bcConfiguration = new BcConfiguration();
-    
+
     bcConfiguration.setServiceAddress(gmComponentRepresentation.getHostAddress());
-    
+
     JSONParser parser = new JSONParser();
     JSONObject jsonObject = null;
+
+    String configPath = BcManager.class.getClassLoader().getResource("config.json").toExternalForm();
+
     try {
-      jsonObject = (JSONObject) parser.parse(new FileReader("/home/siddhartha/Downloads/chor/evolution-service-bus/bc-manager/src/main/resources/config.json"));
+      jsonObject = (JSONObject) parser.parse(new FileReader(configPath));//"/home/siddhartha/Downloads/chor/evolution-service-bus/bc-manager/src/main/resources/config.json"));
     } catch (IOException | ParseException e) {
       e.printStackTrace();
     }
     bcConfiguration.setServiceName((String) jsonObject.get("service_name"));
     bcConfiguration.setTargetNamespace((String) jsonObject.get("target_namespace"));
- 
+
     bcConfiguration.setSubcomponentRole("SERVER");
-    
+
     switch(choreographyProtocol) {
     case REST:
       serverComponent = new BcRestSubcomponent(bcConfiguration); 
@@ -52,9 +56,9 @@ public class VsbManager {
       serverComponent = new BcMQTTSubcomponent(bcConfiguration); 
       break;
     }
-    
+
     bcConfiguration.setSubcomponentRole("CLIENT");
-    
+
     switch(gmComponentRepresentation.getProtocol()) {
     case REST:
       clientComponent = new BcRestSubcomponent(bcConfiguration); 
@@ -66,14 +70,14 @@ public class VsbManager {
       clientComponent = new BcMQTTSubcomponent(bcConfiguration); 
       break;
     }
-    
+
     serverComponent.setNextComponent(clientComponent);
     clientComponent.setNextComponent(serverComponent);
-    
+
     serverComponent.start();
     clientComponent.start();
     // TODO: instantiate the right generator based on the bcConfig
     // could use JAVA Service Provider Interface (SPI) for a clean and clear implementation
-//    JarGenerator.generateBc(new BcSoapGenerator(gmComponentDescription, new BcConfiguration(bcConfiguration)));
+    //    JarGenerator.generateBc(new BcSoapGenerator(gmComponentDescription, new BcConfiguration(bcConfiguration)));
   }
 }
