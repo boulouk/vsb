@@ -54,7 +54,6 @@ public class BcRestSubcomponent extends BcGmSubcomponent {
       }
       break;
     case "CLIENT":   
-      this.client = new Client(Protocol.HTTP);
       try {
         this.client.start();
       } catch (Exception e1) {

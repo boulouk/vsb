@@ -16,20 +16,18 @@ import eu.chorevolution.vsb.gm.protocols.soap.BcSoapSubcomponent;
 import eu.chorevolution.vsb.gmdl.tools.serviceparser.ServiceDescriptionParser;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
 import eu.chorevolution.vsb.gmdl.utils.GmServiceRepresentation;
+import eu.chorevolution.vsb.gmdl.utils.Interface;
 import eu.chorevolution.vsb.gmdl.utils.enums.Protocol;
+import eu.chorevolution.vsb.gmdl.utils.enums.RoleType;
 
 public class VsbManager {
-  public void generateBindingComponent(final String interfaceDescription, final Protocol choreographyProtocol) {
+  public void generateBindingComponent(final String interfaceDescription, final Protocol busProtocol) {
     GmServiceRepresentation gmComponentRepresentation = null;
-    BcGmSubcomponent serverComponent = null;
-    BcGmSubcomponent clientComponent = null;
+    
     BcConfiguration bcConfiguration = null;
 
     gmComponentRepresentation = ServiceDescriptionParser.getRepresentationFromGMDL(interfaceDescription);
-    bcConfiguration = new BcConfiguration();
-
-    bcConfiguration.setServiceAddress(gmComponentRepresentation.getHostAddress());
-
+    
     JSONParser parser = new JSONParser();
     JSONObject jsonObject = null;
 
@@ -40,42 +38,65 @@ public class VsbManager {
     } catch (IOException | ParseException e) {
       e.printStackTrace();
     }
-    bcConfiguration.setServiceName((String) jsonObject.get("service_name"));
-    bcConfiguration.setTargetNamespace((String) jsonObject.get("target_namespace"));
+   
+    for(Interface inter: gmComponentRepresentation.getInterfaces()) {
+     
+      BcGmSubcomponent block1Component = null;
+      BcGmSubcomponent block2Component = null;
+      
+      RoleType busRole = null;
+      if(inter.getRole() == RoleType.SERVER) {
+        busRole = RoleType.CLIENT;
+      }
+      else if(inter.getRole() == RoleType.CLIENT) {
+        busRole = RoleType.SERVER;
+      }
+      
+      bcConfiguration = new BcConfiguration();
+      bcConfiguration.setSubcomponentRole(inter.getRole().toString());
+      bcConfiguration.setServiceAddress(gmComponentRepresentation.getHostAddress());
+      bcConfiguration.setServiceName((String) jsonObject.get("service_name"));
+      bcConfiguration.setTargetNamespace((String) jsonObject.get("target_namespace"));
+      
+      switch(busProtocol) {
+      case REST:
+        block1Component = new BcRestSubcomponent(bcConfiguration); 
+        break;
+      case SOAP:
+        block1Component = new BcSoapSubcomponent(bcConfiguration); 
+        break;
+      case MQTT:
+        block1Component = new BcMQTTSubcomponent(bcConfiguration); 
+        break;
+      }
 
-    bcConfiguration.setSubcomponentRole("SERVER");
+      bcConfiguration = new BcConfiguration();
+      bcConfiguration.setSubcomponentRole(busRole.toString());
+      bcConfiguration.setServiceAddress(gmComponentRepresentation.getHostAddress());
+      bcConfiguration.setServiceName((String) jsonObject.get("service_name"));
+      bcConfiguration.setTargetNamespace((String) jsonObject.get("target_namespace"));
+      
+      switch(gmComponentRepresentation.getProtocol()) {
+      case REST:
+        block2Component = new BcRestSubcomponent(bcConfiguration); 
+        break;
+      case SOAP:
+        block2Component = new BcSoapSubcomponent(bcConfiguration); 
+        break;
+      case MQTT:
+        block2Component = new BcMQTTSubcomponent(bcConfiguration); 
+        break;
+      }
 
-    switch(choreographyProtocol) {
-    case REST:
-      serverComponent = new BcRestSubcomponent(bcConfiguration); 
-      break;
-    case SOAP:
-      serverComponent = new BcSoapSubcomponent(bcConfiguration); 
-      break;
-    case MQTT:
-      serverComponent = new BcMQTTSubcomponent(bcConfiguration); 
-      break;
+      block1Component.setNextComponent(block2Component);
+      block2Component.setNextComponent(block1Component);
+      
+      block1Component.start();
+      block2Component.start();
+      
     }
 
-    bcConfiguration.setSubcomponentRole("CLIENT");
 
-    switch(gmComponentRepresentation.getProtocol()) {
-    case REST:
-      clientComponent = new BcRestSubcomponent(bcConfiguration); 
-      break;
-    case SOAP:
-      clientComponent = new BcSoapSubcomponent(bcConfiguration); 
-      break;
-    case MQTT:
-      clientComponent = new BcMQTTSubcomponent(bcConfiguration); 
-      break;
-    }
-
-    serverComponent.setNextComponent(clientComponent);
-    clientComponent.setNextComponent(serverComponent);
-
-    serverComponent.start();
-    clientComponent.start();
     // TODO: instantiate the right generator based on the bcConfig
     // could use JAVA Service Provider Interface (SPI) for a clean and clear implementation
     //    JarGenerator.generateBc(new BcSoapGenerator(gmComponentDescription, new BcConfiguration(bcConfiguration)));
