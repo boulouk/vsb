@@ -13,7 +13,7 @@ public class GmServiceRepresentation {
   private Protocol protocol;
 
   private final List<Interface> interfaces = new ArrayList<Interface>();
-  //  private final Map<String, Operation> operations = new HashMap<String, Operation>();
+    private final Map<String, Operation> operations = new HashMap<String, Operation>();
   private final Map<String, Data<?>> typeDefinitions = new HashMap<String, Data<?>>();
 
   public void setProtocol(Protocol protocol) {
@@ -40,18 +40,18 @@ public class GmServiceRepresentation {
     this.interfaces.add(inter);
   }
 
-  //  public void addOperation(Operation operation) {
-  //    this.operations.put(operation.getOperationName(), operation);
-  //  }
-  //  
-  //  public Collection<Operation> getOperations() {
-  //    return this.operations.values();
-  //  }
-  //  
-  //  public Operation getOperation(String operationName) {
-  //    return this.operations.get(operationName);
-  //  }
-  //  
+    public void addOperation(Operation operation) {
+      this.operations.put(operation.getOperationName(), operation);
+    }
+    
+    public Collection<Operation> getOperations() {
+      return this.operations.values();
+    }
+    
+    public Operation getOperation(String operationName) {
+      return this.operations.get(operationName);
+    }
+    
   public void addTypeDefinition(Data<?> typeDefinition) {
     this.typeDefinitions.put(typeDefinition.getClassName(), typeDefinition);
   }

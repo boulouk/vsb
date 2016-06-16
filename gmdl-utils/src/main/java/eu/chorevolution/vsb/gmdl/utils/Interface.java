@@ -39,7 +39,7 @@ public class Interface {
   }
   
   public void addOperation(Operation operation) {
-    this.operations.put(operation.getOperationName(), operation);
+    this.operations.put(operation.getOperationID(), operation);
   }
-  
+
 }

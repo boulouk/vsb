@@ -87,7 +87,7 @@ public class ParseGMDL {
       if(interfaces == null) {
         interfaces = new JSONArray();
       }
-      
+
       if(operations == null) {
         operations = new JSONArray();
       }
@@ -158,12 +158,12 @@ public class ParseGMDL {
       }
 
       Map<String, Operation> operationMap = new HashMap<String, Operation>();
-      
+
       Iterator<JSONObject> operationsIterator = operations.iterator();
       while(operationsIterator.hasNext()) {
         JSONObject operation = (JSONObject) operationsIterator.next();
 
-        String operation_name = (String) operation.get("operation_name");
+        String operation_name = (String) operation.get("operation_id");
         String operation_type = (String) operation.get("operation_type");                 
         OperationType type = null; 
         switch(operation_type) {
@@ -222,19 +222,19 @@ public class ParseGMDL {
           op.setPostData(data);
         }
 
-//        serviceDefinition.addOperation(op);       
-        operationMap.put(op.getOperationName(), op);
+        //        serviceDefinition.addOperation(op);       
+        operationMap.put(op.getOperationID(), op);
       }
-      
-      
+
+
       Iterator<JSONObject> interfacesIterator = interfaces.iterator();
       while(interfacesIterator.hasNext()) {
         JSONObject interfaceJSONObj = (JSONObject) interfacesIterator.next();
         String roleName = (String)interfaceJSONObj.get("role");
         JSONArray ops = (JSONArray) interfaceJSONObj.get("operations");
         Iterator<String> opStr = ops.iterator();
-        
-//        String defintionType = (String)definition.get("definition_type");
+
+        //        String defintionType = (String)definition.get("definition_type");
         Interface interfaceObj = null;
 
         if(roleName.equals("provider")) {
@@ -243,22 +243,22 @@ public class ParseGMDL {
         else if(roleName.equals("consumer")) {
           interfaceObj = new Interface(RoleType.CLIENT);
         }
-        
+
         while(opStr.hasNext()) {
           String op = opStr.next();
+          System.out.println(op + " " + operationMap.get(op));
           interfaceObj.addOperation(operationMap.get(op));
         }
-        
         serviceDefinition.addInterface(interfaceObj);
       }
-   
-      
-      
-      if(serviceDefinition.getProtocol() == Protocol.REST) {
-        BcSubcomponentGenerator soapGenerator = new BcSoapGenerator(serviceDefinition, compConfServer).setDebug(true); 
-        soapGenerator.generateBc();
-      }
-      
+
+
+
+      //      if(serviceDefinition.getProtocol() == Protocol.REST) {
+      //        BcSubcomponentGenerator soapGenerator = new BcSoapGenerator(serviceDefinition, compConfServer).setDebug(true); 
+      //        soapGenerator.generateBc();
+      //      }
+
     } catch (IOException | ParseException e) {
       e.printStackTrace();
     }
