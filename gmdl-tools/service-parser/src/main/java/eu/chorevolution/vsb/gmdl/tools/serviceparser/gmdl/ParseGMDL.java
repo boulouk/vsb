@@ -19,10 +19,12 @@ import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
 import eu.chorevolution.vsb.gmdl.utils.Data;
 import eu.chorevolution.vsb.gmdl.utils.Data.Context;
 import eu.chorevolution.vsb.gmdl.utils.GmServiceRepresentation;
+import eu.chorevolution.vsb.gmdl.utils.Interface;
 import eu.chorevolution.vsb.gmdl.utils.Operation;
 import eu.chorevolution.vsb.gmdl.utils.Scope;
 import eu.chorevolution.vsb.gmdl.utils.enums.OperationType;
 import eu.chorevolution.vsb.gmdl.utils.enums.Protocol;
+import eu.chorevolution.vsb.gmdl.utils.enums.RoleType;
 import eu.chorevolution.vsb.gmdl.utils.enums.Verb;
 
 public class ParseGMDL {
@@ -78,9 +80,14 @@ public class ParseGMDL {
         break;
       }
 
+      JSONArray interfaces = (JSONArray) jsonObject.get("interfaces");
       JSONArray operations = (JSONArray) jsonObject.get("operations");
       JSONArray definitions = (JSONArray) jsonObject.get("definitions");
 
+      if(interfaces == null) {
+        interfaces = new JSONArray();
+      }
+      
       if(operations == null) {
         operations = new JSONArray();
       }
@@ -150,6 +157,8 @@ public class ParseGMDL {
         serviceDefinition.addTypeDefinition(parentData);
       }
 
+      Map<String, Operation> operationMap = new HashMap<String, Operation>();
+      
       Iterator<JSONObject> operationsIterator = operations.iterator();
       while(operationsIterator.hasNext()) {
         JSONObject operation = (JSONObject) operationsIterator.next();
@@ -213,9 +222,37 @@ public class ParseGMDL {
           op.setPostData(data);
         }
 
-        serviceDefinition.addOperation(op);       
-
+//        serviceDefinition.addOperation(op);       
+        operationMap.put(op.getOperationName(), op);
       }
+      
+      
+      Iterator<JSONObject> interfacesIterator = interfaces.iterator();
+      while(interfacesIterator.hasNext()) {
+        JSONObject interfaceJSONObj = (JSONObject) interfacesIterator.next();
+        String roleName = (String)interfaceJSONObj.get("role");
+        JSONArray ops = (JSONArray) interfaceJSONObj.get("operations");
+        Iterator<String> opStr = ops.iterator();
+        
+//        String defintionType = (String)definition.get("definition_type");
+        Interface interfaceObj = null;
+
+        if(roleName.equals("provider")) {
+          interfaceObj = new Interface(RoleType.SERVER);
+        } 
+        else if(roleName.equals("consumer")) {
+          interfaceObj = new Interface(RoleType.CLIENT);
+        }
+        
+        while(opStr.hasNext()) {
+          String op = opStr.next();
+          interfaceObj.addOperation(operationMap.get(op));
+        }
+        
+        serviceDefinition.addInterface(interfaceObj);
+      }
+   
+      
       
       if(serviceDefinition.getProtocol() == Protocol.REST) {
         BcSubcomponentGenerator soapGenerator = new BcSoapGenerator(serviceDefinition, compConfServer).setDebug(true); 
