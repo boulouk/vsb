@@ -8,6 +8,7 @@ import javax.xml.ws.Endpoint;
 import eu.chorevolution.vsb.gm.protocols.primitives.BcGmSubcomponent;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
 import eu.chorevolution.vsb.gmdl.utils.Data;
+import eu.chorevolution.vsb.gmdl.utils.enums.*;
 
 public class BcSoapSubcomponent extends BcGmSubcomponent {
 
@@ -20,7 +21,7 @@ public class BcSoapSubcomponent extends BcGmSubcomponent {
   @Override
   public void start() {
     switch (this.bcConfiguration.getSubcomponentRole()) {
-    case "SERVER":
+    case SERVER:
       Class<?> bc = null;
       try {
         bc = Class.forName(this.bcConfiguration.getTargetNamespace()+"."+this.bcConfiguration.getServiceName());
@@ -44,7 +45,7 @@ public class BcSoapSubcomponent extends BcGmSubcomponent {
         e.printStackTrace();
       }
       break;
-    case "CLIENT":
+    case CLIENT:
 
       break;
     default:
@@ -55,12 +56,12 @@ public class BcSoapSubcomponent extends BcGmSubcomponent {
   @Override
   public void stop() {
     switch (this.bcConfiguration.getSubcomponentRole()) {
-    case "SERVER":
+    case SERVER:
       if(this.endpoint.isPublished()) {
         this.endpoint.stop();
       }
       break;
-    case "CLIENT":
+    case CLIENT:
 
       break;
     default:

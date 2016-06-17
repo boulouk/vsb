@@ -11,4 +11,9 @@ public class StartServer {
     ss.publish("bookEndpoint",new BookService());  
   
   }
+  
+  public static void main(String[] args) {
+    SoapServer ss = new SoapServer("http://localhost:8484/");
+    ss.publish("bookEndpoint",new BookService());  
+  }
 }

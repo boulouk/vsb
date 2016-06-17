@@ -24,7 +24,7 @@ import org.eclipse.paho.client.mqttv3.MqttSecurityException;
 public class BcMQTTSubcomponent extends BcGmSubcomponent {
 
   private Endpoint endpoint;
-
+  private MqttClient client;
   public BcMQTTSubcomponent(BcConfiguration bcConfiguration) {
     super(bcConfiguration);
   }
@@ -32,12 +32,12 @@ public class BcMQTTSubcomponent extends BcGmSubcomponent {
   @Override
   public void start() {
     switch (this.bcConfiguration.getSubcomponentRole()) {
-    case "SERVER":      
+    case SERVER:      
       BrokerService broker;
       BlockingConnection connection;
       broker = new BrokerService();
       try {
-        broker.addConnector("mqtt://localhost:1883");
+        broker.addConnector("mqtt://" + this.bcConfiguration.getSubcomponentAddress() + ":" + this.bcConfiguration.getSubcomponentPort());
       } catch (Exception e1) {
         e1.printStackTrace();
       }
@@ -58,9 +58,21 @@ public class BcMQTTSubcomponent extends BcGmSubcomponent {
         }
       });
 
-      MqttClient client;
+      MqttClient localclient;
       try {
-        client = new MqttClient("tcp://localhost:1883", "client");
+        localclient = new MqttClient("tcp://"+this.bcConfiguration.getSubcomponentAddress()+":"+this.bcConfiguration.getSubcomponentPort(), "client");
+        localclient.setCallback(new LocalSubscriberCallback());
+        MqttConnectOptions options = new MqttConnectOptions();
+        options.setCleanSession(false);
+        localclient.connect(options);
+      } catch (MqttException e) {
+        e.printStackTrace();
+      }
+
+      break;
+    case CLIENT:  
+      try {
+        client = new MqttClient("tcp://"+this.bcConfiguration.getServiceAddress()+":"+this.bcConfiguration.getServicePort(), "client");
         client.setCallback(new SubscriberCallback());
         MqttConnectOptions options = new MqttConnectOptions();
         options.setCleanSession(false);
@@ -68,10 +80,6 @@ public class BcMQTTSubcomponent extends BcGmSubcomponent {
       } catch (MqttException e) {
         e.printStackTrace();
       }
-
-      break;
-    case "CLIENT":  
-      
       
       break;
     default:
@@ -82,12 +90,12 @@ public class BcMQTTSubcomponent extends BcGmSubcomponent {
   @Override
   public void stop() {
     switch (this.bcConfiguration.getSubcomponentRole()) {
-    case "SERVER":  
+    case SERVER:  
       if(this.endpoint.isPublished()) {
         this.endpoint.stop();
       }
       break;
-    case "CLIENT":   
+    case CLIENT:   
       break;
     default:
       break;
@@ -148,6 +156,27 @@ public class BcMQTTSubcomponent extends BcGmSubcomponent {
     // TODO Auto-generated method stub
   }
 
+  private final class LocalSubscriberCallback implements MqttCallback {
+
+    public LocalSubscriberCallback() {
+      super();
+    }
+
+    @Override
+    public void messageArrived(String topic, MqttMessage msg) throws Exception {
+      mgetOneway(topic, msg);
+    }
+
+    @Override
+    public void connectionLost(Throwable arg0) {
+    }
+
+    @Override
+    public void deliveryComplete(IMqttDeliveryToken arg0) {
+
+    }
+  }
+  
   private final class SubscriberCallback implements MqttCallback {
 
     public SubscriberCallback() {

@@ -1,7 +1,9 @@
 package eu.chorevolution.vsb.gm.protocols.rest;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.json.simple.JSONObject;
 import org.restlet.Client;
@@ -9,10 +11,17 @@ import org.restlet.Component;
 import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.Server;
+import org.restlet.data.Header;
 import org.restlet.data.MediaType;
 import org.restlet.data.Method;
 import org.restlet.data.Protocol;
+import org.restlet.engine.header.HeaderConstants;
+import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
+import org.restlet.resource.Get;
+import org.restlet.resource.ResourceException;
+import org.restlet.resource.ServerResource;
+import org.restlet.util.Series;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,12 +39,12 @@ public class BcRestSubcomponent extends BcGmSubcomponent {
   public BcRestSubcomponent(BcConfiguration bcConfiguration) {
     super(bcConfiguration);
     switch (this.bcConfiguration.getSubcomponentRole()) {
-    case "SERVER":
-      this.server = new Server(Protocol.HTTP, 0);
+    case SERVER:
+      this.server = new Server(Protocol.HTTP, this.bcConfiguration.getSubcomponentAddress(), this.bcConfiguration.getSubcomponentPort());
       this.component = new Component();
       this.component.getServers().add(server);
       break;
-    case "CLIENT":   
+    case CLIENT:   
       this.client = new Client(Protocol.HTTP);
       break;
     default:
@@ -46,14 +55,15 @@ public class BcRestSubcomponent extends BcGmSubcomponent {
   @Override
   public void start() {
     switch (this.bcConfiguration.getSubcomponentRole()) {
-    case "SERVER":
+    case SERVER:
       try {
         this.component.start();
       } catch (Exception e) {
         e.printStackTrace();
       }
+      this.component.getDefaultHost().attach("/", RestServerResource.class);
       break;
-    case "CLIENT":   
+    case CLIENT:   
       try {
         this.client.start();
       } catch (Exception e1) {
@@ -68,10 +78,14 @@ public class BcRestSubcomponent extends BcGmSubcomponent {
   @Override
   public void stop() {
     switch (this.bcConfiguration.getSubcomponentRole()) {
-    case "SERVER":
-
+    case SERVER:
+      try {
+        this.component.stop();
+      } catch (Exception e1) {
+        e1.printStackTrace();
+      }
       break;
-    case "CLIENT":   
+    case CLIENT:   
       try {
         this.client.stop();
       } catch (Exception e) {
@@ -156,6 +170,71 @@ public class BcRestSubcomponent extends BcGmSubcomponent {
   @Override
   public void postBackTwowayAsync(final String source, final String scope, final Data<?> data, final long lease, final Object exchange) {
     // TODO Auto-generated method stub
+  }
+  
+  public static class RestServerResource extends ServerResource {
+//    @Override
+//    protected Representation post(Representation entity) throws ResourceException {
+//      String receivedText = null;
+//      try {
+//        receivedText = entity.getText();
+//      } catch (IOException e1) {
+//        e1.printStackTrace();
+//      }
+//      System.out.println("Server received: " + receivedText);
+////      System.err.println("Server responded: ss");
+//      return new StringRepresentation("ss");
+//    }
+
+    @Get
+    public org.restlet.Response receiveGet() {
+        String remainingPart = getReference().getRemainingPart();
+        Request req = getRequest();
+
+        //TODO: Remove source. Not needed
+        String source = req.getHostRef().getHostDomain();
+        int port = req.getHostRef().getHostPort();
+
+        Request request = getRequest();
+        Map<String, Object> map = request.getAttributes();
+        Object headers = map.get(HeaderConstants.ATTRIBUTE_HEADERS);
+        int connectionTimeout = 60000;//Default value
+        String callback = null;
+        try {
+            @SuppressWarnings("unchecked")
+            Series<Header> headerSeries = (Series<Header>) headers;
+            Header timeoutHeader = headerSeries.getFirst("connectionTimeout");
+            if (timeoutHeader != null) {
+                connectionTimeout = Integer.valueOf(timeoutHeader.getValue());
+            }
+            Header callbackHeader = headerSeries.getFirst("callbackURL");
+            if (callbackHeader != null) {
+                callback = callbackHeader.getValue();
+            }
+        } catch (ClassCastException e) {
+//            GLog.log.e(TAG, "Class cast exeption: " + e);
+        } catch (NumberFormatException nfe) {
+//            GLog.log.e(TAG, "Class cast exeption: " + nfe);
+        }
+
+//        Message_CS msg = new Message_CS("", 0, source, port, "GET", remainingPart, "", connectionTimeout, "", 0);
+//
+//        fr.inria.arles.lsb.commons.Response lsbResponse = null;
+//
+//        if (callback == null) {
+//            lsbResponse = connectorRef.invokeSync(msg);
+//        } else {
+//            lsbResponse = connectorRef.invokeAsync(msg);
+//        }
+
+        org.restlet.Response restletResponse = null;
+//        restletResponse = getResponse();getResponse();
+//        restletResponse.setStatus(lsbResponse.get_respStatus());
+//        restletResponse.setEntity(new StringRepresentation(lsbResponse.getDataString()));
+        return restletResponse;
+    }
+
+    
   }
 
 }
