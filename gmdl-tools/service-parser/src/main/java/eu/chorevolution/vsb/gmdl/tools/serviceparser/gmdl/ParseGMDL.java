@@ -170,8 +170,14 @@ public class ParseGMDL {
         case "two_way":
           type = OperationType.TWO_WAY_SYNC;
         }
+        
         String role = (String) operation.get("role");  
-        compConfServer.setSubcomponentRole(role.toUpperCase());
+        if(role.equalsIgnoreCase("SERVER")) {
+          compConfServer.setSubcomponentRole(RoleType.SERVER);
+        }
+        else if(role.equalsIgnoreCase("CLIENT")) {
+          compConfServer.setSubcomponentRole(RoleType.CLIENT);
+        }
 
         JSONObject scopeJSONObj = null;
         Object scopeObj = operation.get("scope");

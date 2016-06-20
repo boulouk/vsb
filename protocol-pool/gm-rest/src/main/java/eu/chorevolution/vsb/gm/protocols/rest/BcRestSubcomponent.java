@@ -61,6 +61,7 @@ public class BcRestSubcomponent extends BcGmSubcomponent {
       } catch (Exception e) {
         e.printStackTrace();
       }
+//      this.component.setDefaultHost(this.bcConfiguration.getSubcomponentAddress());
       this.component.getDefaultHost().attach("/", RestServerResource.class);
       break;
     case CLIENT:   
