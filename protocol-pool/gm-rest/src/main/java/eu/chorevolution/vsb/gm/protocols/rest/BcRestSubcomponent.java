@@ -99,29 +99,27 @@ public class BcRestSubcomponent extends BcGmSubcomponent {
 
   @Override
   public void postOneway(final String destination, final String scope, final List<Data<?>> datas, final long lease) {
-    String json = null;
-    ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-    try {
-      json = ow.writeValueAsString(datas.get(0).getObject());
-    } catch (JsonProcessingException e) {
-      e.printStackTrace();
-    }
-    System.out.println("rec: " + json.toString());
-    //    Request request = new Request(Method.POST, destination + scope);
-    json = (String)datas.get(0).getObject();
-    String[] values = json.split(",");
-    JSONObject obj = new JSONObject();
-    if(values.length>1) {
-      obj.put("id", json.split(",")[0]);
-      obj.put("value", json.split(",")[1]);
-      //      ConversionWindow.center.setVisible(true);
-      //      ConversionWindow.right.setText(String.format("<html><div WIDTH=%d>%s</div><div WIDTH=%d>%s</div><html>", 83, obj.toJSONString().substring(0, 13),90,obj.toJSONString().substring(13)));
-
-    }
-    System.out.println("rec: " + obj.toJSONString());
-    //    request.setEntity(json, new StringRepresentation((String)obj.toJSONString());
-
-    Request request = new Request(Method.POST, destination + scope, new StringRepresentation((String)obj.toJSONString()));
+//    String json = null;
+//    ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+//    try {
+//      json = ow.writeValueAsString(datas.get(0).getObject());
+//    } catch (JsonProcessingException e) {
+//      e.printStackTrace();
+//    }
+//    System.out.println("rec: " + json.toString());
+//    //    Request request = new Request(Method.POST, destination + scope);
+//    json = (String)datas.get(0).getObject();
+//    String[] values = json.split(",");
+//    JSONObject obj = new JSONObject();
+//    if(values.length>1) {
+//      obj.put("id", json.split(",")[0]);
+//      obj.put("value", json.split(",")[1]);
+//    }
+//    System.out.println("rec: " + obj.toJSONString());
+//    //    request.setEntity(json, new StringRepresentation((String)obj.toJSONString());
+//
+//    Request request = new Request(Method.POST, destination + scope, new StringRepresentation((String)obj.toJSONString()));
+    Request request = RestRequestBuilder.buildRestGetRequest(destination, scope, datas);
     this.client.handle(request);
   }
 

@@ -25,7 +25,7 @@ public class BCStarter {
 		);
 
 		// test purpose: should be extract when parsing the config file
-		configuration.setSubcomponentRole("SERVER");
+		configuration.setSubcomponentRole(RoleType.SERVER);
 		configuration.setServiceAddress("http://93.62.202.227");
 		configuration.setServiceName("BindingComponent");
 		configuration.setTargetNamespace("eu.chorevolution.vsb.bcs.weather.bc");

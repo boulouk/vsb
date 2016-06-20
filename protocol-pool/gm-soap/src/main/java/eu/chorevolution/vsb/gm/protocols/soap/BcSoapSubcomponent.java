@@ -1,8 +1,18 @@
 package eu.chorevolution.vsb.gm.protocols.soap;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+import javax.xml.soap.MessageFactory;
+import javax.xml.soap.SOAPBody;
+import javax.xml.soap.SOAPConnection;
+import javax.xml.soap.SOAPConnectionFactory;
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPEnvelope;
+import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPMessage;
+import javax.xml.soap.SOAPPart;
 import javax.xml.ws.Endpoint;
 
 import eu.chorevolution.vsb.gm.protocols.primitives.BcGmSubcomponent;
@@ -13,6 +23,7 @@ import eu.chorevolution.vsb.gmdl.utils.enums.*;
 public class BcSoapSubcomponent extends BcGmSubcomponent {
 
   private Endpoint endpoint;
+  private SOAPConnection soapConnection;
 
   public BcSoapSubcomponent(BcConfiguration bcConfiguration) {
     super(bcConfiguration);
@@ -46,7 +57,17 @@ public class BcSoapSubcomponent extends BcGmSubcomponent {
       }
       break;
     case CLIENT:
-
+      SOAPConnectionFactory soapConnectionFactory = null;
+      try {
+        soapConnectionFactory = SOAPConnectionFactory.newInstance();
+      } catch (UnsupportedOperationException | SOAPException e) {
+        e.printStackTrace();
+      }
+      try {
+        soapConnection = soapConnectionFactory.createConnection();
+      } catch (SOAPException e) {
+        e.printStackTrace();
+      }
       break;
     default:
       break;
@@ -62,7 +83,11 @@ public class BcSoapSubcomponent extends BcGmSubcomponent {
       }
       break;
     case CLIENT:
-
+      try {
+        soapConnection.close();
+      } catch (SOAPException e) {
+        e.printStackTrace();
+      }
       break;
     default:
       break;
@@ -72,6 +97,76 @@ public class BcSoapSubcomponent extends BcGmSubcomponent {
   @Override
   public void postOneway(final String destination, final String scope, final List<Data<?>> data, final long lease) {
     // TODO Auto-generated method stub
+    String url = "http://ws.cdyne.com/emailverify/Emailvernotestemail.asmx";//http://localhost:8484/bookEndpoint
+    
+    MessageFactory messageFactory = null;
+    try {
+      messageFactory = MessageFactory.newInstance();
+    } catch (SOAPException e) {
+      e.printStackTrace();
+    }
+    SOAPMessage soapMessage = null;
+    try {
+      soapMessage = messageFactory.createMessage();
+    } catch (SOAPException e) {
+      e.printStackTrace();
+    }
+    SOAPPart soapPart = soapMessage.getSOAPPart();
+
+    String serverURI = "http://ws.cdyne.com/";//http://test.soap.clientserver.playgrounds.vsb.chorevolution.eu/
+
+    // SOAP Envelope
+    SOAPEnvelope envelope = null;
+    try {
+      envelope = soapPart.getEnvelope();
+    } catch (SOAPException e) {
+      e.printStackTrace();
+    }
+    try {
+      envelope.addNamespaceDeclaration("example", serverURI);
+    } catch (SOAPException e) {
+      e.printStackTrace();
+    }
+
+    // SOAP Body
+    SOAPBody soapBody = null;
+    try {
+      soapBody = envelope.getBody();
+    } catch (SOAPException e) {
+      e.printStackTrace();
+    }
+    
+    SOAPElement soapBodyElem = null;
+    SOAPElement soapBodyElem1 = null;
+    SOAPElement soapBodyElem2 = null;
+    try {
+      soapBodyElem = soapBody.addChildElement("VerifyEmail", "example");
+      soapBodyElem1 = soapBodyElem.addChildElement("email", "example");
+      soapBodyElem1.addTextNode("mutantninja@gmail.com");
+      soapBodyElem2 = soapBodyElem.addChildElement("LicenseKey", "example");
+      soapBodyElem2.addTextNode("123");
+    } catch (SOAPException e) {
+      e.printStackTrace();
+    }
+    
+//    MimeHeaders headers = soapMessage.getMimeHeaders();
+//    headers.addHeader("SOAPAction", serverURI  + "VerifyEmail");
+    
+    try {
+      soapMessage.saveChanges();
+      /* Print the request message */
+      System.out.print("Request SOAP Message:");
+      soapMessage.writeTo(System.out);
+      System.out.println();
+
+      SOAPMessage soapResponse = soapConnection.call(soapMessage, url);
+
+      System.out.print("Response SOAP Message:");
+      soapResponse.writeTo(System.out);
+    } catch (SOAPException | IOException e) {
+      e.printStackTrace();
+    }
+    
   }
 
   @Override
