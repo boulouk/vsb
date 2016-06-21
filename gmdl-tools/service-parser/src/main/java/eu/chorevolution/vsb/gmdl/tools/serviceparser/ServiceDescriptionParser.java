@@ -1,6 +1,6 @@
 package eu.chorevolution.vsb.gmdl.tools.serviceparser;
 
-import eu.chorevolution.vsb.gmdl.tools.gmdl_parser.ParseGMDL;
+import eu.chorevolution.vsb.gmdl.tools.serviceparser.gmdl.ParseGMDL;
 import eu.chorevolution.vsb.gmdl.utils.GmServiceRepresentation;
 // TODO NOTE: could be refactor with a Factory+Strategy Pattern
 // OR, at least, one interface+concretes implementation for each description format

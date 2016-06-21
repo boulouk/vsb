@@ -66,17 +66,20 @@ public class ParseGMDL {
       String host_address = (String) jsonObject.get("host_address");
       String protocol = (String) jsonObject.get("protocol");
 
-      BcConfiguration compConfServer = new BcConfiguration();
+//      BcConfiguration compConfServer = new BcConfiguration();
 
-      compConfServer.setServiceAddress(host_address);
-      compConfServer.setGeneratedCodePath("src/test/generated");
-      compConfServer.setTargetNamespace("");
+//      compConfServer.setServiceAddress(host_address);
+//      compConfServer.setGeneratedCodePath("src/test/generated");
+//      compConfServer.setTargetNamespace("");
 
       serviceDefinition.setHostAddress(host_address);
 
       switch(protocol) {
       case "REST":
         serviceDefinition.setProtocol(Protocol.REST);
+        break;
+      case "SOAP":
+        serviceDefinition.setProtocol(Protocol.SOAP);
         break;
       }
 
@@ -171,13 +174,13 @@ public class ParseGMDL {
           type = OperationType.TWO_WAY_SYNC;
         }
         
-        String role = (String) operation.get("role");  
-        if(role.equalsIgnoreCase("SERVER")) {
-          compConfServer.setSubcomponentRole(RoleType.SERVER);
-        }
-        else if(role.equalsIgnoreCase("CLIENT")) {
-          compConfServer.setSubcomponentRole(RoleType.CLIENT);
-        }
+//        String role = (String) operation.get("role");  
+//        if(role.equalsIgnoreCase("SERVER")) {
+//          compConfServer.setSubcomponentRole(RoleType.SERVER);
+//        }
+//        else if(role.equalsIgnoreCase("CLIENT")) {
+//          compConfServer.setSubcomponentRole(RoleType.CLIENT);
+//        }
 
         JSONObject scopeJSONObj = null;
         Object scopeObj = operation.get("scope");
@@ -260,10 +263,10 @@ public class ParseGMDL {
 
 
 
-      //      if(serviceDefinition.getProtocol() == Protocol.REST) {
-      //        BcSubcomponentGenerator soapGenerator = new BcSoapGenerator(serviceDefinition, compConfServer).setDebug(true); 
-      //        soapGenerator.generateBc();
-      //      }
+//            if(serviceDefinition.getProtocol() == Protocol.REST) {
+//              BcSubcomponentGenerator soapGenerator = new BcSoapGenerator(serviceDefinition, compConfServer).setDebug(true); 
+//              soapGenerator.generateBc();
+//            }
 
     } catch (IOException | ParseException e) {
       e.printStackTrace();

@@ -14,5 +14,6 @@
   "destinationAddress":"http://127.0.0.1",
   "destinationPort":8091,
   "mediatorAddress":"http://127.0.0.1",
-  "mediatorPort":8080
+  "mediatorPort":8080,
+  "generatedCodePath":"/home/siddhartha/Downloads/chor/evolution-service-bus/vsb-manager/src/main/java"
 }
