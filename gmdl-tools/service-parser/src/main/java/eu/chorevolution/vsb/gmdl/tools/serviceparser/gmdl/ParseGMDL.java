@@ -23,7 +23,7 @@ import eu.chorevolution.vsb.gmdl.utils.Interface;
 import eu.chorevolution.vsb.gmdl.utils.Operation;
 import eu.chorevolution.vsb.gmdl.utils.Scope;
 import eu.chorevolution.vsb.gmdl.utils.enums.OperationType;
-import eu.chorevolution.vsb.gmdl.utils.enums.Protocol;
+import eu.chorevolution.vsb.gmdl.utils.enums.ProtocolType;
 import eu.chorevolution.vsb.gmdl.utils.enums.RoleType;
 import eu.chorevolution.vsb.gmdl.utils.enums.Verb;
 
@@ -76,10 +76,10 @@ public class ParseGMDL {
 
       switch(protocol) {
       case "REST":
-        serviceDefinition.setProtocol(Protocol.REST);
+        serviceDefinition.setProtocol(ProtocolType.REST);
         break;
       case "SOAP":
-        serviceDefinition.setProtocol(Protocol.SOAP);
+        serviceDefinition.setProtocol(ProtocolType.SOAP);
         break;
       }
 

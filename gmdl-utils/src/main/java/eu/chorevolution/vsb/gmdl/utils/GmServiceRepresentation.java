@@ -6,17 +6,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import eu.chorevolution.vsb.gmdl.utils.enums.Protocol;
+import eu.chorevolution.vsb.gmdl.utils.enums.ProtocolType;
 
 public class GmServiceRepresentation {
   private String host_address;
-  private Protocol protocol;
+  private ProtocolType protocol;
 
   private final List<Interface> interfaces = new ArrayList<Interface>();
     private final Map<String, Operation> operations = new HashMap<String, Operation>();
   private final Map<String, Data<?>> typeDefinitions = new HashMap<String, Data<?>>();
 
-  public void setProtocol(Protocol protocol) {
+  public void setProtocol(ProtocolType protocol) {
     this.protocol = protocol;
   }
 
@@ -32,7 +32,7 @@ public class GmServiceRepresentation {
     this.host_address = host_address;
   }
 
-  public Protocol getProtocol() {
+  public ProtocolType getProtocol() {
     return protocol;
   }
 

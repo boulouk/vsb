@@ -12,7 +12,7 @@ import eu.chorevolution.vsb.gmdl.utils.GmServiceRepresentation;
 import eu.chorevolution.vsb.gmdl.utils.Operation;
 import eu.chorevolution.vsb.gmdl.utils.Scope;
 import eu.chorevolution.vsb.gmdl.utils.enums.OperationType;
-import eu.chorevolution.vsb.gmdl.utils.enums.Protocol;
+import eu.chorevolution.vsb.gmdl.utils.enums.ProtocolType;
 import eu.chorevolution.vsb.gmdl.utils.enums.Verb;
 
 public class BcSoapGeneratorTest {
@@ -28,7 +28,7 @@ public class BcSoapGeneratorTest {
     compConfServer.setTargetNamespace("");
     
     GmServiceRepresentation serviceDefinition = new GmServiceRepresentation();
-    serviceDefinition.setProtocol(Protocol.REST);
+    serviceDefinition.setProtocol(ProtocolType.REST);
     
     /*Types Definitions*/
     Data<?> light = new Data<>("light", "TrafficLight", false, "application/json", Context.BODY, true);
