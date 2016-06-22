@@ -39,8 +39,11 @@ public class GeneratedFactory {
             }
             BcConfiguration bcConfiguration1 = new BcConfiguration();
             BcConfiguration bcConfiguration2 = new BcConfiguration();
+            bcConfiguration1 .parseFromJSON((new String("config_block1_interface_")+ String.valueOf(i)));
+            bcConfiguration2 .parseFromJSON((new String("config_block2_interface_")+ String.valueOf(i)));
             BcGmSubcomponent block1Component = new BcSoapSubcomponent(bcConfiguration1);
             BcGmSubcomponent block2Component = new BcRestSubcomponent(bcConfiguration2);
+            BcGmSubcomponent block2Component1;
             block1Component.setNextComponent(block2Component);
             block2Component.setNextComponent(block1Component);
             block1Component.start();

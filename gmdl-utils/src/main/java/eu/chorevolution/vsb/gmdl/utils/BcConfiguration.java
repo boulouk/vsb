@@ -89,5 +89,8 @@ public class BcConfiguration {
     return targetNamespace;
   }
 
+  public void parseFromJSON(String path) {
+    
+  }
  
 }

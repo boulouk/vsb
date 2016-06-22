@@ -251,26 +251,34 @@ public class VsbManager {
     roleCondition._then().assign(JExpr.ref(RoleTypeClassVar.name()), RoleTypeClientEnum);
     roleCondition._else().assign(JExpr.ref(RoleTypeClassVar.name()), RoleTypeServerEnum);
 
-    JVar bcConfig1Class = forBlock.decl(BcConfigurationClass, "bcConfiguration1", JExpr._new(BcConfigurationClass));
-    JVar bcConfig2Class = forBlock.decl(BcConfigurationClass, "bcConfiguration2", JExpr._new(BcConfigurationClass));
+    JVar bcConfig1Var = forBlock.decl(BcConfigurationClass, "bcConfiguration1", JExpr._new(BcConfigurationClass));
+    JVar bcConfig2Var = forBlock.decl(BcConfigurationClass, "bcConfiguration2", JExpr._new(BcConfigurationClass));
+    
+    JInvocation parseInvocation1 = bcConfig1Var.invoke("parseFromJSON").arg(JExpr._new(StringClass).arg("config_block1_interface_").plus(jCodeModel.ref(java.lang.String.class).staticInvoke("valueOf").arg(ivar)));
+    forBlock.add(parseInvocation1);
+    
+    JInvocation parseInvocation2 = bcConfig2Var.invoke("parseFromJSON").arg(JExpr._new(StringClass).arg("config_block2_interface_").plus(jCodeModel.ref(java.lang.String.class).staticInvoke("valueOf").arg(ivar)));
+    forBlock.add(parseInvocation2);
+    
     JVar BcGmSubcomponentVar1 = forBlock.decl(BcGmSubcomponentClass, "block1Component", null);
     JVar BcGmSubcomponentVar2 = forBlock.decl(BcGmSubcomponentClass, "block2Component", null);
-    
+    JVar bcConfig1Var1 = forBlock.decl(BcGmSubcomponentClass, "block2Component1", null);
+
     switch(busProtocol) {
     case REST:
       for(int i=1; i<=gmComponentRepresentation.getInterfaces().size(); i++)  
         createConfigFile(ProtocolType.REST, "config_block1_interface_" + String.valueOf(i));
-      BcGmSubcomponentVar1.init(JExpr._new(BcRestSubcomponentClass).arg(bcConfig1Class));
+      BcGmSubcomponentVar1.init(JExpr._new(BcRestSubcomponentClass).arg(bcConfig1Var));
       break;
     case SOAP:
       for(int i=1; i<=gmComponentRepresentation.getInterfaces().size(); i++)  
         createConfigFile(ProtocolType.SOAP, "config_block1_interface_" + String.valueOf(i));
-      BcGmSubcomponentVar1.init(JExpr._new(BcSoapSubcomponentClass).arg(bcConfig1Class));
+      BcGmSubcomponentVar1.init(JExpr._new(BcSoapSubcomponentClass).arg(bcConfig1Var));
       break;
     case MQTT:
       for(int i=1; i<=gmComponentRepresentation.getInterfaces().size(); i++)  
         createConfigFile(ProtocolType.MQTT, "config_block1_interface_" + String.valueOf(i));
-      BcGmSubcomponentVar1.init(JExpr._new(BcMQTTSubcomponentClass).arg(bcConfig1Class));
+      BcGmSubcomponentVar1.init(JExpr._new(BcMQTTSubcomponentClass).arg(bcConfig1Var));
       break;
     }
 
@@ -278,17 +286,17 @@ public class VsbManager {
     case REST:
       for(int i=1; i<=gmComponentRepresentation.getInterfaces().size(); i++)  
         createConfigFile(ProtocolType.REST, "config_block2_interface_" + String.valueOf(i));
-      BcGmSubcomponentVar2.init(JExpr._new(BcRestSubcomponentClass).arg(bcConfig2Class));
+      BcGmSubcomponentVar2.init(JExpr._new(BcRestSubcomponentClass).arg(bcConfig2Var));
       break;
     case SOAP:
       for(int i=1; i<=gmComponentRepresentation.getInterfaces().size(); i++)  
         createConfigFile(ProtocolType.SOAP, "config_block2_interface_" + String.valueOf(i));
-      BcGmSubcomponentVar2.init(JExpr._new(BcSoapSubcomponentClass).arg(bcConfig2Class));
+      BcGmSubcomponentVar2.init(JExpr._new(BcSoapSubcomponentClass).arg(bcConfig2Var));
       break;
     case MQTT:
       for(int i=1; i<=gmComponentRepresentation.getInterfaces().size(); i++)  
         createConfigFile(ProtocolType.MQTT, "config_block2_interface_" + String.valueOf(i));
-      BcGmSubcomponentVar2.init(JExpr._new(BcMQTTSubcomponentClass).arg(bcConfig2Class));
+      BcGmSubcomponentVar2.init(JExpr._new(BcMQTTSubcomponentClass).arg(bcConfig2Var));
       break;
     }
 
