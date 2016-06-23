@@ -1,0 +1,6 @@
+{
+	"subcomponent_address":"http://localhost:8888/BindingComponent",
+	"service_name":"BindingComponent",
+	"service_address":"https://maps.googleapis.com",
+	"target_namespace":"eu.chorevolution.vsb.bcs.dtsgoogle.bc"
+}

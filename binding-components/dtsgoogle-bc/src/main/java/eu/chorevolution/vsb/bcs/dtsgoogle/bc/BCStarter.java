@@ -1,4 +1,4 @@
-package eu.chorevolution.vsb.bcs.dtsgoogle;
+package eu.chorevolution.vsb.bcs.dtsgoogle.bc;
 
 import eu.chorevolution.vsb.bc.manager.BcManager;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;

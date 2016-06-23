@@ -6,6 +6,7 @@ import eu.chorevolution.vsb.bc.manager.BcManager;
 import eu.chorevolution.vsb.gm.protocols.primitives.BcGmSubcomponent;
 import eu.chorevolution.vsb.gm.protocols.rest.BcRestSubcomponent;
 import eu.chorevolution.vsb.gm.protocols.soap.BcSoapSubcomponent;
+import eu.chorevolution.vsb.gmdl.tools.serviceparser.ServiceDescriptionParser;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
 import eu.chorevolution.vsb.gmdl.utils.GmServiceRepresentation;
 import eu.chorevolution.vsb.gmdl.utils.Interface;
@@ -21,6 +22,8 @@ public class GeneratedFactory {
         JSONObject jsonObject = new JSONObject();
         java.lang.Integer intFive;
         intFive = Integer.parseInt("5");
+        java.lang.Integer intOne;
+        intOne = Integer.parseInt("1");
         String configFilePath = BcManager.class.getClassLoader().getResource("config.json").toExternalForm().substring(intFive);
         try {
             FileReader fileReader = new FileReader(configFilePath);
@@ -28,6 +31,8 @@ public class GeneratedFactory {
         } catch (Exception _x) {
         }
         GmServiceRepresentation gmComponentRepresentation = null;
+        String interfaceDescFilePath = BcManager.class.getClassLoader().getResource("dts-google1.json").toExternalForm().substring(intFive);
+        gmComponentRepresentation = ServiceDescriptionParser.getRepresentationFromGMDL(interfaceDescFilePath);
         for (int i = 0; (i<gmComponentRepresentation.getInterfaces().size()); i += 1) {
             Interface inter = null;
             inter = gmComponentRepresentation.getInterfaces().get(i);
@@ -39,11 +44,12 @@ public class GeneratedFactory {
             }
             BcConfiguration bcConfiguration1 = new BcConfiguration();
             BcConfiguration bcConfiguration2 = new BcConfiguration();
-            bcConfiguration1 .parseFromJSON((new String("config_block1_interface_")+ String.valueOf(i)));
-            bcConfiguration2 .parseFromJSON((new String("config_block2_interface_")+ String.valueOf(i)));
+            bcConfiguration1 .setSubcomponentRole(inter.getRole());
+            bcConfiguration2 .setSubcomponentRole(busRole);
+            bcConfiguration1 .parseFromJSON((new String("src/main/java/test/config_block1_interface_")+ String.valueOf((i + intOne))));
+            bcConfiguration2 .parseFromJSON((new String("src/main/java/test/config_block2_interface_")+ String.valueOf((i + intOne))));
             BcGmSubcomponent block1Component = new BcSoapSubcomponent(bcConfiguration1);
             BcGmSubcomponent block2Component = new BcRestSubcomponent(bcConfiguration2);
-            BcGmSubcomponent block2Component1;
             block1Component.setNextComponent(block2Component);
             block2Component.setNextComponent(block1Component);
             block1Component.start();

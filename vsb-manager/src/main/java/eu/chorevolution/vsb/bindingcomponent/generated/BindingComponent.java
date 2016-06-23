@@ -1,8 +1,13 @@
 
 package eu.chorevolution.vsb.bindingcomponent.generated;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.jws.WebMethod;
 import javax.jws.WebService;
+import eu.chorevolution.vsb.gm.protocols.builders.ResponseBuilder;
 import eu.chorevolution.vsb.gm.protocols.primitives.BcGmSubcomponent;
+import eu.chorevolution.vsb.gmdl.utils.Data;
 
 
 /**
@@ -16,6 +21,15 @@ public class BindingComponent {
 
     public BindingComponent(BcGmSubcomponent apiRef) {
         this.apiRef = apiRef;
+    }
+
+    @WebMethod
+    public RootClass routeRequest(String origin, String destination) {
+        List<Data<?>> datas = new ArrayList<Data<?>>();
+        datas.add(new Data<String>("origin", "String", true, origin, "PATH"));
+        datas.add(new Data<String>("destination", "String", true, destination, "PATH"));
+        java.lang.String serializedroute = this.apiRef.mgetTwowaySync("/maps/api/directions/json?origin={origin}&destination={destination}&key={key}", datas);
+        return ResponseBuilder.unmarshalObject("application/json", serializedroute, RootClass.class);
     }
 
 }

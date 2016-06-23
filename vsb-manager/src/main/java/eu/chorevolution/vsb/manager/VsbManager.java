@@ -83,81 +83,25 @@ public class VsbManager {
 
     generateClass(gmComponentRepresentation, busProtocol);
 
-    //    JSONParser parser = new JSONParser();
-    //    JSONObject jsonObject = null;
-    //
-    //    String configPath = BcManager.class.getClassLoader().getResource("config.json").toExternalForm();
-    //
-    //    try {
-    //      jsonObject = (JSONObject) parser.parse(new FileReader(configPath));//"/home/siddhartha/Downloads/chor/evolution-service-bus/bc-manager/src/main/resources/config.json"));
-    //    } catch (IOException | ParseException e) {
-    //      e.printStackTrace();
-    //    }
-    //   
-    //    for(Interface inter: gmComponentRepresentation.getInterfaces()) {
-    //     
-    //      BcGmSubcomponent block1Component = null;
-    //      BcGmSubcomponent block2Component = null;
-    //      
-    //      RoleType busRole = null;
-    //      if(inter.getRole() == RoleType.SERVER) {
-    //        busRole = RoleType.CLIENT;
-    //      }
-    //      else if(inter.getRole() == RoleType.CLIENT) {
-    //        busRole = RoleType.SERVER;
-    //      }
-    //      
-    //      bcConfiguration = new BcConfiguration();
-    //      bcConfiguration.setSubcomponentRole(inter.getRole());
-    //      bcConfiguration.setServiceAddress(gmComponentRepresentation.getHostAddress());
-    //      bcConfiguration.setServiceName((String) jsonObject.get("service_name"));
-    //      bcConfiguration.setTargetNamespace((String) jsonObject.get("target_namespace"));
-    //      
-    //      switch(busProtocol) {
-    //      case REST:
-    //        block1Component = new BcRestSubcomponent(bcConfiguration); 
-    //        break;
-    //      case SOAP:
-    //        block1Component = new BcSoapSubcomponent(bcConfiguration); 
-    //        break;
-    //      case MQTT:
-    //        block1Component = new BcMQTTSubcomponent(bcConfiguration); 
-    //        break;
-    //      }
-    //
-    //      bcConfiguration = new BcConfiguration();
-    //      bcConfiguration.setSubcomponentRole(busRole);
-    //      bcConfiguration.setServiceAddress(gmComponentRepresentation.getHostAddress());
-    //      bcConfiguration.setServiceName((String) jsonObject.get("service_name"));
-    //      bcConfiguration.setTargetNamespace((String) jsonObject.get("target_namespace"));
-    //      
-    //      switch(gmComponentRepresentation.getProtocol()) {
-    //      case REST:
-    //        block2Component = new BcRestSubcomponent(bcConfiguration); 
-    //        break;
-    //      case SOAP:
-    //        block2Component = new BcSoapSubcomponent(bcConfiguration); 
-    //        break;
-    //      case MQTT:
-    //        block2Component = new BcMQTTSubcomponent(bcConfiguration); 
-    //        break;
-    //      }
-    //
-    //      block1Component.setNextComponent(block2Component);
-    //      block2Component.setNextComponent(block1Component);
-    //      
-    //      block1Component.start();
-    //      block2Component.start();
-    //      
-    //    }
-
-
     // TODO: instantiate the right generator based on the bcConfig
     // could use JAVA Service Provider Interface (SPI) for a clean and clear implementation
     //    JarGenerator.generateBc(new BcSoapGenerator(gmComponentDescription, new BcConfiguration(bcConfiguration)));
   }
 
   public static void generateClass(GmServiceRepresentation gmComponentRepresentation, ProtocolType busProtocol) {
+
+    String configTemplatePath = "";
+    JSONParser parser = new JSONParser();
+    JSONObject jsonObject = null;
+
+    configTemplatePath = BcManager.class.getClassLoader().getResource("config.json").toExternalForm().substring(5);
+
+    try {
+      jsonObject = (JSONObject) parser.parse(new FileReader(configTemplatePath));
+    } catch (IOException | ParseException e) {
+      e.printStackTrace();
+    }
+
     /* Creating java code model classes */
     JCodeModel jCodeModel = new JCodeModel();
     /* Adding package here */
@@ -184,19 +128,25 @@ public class VsbManager {
     JVar JSONObjectVar = jBlock.decl(JSONObjectClass, "jsonObject");
     JSONObjectVar.init(JExpr._new(JSONObjectClass));
 
-    
+
     JClass integerClass = jCodeModel.ref(java.lang.Integer.class);
     JClass StringClass = jCodeModel.ref(String.class);
-    
+
     JVar intFiveVar = jBlock.decl(integerClass, "intFive");
-    
     jBlock.assign(JExpr.ref(intFiveVar.name()),jCodeModel.ref("Integer").staticInvoke("parseInt").arg("5"));
+    
+    JVar intOneVar = jBlock.decl(integerClass, "intOne");
+    jBlock.assign(JExpr.ref(intOneVar.name()),jCodeModel.ref("Integer").staticInvoke("parseInt").arg("1"));
+    
     JVar StringObjectVar = null;
+    JDefinedClass BcManagerClass = null;
     try {
-      StringObjectVar = jBlock.decl(StringClass, "configFilePath", jCodeModel._class("eu.chorevolution.vsb.bc.manager.BcManager").dotclass().invoke("getClassLoader").invoke("getResource").arg("config.json").invoke("toExternalForm").invoke("substring").arg(intFiveVar));
-    } catch (JClassAlreadyExistsException e1) {
-      e1.printStackTrace();
+      BcManagerClass = jCodeModel._class("eu.chorevolution.vsb.bc.manager.BcManager");
+    } catch (JClassAlreadyExistsException e2) {
+      // TODO Auto-generated catch block
+      e2.printStackTrace();
     }
+    StringObjectVar = jBlock.decl(StringClass, "configFilePath", BcManagerClass.dotclass().invoke("getClassLoader").invoke("getResource").arg("config.json").invoke("toExternalForm").invoke("substring").arg(intFiveVar));
     JClass ExceptionClass = jCodeModel.ref(java.lang.Exception.class);
 
     JTryBlock parseTryBlock = jBlock._try();
@@ -215,6 +165,15 @@ public class VsbManager {
 
     JClass GmComponentRepresentationClass = jCodeModel.ref(eu.chorevolution.vsb.gmdl.utils.GmServiceRepresentation.class);
     JVar GmComponentRepresentationVar = jBlock.decl(GmComponentRepresentationClass, "gmComponentRepresentation", JExpr._null());
+
+    JVar interfaceDescriptionPathVar = null;
+    interfaceDescriptionPathVar = jBlock.decl(StringClass, "interfaceDescFilePath", BcManagerClass.dotclass().invoke("getClassLoader").invoke("getResource").arg("dts-google1.json").invoke("toExternalForm").invoke("substring").arg(intFiveVar));
+
+    JClass serviceDescriptionClass = jCodeModel.ref(ServiceDescriptionParser.class);
+
+    JInvocation getInterfaceRepresentation = serviceDescriptionClass.staticInvoke("getRepresentationFromGMDL").arg(interfaceDescriptionPathVar); 
+    //    jBlock.add(getInterfaceRepresentation);
+    jBlock.assign(GmComponentRepresentationVar, getInterfaceRepresentation);
     
     JForLoop forLoop = jBlock._for();
     JVar ivar = forLoop.init(jCodeModel.INT, "i", JExpr.lit(0));
@@ -229,8 +188,8 @@ public class VsbManager {
     forBlock.assign(JExpr.ref(InterfaceVar.name()), GmComponentRepresentationVar.invoke("getInterfaces").invoke("get").arg(ivar));
 
     JClass BcGmSubcomponentClass = jCodeModel.ref(eu.chorevolution.vsb.gm.protocols.primitives.BcGmSubcomponent.class);
-    
-//    JClass ProtocolClass = jCodeModel.ref(eu.chorevolution.vsb.gmdl.utils.enums.ProtocolType.class);
+
+    //    JClass ProtocolClass = jCodeModel.ref(eu.chorevolution.vsb.gmdl.utils.enums.ProtocolType.class);
     JClass RoleTypeClass = jCodeModel.ref(eu.chorevolution.vsb.gmdl.utils.enums.RoleType.class);
     JClass BcRestSubcomponentClass = jCodeModel.ref(eu.chorevolution.vsb.gm.protocols.rest.BcRestSubcomponent.class);
     JClass BcSoapSubcomponentClass = jCodeModel.ref(eu.chorevolution.vsb.gm.protocols.soap.BcSoapSubcomponent.class);
@@ -238,10 +197,10 @@ public class VsbManager {
     JClass BcConfigurationClass = jCodeModel.ref(eu.chorevolution.vsb.gmdl.utils.BcConfiguration.class);
 
     JClass EnumClass = jCodeModel.ref("eu.chorevolution.vsb.gmdl.utils.enums.RoleType");
-    
+
     JFieldRef RoleTypeServerEnum = null;
     JFieldRef RoleTypeClientEnum = null;
-    
+
     RoleTypeServerEnum = EnumClass.staticRef("SERVER");
     RoleTypeClientEnum = EnumClass.staticRef("CLIENT");
 
@@ -253,31 +212,36 @@ public class VsbManager {
 
     JVar bcConfig1Var = forBlock.decl(BcConfigurationClass, "bcConfiguration1", JExpr._new(BcConfigurationClass));
     JVar bcConfig2Var = forBlock.decl(BcConfigurationClass, "bcConfiguration2", JExpr._new(BcConfigurationClass));
+
+    JInvocation setRole1 = bcConfig1Var.invoke("setSubcomponentRole").arg(InterfaceVar.invoke("getRole"));
+    forBlock.add(setRole1);
+
+    JInvocation setRole2 = bcConfig2Var.invoke("setSubcomponentRole").arg(RoleTypeClassVar);
+    forBlock.add(setRole2);
     
-    JInvocation parseInvocation1 = bcConfig1Var.invoke("parseFromJSON").arg(JExpr._new(StringClass).arg("config_block1_interface_").plus(jCodeModel.ref(java.lang.String.class).staticInvoke("valueOf").arg(ivar)));
+    JInvocation parseInvocation1 = bcConfig1Var.invoke("parseFromJSON").arg(JExpr._new(StringClass).arg((String) jsonObject.get("generatedCodePath")+"/test/config_block1_interface_").plus(jCodeModel.ref(java.lang.String.class).staticInvoke("valueOf").arg(ivar.plus(intOneVar))));
     forBlock.add(parseInvocation1);
-    
-    JInvocation parseInvocation2 = bcConfig2Var.invoke("parseFromJSON").arg(JExpr._new(StringClass).arg("config_block2_interface_").plus(jCodeModel.ref(java.lang.String.class).staticInvoke("valueOf").arg(ivar)));
+
+    JInvocation parseInvocation2 = bcConfig2Var.invoke("parseFromJSON").arg(JExpr._new(StringClass).arg((String) jsonObject.get("generatedCodePath")+"/test/config_block2_interface_").plus(jCodeModel.ref(java.lang.String.class).staticInvoke("valueOf").arg(ivar.plus(intOneVar))));
     forBlock.add(parseInvocation2);
-    
+
     JVar BcGmSubcomponentVar1 = forBlock.decl(BcGmSubcomponentClass, "block1Component", null);
     JVar BcGmSubcomponentVar2 = forBlock.decl(BcGmSubcomponentClass, "block2Component", null);
-    JVar bcConfig1Var1 = forBlock.decl(BcGmSubcomponentClass, "block2Component1", null);
 
     switch(busProtocol) {
     case REST:
       for(int i=1; i<=gmComponentRepresentation.getInterfaces().size(); i++)  
-        createConfigFile(ProtocolType.REST, "config_block1_interface_" + String.valueOf(i));
+        createConfigFile(ProtocolType.REST, (String) jsonObject.get("generatedCodePath")+"/test/config_block1_interface_" + String.valueOf(i));
       BcGmSubcomponentVar1.init(JExpr._new(BcRestSubcomponentClass).arg(bcConfig1Var));
       break;
     case SOAP:
       for(int i=1; i<=gmComponentRepresentation.getInterfaces().size(); i++)  
-        createConfigFile(ProtocolType.SOAP, "config_block1_interface_" + String.valueOf(i));
+        createConfigFile(ProtocolType.SOAP, (String) jsonObject.get("generatedCodePath")+"/test/config_block1_interface_" + String.valueOf(i));
       BcGmSubcomponentVar1.init(JExpr._new(BcSoapSubcomponentClass).arg(bcConfig1Var));
       break;
     case MQTT:
       for(int i=1; i<=gmComponentRepresentation.getInterfaces().size(); i++)  
-        createConfigFile(ProtocolType.MQTT, "config_block1_interface_" + String.valueOf(i));
+        createConfigFile(ProtocolType.MQTT, (String) jsonObject.get("generatedCodePath")+"/test/config_block1_interface_" + String.valueOf(i));
       BcGmSubcomponentVar1.init(JExpr._new(BcMQTTSubcomponentClass).arg(bcConfig1Var));
       break;
     }
@@ -285,17 +249,17 @@ public class VsbManager {
     switch(gmComponentRepresentation.getProtocol()) {
     case REST:
       for(int i=1; i<=gmComponentRepresentation.getInterfaces().size(); i++)  
-        createConfigFile(ProtocolType.REST, "config_block2_interface_" + String.valueOf(i));
+        createConfigFile(ProtocolType.REST, (String) jsonObject.get("generatedCodePath")+"/test/config_block2_interface_" + String.valueOf(i));
       BcGmSubcomponentVar2.init(JExpr._new(BcRestSubcomponentClass).arg(bcConfig2Var));
       break;
     case SOAP:
       for(int i=1; i<=gmComponentRepresentation.getInterfaces().size(); i++)  
-        createConfigFile(ProtocolType.SOAP, "config_block2_interface_" + String.valueOf(i));
+        createConfigFile(ProtocolType.SOAP, (String) jsonObject.get("generatedCodePath")+"/test/config_block2_interface_" + String.valueOf(i));
       BcGmSubcomponentVar2.init(JExpr._new(BcSoapSubcomponentClass).arg(bcConfig2Var));
       break;
     case MQTT:
       for(int i=1; i<=gmComponentRepresentation.getInterfaces().size(); i++)  
-        createConfigFile(ProtocolType.MQTT, "config_block2_interface_" + String.valueOf(i));
+        createConfigFile(ProtocolType.MQTT, (String) jsonObject.get("generatedCodePath")+"/test/config_block2_interface_" + String.valueOf(i));
       BcGmSubcomponentVar2.init(JExpr._new(BcMQTTSubcomponentClass).arg(bcConfig2Var));
       break;
     }
@@ -307,12 +271,12 @@ public class VsbManager {
     forBlock.add(BcGmSubcomponentVar2.invoke("start"));
 
     try {
-      jCodeModel.build(new File("src/main/java"));
+      jCodeModel.build(new File((String) jsonObject.get("generatedCodePath")));
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
-  
+
   private static void createConfigFile(ProtocolType protocol, String filename) {
     String configTemplatePath = "";
     JSONParser parser = new JSONParser();
@@ -329,18 +293,87 @@ public class VsbManager {
       configTemplatePath = BcManager.class.getClassLoader().getResource("mqtt-config.json").toExternalForm().substring(5);
       break;
     }
-    
+
     try {
       jsonObject = (JSONObject) parser.parse(new FileReader(configTemplatePath));
     } catch (IOException | ParseException e) {
       e.printStackTrace();
     }
-    
-    try (FileWriter file = new FileWriter(filename)) {
-      file.write(jsonObject.toJSONString());
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+
+//    try (FileWriter file = new FileWriter(filename)) {
+//      file.write(jsonObject.toJSONString());
+//    } catch (IOException e) {
+//      e.printStackTrace();
+//    }
   }
-  
+
 }
+
+//    JSONParser parser = new JSONParser();
+//    JSONObject jsonObject = null;
+//
+//    String configPath = BcManager.class.getClassLoader().getResource("config.json").toExternalForm();
+//
+//    try {
+//      jsonObject = (JSONObject) parser.parse(new FileReader(configPath));//"/home/siddhartha/Downloads/chor/evolution-service-bus/bc-manager/src/main/resources/config.json"));
+//    } catch (IOException | ParseException e) {
+//      e.printStackTrace();
+//    }
+//   
+//    for(Interface inter: gmComponentRepresentation.getInterfaces()) {
+//     
+//      BcGmSubcomponent block1Component = null;
+//      BcGmSubcomponent block2Component = null;
+//      
+//      RoleType busRole = null;
+//      if(inter.getRole() == RoleType.SERVER) {
+//        busRole = RoleType.CLIENT;
+//      }
+//      else if(inter.getRole() == RoleType.CLIENT) {
+//        busRole = RoleType.SERVER;
+//      }
+//      
+//      bcConfiguration = new BcConfiguration();
+//      bcConfiguration.setSubcomponentRole(inter.getRole());
+//      bcConfiguration.setServiceAddress(gmComponentRepresentation.getHostAddress());
+//      bcConfiguration.setServiceName((String) jsonObject.get("service_name"));
+//      bcConfiguration.setTargetNamespace((String) jsonObject.get("target_namespace"));
+//      
+//      switch(busProtocol) {
+//      case REST:
+//        block1Component = new BcRestSubcomponent(bcConfiguration); 
+//        break;
+//      case SOAP:
+//        block1Component = new BcSoapSubcomponent(bcConfiguration); 
+//        break;
+//      case MQTT:
+//        block1Component = new BcMQTTSubcomponent(bcConfiguration); 
+//        break;
+//      }
+//
+//      bcConfiguration = new BcConfiguration();
+//      bcConfiguration.setSubcomponentRole(busRole);
+//      bcConfiguration.setServiceAddress(gmComponentRepresentation.getHostAddress());
+//      bcConfiguration.setServiceName((String) jsonObject.get("service_name"));
+//      bcConfiguration.setTargetNamespace((String) jsonObject.get("target_namespace"));
+//      
+//      switch(gmComponentRepresentation.getProtocol()) {
+//      case REST:
+//        block2Component = new BcRestSubcomponent(bcConfiguration); 
+//        break;
+//      case SOAP:
+//        block2Component = new BcSoapSubcomponent(bcConfiguration); 
+//        break;
+//      case MQTT:
+//        block2Component = new BcMQTTSubcomponent(bcConfiguration); 
+//        break;
+//      }
+//
+//      block1Component.setNextComponent(block2Component);
+//      block2Component.setNextComponent(block1Component);
+//      
+//      block1Component.start();
+//      block2Component.start();
+//      
+//    }
+
