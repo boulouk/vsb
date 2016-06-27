@@ -3,15 +3,17 @@ package eu.chorevolution.vsb.gmdl.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import eu.chorevolution.vsb.gmdl.utils.Data.Context;
+
 public class Data<T> {
 
   private String name;
-  private final String className;
-  private final boolean isPrimitiveType;
-  private final Context context;
+  private String className;
+  private boolean isPrimitiveType;
+  private Context context;
   private final String mediaType;
   private boolean isRequired;
-  private final List<Data<?>> attributes;
+  private List<Data<?>> attributes;
   private T object;
 
   public Data(Data<T> another) {
@@ -101,6 +103,9 @@ public class Data<T> {
   public enum Context {
     BODY, PATH, QUERY, FORM, HEADER;
   }
-  
 
+  public void setContext(Context con) {
+    context = con;
+  }
+  
 }

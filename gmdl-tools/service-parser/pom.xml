@@ -8,20 +8,56 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-
-	<groupId>eu.chorevolution.vsb</groupId>
 	<artifactId>service-parser</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>service-parser</name>
 	<url>http://maven.apache.org</url>
+
+   <repositories>
+     <repository>
+         <id>chorevolution</id>
+         <url>http://nexus.disim.univaq.it/content/repositories/chorevolution/</url>
+         <releases>
+            <enabled>false</enabled>
+         </releases>
+         <snapshots>
+            <enabled>true</enabled>
+         </snapshots>
+      </repository>
+   </repositories>
+
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<dependencies>
+	    <!-- org.eclipse.emf -->
+      <dependency>
+         <groupId>org.eclipse.emf</groupId>
+         <artifactId>org.eclipse.emf.common</artifactId>
+         <version>2.11.0-v20150805-0538</version>
+      </dependency>
+      <dependency>
+         <groupId>org.eclipse.emf</groupId>
+         <artifactId>org.eclipse.emf.ecore</artifactId>
+         <version>2.11.1-v20150805-0538</version>
+      </dependency>
+      <dependency>
+         <groupId>org.eclipse.emf</groupId>
+         <artifactId>org.eclipse.emf.ecore.xmi</artifactId>
+         <version>2.11.1-v20150805-0538</version>
+      </dependency>
+      <!-- metamodels to be used in the transformation -->
+      <dependency>
+         <groupId>eu.chorevolution.modelingnotations</groupId>
+         <artifactId>eu.chorevolution.modelingnotations.gidl</artifactId>
+         <version>1.0.0-SNAPSHOT</version>
+      </dependency>
+ 
+	
+	
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -35,7 +71,7 @@
 		</dependency>
 		<dependency>
 			<groupId>eu.chorevolution.vsb</groupId>
-			<artifactId>gmdl-parser</artifactId>
+			<artifactId>gm-soap</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

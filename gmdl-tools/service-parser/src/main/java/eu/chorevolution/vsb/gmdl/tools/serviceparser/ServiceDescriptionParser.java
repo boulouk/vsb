@@ -1,5 +1,6 @@
 package eu.chorevolution.vsb.gmdl.tools.serviceparser;
 
+import eu.chorevolution.vsb.gmdl.tools.serviceparser.gidl.ParseGIDL;
 import eu.chorevolution.vsb.gmdl.tools.serviceparser.gmdl.ParseGMDL;
 import eu.chorevolution.vsb.gmdl.utils.GmServiceRepresentation;
 // TODO NOTE: could be refactor with a Factory+Strategy Pattern
@@ -12,8 +13,8 @@ public class ServiceDescriptionParser {
   }
   
   public static final GmServiceRepresentation getRepresentationFromGIDL(String gidl) {
- // TODO
-    return null;
+    ParseGIDL gidlParser = new ParseGIDL();
+    return gidlParser.parse(gidl);
   }
 
   
