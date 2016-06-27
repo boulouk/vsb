@@ -1,5 +1,5 @@
 {
   "service_name": "BindingComponent",
-  "target_namespace": "eu.chorevolution.vsb.bcs.dtsgoogle.bc",
-  "generatedCodePath":"src/main/java"
+  "target_namespace": "eu.chorevolution.vsb.bindingcomponent.generated",
+  "generatedCodePath":"/home/siddhartha/Downloads/chor/evolution-service-bus/vsb-manager/src/main/java"
 }

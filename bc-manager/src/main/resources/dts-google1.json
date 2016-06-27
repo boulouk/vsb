@@ -53,6 +53,9 @@
 		}, {
 			"property_name": "status",
 			"property_type": "String"
+		}, {
+			"property_name": "testing",
+			"property_type": "List<String>"
 		}]
 	}, {
 		"definition_name": "GeocodedWayPoints",

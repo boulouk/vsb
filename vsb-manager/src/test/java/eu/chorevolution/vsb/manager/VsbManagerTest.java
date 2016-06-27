@@ -1,6 +1,8 @@
 package eu.chorevolution.vsb.manager;
 
-import test.GeneratedFactory;
+import eu.chorevolution.vsb.bindingcomponent.generated.GeneratedFactory;
+
+
 
 public class VsbManagerTest {
   public static void main(String[] args) {

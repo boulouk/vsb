@@ -73,6 +73,9 @@ public class VsbManager {
     }
 
     bcConfiguration.setGeneratedCodePath((String) jsonObject.get("generatedCodePath"));
+    bcConfiguration.setTargetNamespace((String) jsonObject.get("target_namespace"));
+    bcConfiguration.setServiceName((String) jsonObject.get("service_name"));
+
 
     gmComponentRepresentation = ServiceDescriptionParser.getRepresentationFromGMDL(interfaceDescription);
 
@@ -105,7 +108,7 @@ public class VsbManager {
     /* Creating java code model classes */
     JCodeModel jCodeModel = new JCodeModel();
     /* Adding package here */
-    JPackage jp = jCodeModel._package("test");
+    JPackage jp = jCodeModel._package((String) jsonObject.get("target_namespace"));
 
     /* Giving Class Name to Generate */
     JDefinedClass jc = null;
@@ -139,13 +142,8 @@ public class VsbManager {
     jBlock.assign(JExpr.ref(intOneVar.name()),jCodeModel.ref("Integer").staticInvoke("parseInt").arg("1"));
     
     JVar StringObjectVar = null;
-    JDefinedClass BcManagerClass = null;
-    try {
-      BcManagerClass = jCodeModel._class("eu.chorevolution.vsb.bc.manager.BcManager");
-    } catch (JClassAlreadyExistsException e2) {
-      // TODO Auto-generated catch block
-      e2.printStackTrace();
-    }
+    JClass BcManagerClass = null;
+    BcManagerClass = jCodeModel.ref("eu.chorevolution.vsb.bc.manager.BcManager");
     StringObjectVar = jBlock.decl(StringClass, "configFilePath", BcManagerClass.dotclass().invoke("getClassLoader").invoke("getResource").arg("config.json").invoke("toExternalForm").invoke("substring").arg(intFiveVar));
     JClass ExceptionClass = jCodeModel.ref(java.lang.Exception.class);
 
@@ -219,10 +217,16 @@ public class VsbManager {
     JInvocation setRole2 = bcConfig2Var.invoke("setSubcomponentRole").arg(RoleTypeClassVar);
     forBlock.add(setRole2);
     
-    JInvocation parseInvocation1 = bcConfig1Var.invoke("parseFromJSON").arg(JExpr._new(StringClass).arg((String) jsonObject.get("generatedCodePath")+"/test/config_block1_interface_").plus(jCodeModel.ref(java.lang.String.class).staticInvoke("valueOf").arg(ivar.plus(intOneVar))));
+    String packagePath = (String) jsonObject.get("target_namespace");
+    packagePath = packagePath.replace(".", "/");
+    
+    String generatedCodePath = (String) jsonObject.get("generatedCodePath");
+    generatedCodePath = generatedCodePath + "/";
+    
+    JInvocation parseInvocation1 = bcConfig1Var.invoke("parseFromJSON").arg(JExpr._new(StringClass).arg(generatedCodePath+"config_block1_interface_").plus(jCodeModel.ref(java.lang.String.class).staticInvoke("valueOf").arg(ivar.plus(intOneVar))));
     forBlock.add(parseInvocation1);
 
-    JInvocation parseInvocation2 = bcConfig2Var.invoke("parseFromJSON").arg(JExpr._new(StringClass).arg((String) jsonObject.get("generatedCodePath")+"/test/config_block2_interface_").plus(jCodeModel.ref(java.lang.String.class).staticInvoke("valueOf").arg(ivar.plus(intOneVar))));
+    JInvocation parseInvocation2 = bcConfig2Var.invoke("parseFromJSON").arg(JExpr._new(StringClass).arg(generatedCodePath+"config_block2_interface_").plus(jCodeModel.ref(java.lang.String.class).staticInvoke("valueOf").arg(ivar.plus(intOneVar))));
     forBlock.add(parseInvocation2);
 
     JVar BcGmSubcomponentVar1 = forBlock.decl(BcGmSubcomponentClass, "block1Component", null);
@@ -231,17 +235,17 @@ public class VsbManager {
     switch(busProtocol) {
     case REST:
       for(int i=1; i<=gmComponentRepresentation.getInterfaces().size(); i++)  
-        createConfigFile(ProtocolType.REST, (String) jsonObject.get("generatedCodePath")+"/test/config_block1_interface_" + String.valueOf(i));
+        createConfigFile(ProtocolType.REST, generatedCodePath+ packagePath + "/config_block1_interface_" + String.valueOf(i));
       BcGmSubcomponentVar1.init(JExpr._new(BcRestSubcomponentClass).arg(bcConfig1Var));
       break;
     case SOAP:
       for(int i=1; i<=gmComponentRepresentation.getInterfaces().size(); i++)  
-        createConfigFile(ProtocolType.SOAP, (String) jsonObject.get("generatedCodePath")+"/test/config_block1_interface_" + String.valueOf(i));
+        createConfigFile(ProtocolType.SOAP, generatedCodePath+ packagePath + "/config_block1_interface_" + String.valueOf(i));
       BcGmSubcomponentVar1.init(JExpr._new(BcSoapSubcomponentClass).arg(bcConfig1Var));
       break;
     case MQTT:
       for(int i=1; i<=gmComponentRepresentation.getInterfaces().size(); i++)  
-        createConfigFile(ProtocolType.MQTT, (String) jsonObject.get("generatedCodePath")+"/test/config_block1_interface_" + String.valueOf(i));
+        createConfigFile(ProtocolType.MQTT, generatedCodePath+packagePath + "/config_block1_interface_" + String.valueOf(i));
       BcGmSubcomponentVar1.init(JExpr._new(BcMQTTSubcomponentClass).arg(bcConfig1Var));
       break;
     }
@@ -249,17 +253,17 @@ public class VsbManager {
     switch(gmComponentRepresentation.getProtocol()) {
     case REST:
       for(int i=1; i<=gmComponentRepresentation.getInterfaces().size(); i++)  
-        createConfigFile(ProtocolType.REST, (String) jsonObject.get("generatedCodePath")+"/test/config_block2_interface_" + String.valueOf(i));
+        createConfigFile(ProtocolType.REST, generatedCodePath+packagePath + "/config_block2_interface_" + String.valueOf(i));
       BcGmSubcomponentVar2.init(JExpr._new(BcRestSubcomponentClass).arg(bcConfig2Var));
       break;
     case SOAP:
       for(int i=1; i<=gmComponentRepresentation.getInterfaces().size(); i++)  
-        createConfigFile(ProtocolType.SOAP, (String) jsonObject.get("generatedCodePath")+"/test/config_block2_interface_" + String.valueOf(i));
+        createConfigFile(ProtocolType.SOAP, generatedCodePath+packagePath + "/config_block2_interface_" + String.valueOf(i));
       BcGmSubcomponentVar2.init(JExpr._new(BcSoapSubcomponentClass).arg(bcConfig2Var));
       break;
     case MQTT:
       for(int i=1; i<=gmComponentRepresentation.getInterfaces().size(); i++)  
-        createConfigFile(ProtocolType.MQTT, (String) jsonObject.get("generatedCodePath")+"/test/config_block2_interface_" + String.valueOf(i));
+        createConfigFile(ProtocolType.MQTT, generatedCodePath+packagePath + "/config_block2_interface_" + String.valueOf(i));
       BcGmSubcomponentVar2.init(JExpr._new(BcMQTTSubcomponentClass).arg(bcConfig2Var));
       break;
     }
@@ -271,7 +275,7 @@ public class VsbManager {
     forBlock.add(BcGmSubcomponentVar2.invoke("start"));
 
     try {
-      jCodeModel.build(new File((String) jsonObject.get("generatedCodePath")));
+      jCodeModel.build(new File(generatedCodePath));
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -300,11 +304,11 @@ public class VsbManager {
       e.printStackTrace();
     }
 
-//    try (FileWriter file = new FileWriter(filename)) {
-//      file.write(jsonObject.toJSONString());
-//    } catch (IOException e) {
-//      e.printStackTrace();
-//    }
+    try (FileWriter file = new FileWriter(filename)) {
+      file.write(jsonObject.toJSONString());
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
 }
