@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gidl:GIDLModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:gidl="http://eu.chorevolution/modelingnotations/gidl" hostAddress="https://maps.googleapis.com" protocol="REST">
+  <hasDefinitions name="Itinerary">
+    <hasProperties name="geocoded_waypoints" type="object" required="true" referenceDefinition="//@hasDefinitions.1"/>
+    <hasProperties name="routes" type="object" required="true" referenceDefinition="//@hasDefinitions.2"/>
+    <hasProperties name="status" type="string" required="true"/>
+  </hasDefinitions>
+  <hasDefinitions name="GeocodedWayPoints">
+    <hasProperties name="geocoder_status" type="string" required="true"/>
+    <hasProperties name="place_id" type="string" required="true"/>
+    <hasProperties name="types" type="string" required="true"/>
+  </hasDefinitions>
+  <hasDefinitions name="Routes">
+    <hasProperties name="bounds" type="object" required="true" referenceDefinition="//@hasDefinitions.3"/>
+    <hasProperties name="copyrights" type="string" required="true"/>
+    <hasProperties name="legs" type="string" required="true"/>
+  </hasDefinitions>
+  <hasDefinitions name="Bounds">
+    <hasProperties name="northeast" type="string" required="true"/>
+    <hasProperties name="southwest" type="string" required="true"/>
+  </hasDefinitions>
+  <hasInterfaces role="provider">
+    <hasOperations name="operation_1" type="two_way_sync">
+      <inputData name="origin" type="string" context="query"/>
+      <inputData name="destination" type="string" context="query"/>
+      <outputData name="route" type="object" context="body" hasDefinition="//@hasDefinitions.0"/>
+      <hasScope name="routeRequest" verb="GET" uri="/maps/api/directions/json?origin={origin}&amp;destination={destination}&amp;key={key}"/>
+    </hasOperations>
+  </hasInterfaces>
+</gidl:GIDLModel>

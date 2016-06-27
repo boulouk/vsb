@@ -1,7 +1,6 @@
 
 package eu.chorevolution.vsb.bindingcomponent.generated;
 
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -13,8 +12,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "RootClass")
-public class RootClass {
+@XmlRootElement(name = "Itinerary")
+public class Itinerary {
 
     @XmlElement(name = "geocoded_waypoints", required = true)
     private GeocodedWayPoints geocoded_waypoints;
@@ -22,8 +21,6 @@ public class RootClass {
     private Routes routes;
     @XmlElement(name = "status", required = true)
     private String status;
-    @XmlElement(name = "testing", required = false)
-    private List<String> testing;
 
     public GeocodedWayPoints getgeocoded_waypoints() {
         return geocoded_waypoints;
@@ -47,14 +44,6 @@ public class RootClass {
 
     public void setstatus(String status) {
         this.status = status;
-    }
-
-    public List<String> gettesting() {
-        return testing;
-    }
-
-    public void settesting(List<String> testing) {
-        this.testing = testing;
     }
 
 }

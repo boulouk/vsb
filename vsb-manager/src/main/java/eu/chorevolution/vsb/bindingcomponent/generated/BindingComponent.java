@@ -24,12 +24,12 @@ public class BindingComponent {
     }
 
     @WebMethod
-    public RootClass routeRequest(String origin, String destination) {
+    public Itinerary routeRequest(String origin, String destination) {
         List<Data<?>> datas = new ArrayList<Data<?>>();
-        datas.add(new Data<String>("origin", "String", true, origin, "PATH"));
-        datas.add(new Data<String>("destination", "String", true, destination, "PATH"));
+        datas.add(new Data<String>("origin", "String", true, origin, "QUERY"));
+        datas.add(new Data<String>("destination", "String", true, destination, "QUERY"));
         java.lang.String serializedroute = this.apiRef.mgetTwowaySync("/maps/api/directions/json?origin={origin}&destination={destination}&key={key}", datas);
-        return ResponseBuilder.unmarshalObject("application/json", serializedroute, RootClass.class);
+        return ResponseBuilder.unmarshalObject("application/json", serializedroute, Itinerary.class);
     }
 
 }

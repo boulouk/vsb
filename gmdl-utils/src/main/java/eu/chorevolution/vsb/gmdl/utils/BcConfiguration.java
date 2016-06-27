@@ -104,6 +104,7 @@ public class BcConfiguration {
     }
     
     setTargetNamespace((String) jsonObject.get("target_namespace"));
+    System.out.println(jsonObject);
     setServiceName((String) jsonObject.get("service_name"));
     setSubcomponentAddress((String) jsonObject.get("subcomponent_address"));
     setServiceAddress((String) jsonObject.get("service_address"));
