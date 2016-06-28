@@ -30,7 +30,7 @@ public class RestRequestBuilder implements RequestBuilder {
     Request request = new Request();
 
     UriBuilder builder = UriBuilder.fromPath(destination+scope);
-
+   
     buildRequestHeaders(request, datas);
     buildRequestPath(builder, datas);
     buildRequestQuery(request, datas);
@@ -73,8 +73,19 @@ public class RestRequestBuilder implements RequestBuilder {
   }
 
   private static void buildRequestQuery(final Request request, final List<Data<?>> datas) {
+    
+    System.out.println(datas.size());
     for (Data<?> data : datas) {
       if(data.getContext() == Context.QUERY) {
+        System.out.println(data.getName() + " " + data.getObject().toString() + " " + data.getContext());
+      }
+    }
+    
+    System.out.println(datas.size());
+    for (Data<?> data : datas) {
+      System.out.println(data.getName() + " " + data.getObject().toString());
+      if(data.getContext() == Context.QUERY) {
+        System.out.println(data.getName() + " " + data.getObject().toString());
         request.getResourceRef().addQueryParameter(data.getName(), data.getObject().toString());
       }
     }

@@ -30,6 +30,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import eu.chorevolution.vsb.gm.protocols.primitives.BcGmSubcomponent;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
 import eu.chorevolution.vsb.gmdl.utils.Data;
+import eu.chorevolution.vsb.gmdl.utils.Data.Context;
 
 public class BcRestSubcomponent extends BcGmSubcomponent {
   private Client client;
@@ -136,6 +137,7 @@ public class BcRestSubcomponent extends BcGmSubcomponent {
 
   @Override
   public <T> T postTwowaySync(final String destination, final String scope, final List<Data<?>> datas, final long lease) {
+    
     Request request = RestRequestBuilder.buildRestGetRequest(destination, scope, datas);
     Response response = this.client.handle(request);
     return (T) response.getEntityAsText();
