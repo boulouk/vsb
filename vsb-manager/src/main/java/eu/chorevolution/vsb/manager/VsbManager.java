@@ -31,6 +31,7 @@ import com.sun.codemodel.JPackage;
 import com.sun.codemodel.JTryBlock;
 import com.sun.codemodel.JVar;
 
+import eu.chorevolution.vsb.artifact.generators.WarGenerator;
 import eu.chorevolution.vsb.bc.manager.BcManager;
 import eu.chorevolution.vsb.gm.protocols.generators.BcSubcomponentGenerator;
 import eu.chorevolution.vsb.gm.protocols.mqtt.BcMQTTSubcomponent;
@@ -44,6 +45,7 @@ import eu.chorevolution.vsb.gmdl.utils.GmServiceRepresentation;
 import eu.chorevolution.vsb.gmdl.utils.Interface;
 import eu.chorevolution.vsb.gmdl.utils.enums.RoleType;
 import eu.chorevolution.vsb.gmdl.utils.enums.ProtocolType;
+import eu.chorevolution.vsb.java2wsdl.Java2WSDL;
 
 public class VsbManager {
 
@@ -52,11 +54,34 @@ public class VsbManager {
     String interfaceDescriptionPath = BcManager.class.getClassLoader().getResource("DtsGoogle.gidl").toExternalForm().substring(5);
     System.out.println(interfaceDescriptionPath);
     generateBindingComponent(interfaceDescriptionPath, ProtocolType.SOAP);
+    
+    Java2WSDL java2wsdl = new Java2WSDL();
+    java2wsdl.generateWSDL();
+    
+    // TODO: instantiate the right generator based on the bcConfig
+    // could use JAVA Service Provider Interface (SPI) for a clean and clear implementation
+    //    JarGenerator.generateBc(new BcSoapGenerator(gmComponentDescription, new BcConfiguration(bcConfiguration)));
+    WarGenerator warGenerator = new WarGenerator();
+//    warGenerator.addPackage(pack);
+//    System.out.println(VsbManager.class.getClassLoader().getResource("pom.xml").toExternalForm().substring(5));
+    warGenerator.addPackage(eu.chorevolution.vsb.manager.VsbManager.class.getPackage());
+    warGenerator.addPackage(eu.chorevolution.vsb.java2wsdl.Java2WSDL.class.getPackage());
+    warGenerator.addPackage(eu.chorevolution.vsb.bindingcomponent.generated.GeneratedFactory.class.getPackage());
+    warGenerator.addPackage(eu.chorevolution.vsb.gmdl.tools.serviceparser.ServiceDescriptionParser.class.getPackage());
+    warGenerator.addPackage(eu.chorevolution.vsb.gmdl.tools.serviceparser.gidl.ParseGIDL.class.getPackage());
+    warGenerator.addPackage(eu.chorevolution.vsb.gmdl.tools.serviceparser.gmdl.ParseGMDL.class.getPackage());
+    warGenerator.addPackage(eu.chorevolution.vsb.gmdl.utils.Operation.class.getPackage());
+    warGenerator.addPackage(eu.chorevolution.vsb.gmdl.utils.enums.OperationType.class.getPackage());
+    warGenerator.addPackage(eu.chorevolution.vsb.gm.protocols.soap.BcSoapGenerator.class.getPackage());
+    warGenerator.addPackage(eu.chorevolution.vsb.gm.protocols.rest.BcRestGenerator.class.getPackage());
+    
+    warGenerator.addDependencyFiles("/home/siddhartha/Downloads/chor/evolution-service-bus/vsb-manager/pom.xml");
+    warGenerator.generate();
   }
 
   public static void generateBindingComponent(final String interfaceDescription, final ProtocolType busProtocol) {
 
-    GmServiceRepresentation gmComponentRepresentation = null;
+    GmServiceRepresentation gmServiceRepresentation = null;
 
     BcConfiguration bcConfiguration = null;
     bcConfiguration = new BcConfiguration();
@@ -76,19 +101,15 @@ public class VsbManager {
     bcConfiguration.setTargetNamespace((String) jsonObject.get("target_namespace"));
     bcConfiguration.setServiceName((String) jsonObject.get("service_name"));
 
-
-    gmComponentRepresentation = ServiceDescriptionParser.getRepresentationFromGIDL(interfaceDescription);
+    gmServiceRepresentation = ServiceDescriptionParser.getRepresentationFromGIDL(interfaceDescription);
 
     if(busProtocol == ProtocolType.SOAP) {
-      BcSubcomponentGenerator soapGenerator = new BcSoapGenerator(gmComponentRepresentation, bcConfiguration).setDebug(true); 
+      BcSubcomponentGenerator soapGenerator = new BcSoapGenerator(gmServiceRepresentation, bcConfiguration).setDebug(true); 
       soapGenerator.generateBc();
     }
 
-    generateBCClass(gmComponentRepresentation, busProtocol);
+    generateBCClass(gmServiceRepresentation, busProtocol);
 
-    // TODO: instantiate the right generator based on the bcConfig
-    // could use JAVA Service Provider Interface (SPI) for a clean and clear implementation
-    //    JarGenerator.generateBc(new BcSoapGenerator(gmComponentDescription, new BcConfiguration(bcConfiguration)));
   }
 
   public static void generateBCClass(GmServiceRepresentation gmComponentRepresentation, ProtocolType busProtocol) {
@@ -327,72 +348,3 @@ public class VsbManager {
   }
 
 }
-
-//    JSONParser parser = new JSONParser();
-//    JSONObject jsonObject = null;
-//
-//    String configPath = BcManager.class.getClassLoader().getResource("config.json").toExternalForm();
-//
-//    try {
-//      jsonObject = (JSONObject) parser.parse(new FileReader(configPath));//"/home/siddhartha/Downloads/chor/evolution-service-bus/bc-manager/src/main/resources/config.json"));
-//    } catch (IOException | ParseException e) {
-//      e.printStackTrace();
-//    }
-//   
-//    for(Interface inter: gmComponentRepresentation.getInterfaces()) {
-//     
-//      BcGmSubcomponent block1Component = null;
-//      BcGmSubcomponent block2Component = null;
-//      
-//      RoleType busRole = null;
-//      if(inter.getRole() == RoleType.SERVER) {
-//        busRole = RoleType.CLIENT;
-//      }
-//      else if(inter.getRole() == RoleType.CLIENT) {
-//        busRole = RoleType.SERVER;
-//      }
-//      
-//      bcConfiguration = new BcConfiguration();
-//      bcConfiguration.setSubcomponentRole(inter.getRole());
-//      bcConfiguration.setServiceAddress(gmComponentRepresentation.getHostAddress());
-//      bcConfiguration.setServiceName((String) jsonObject.get("service_name"));
-//      bcConfiguration.setTargetNamespace((String) jsonObject.get("target_namespace"));
-//      
-//      switch(busProtocol) {
-//      case REST:
-//        block1Component = new BcRestSubcomponent(bcConfiguration); 
-//        break;
-//      case SOAP:
-//        block1Component = new BcSoapSubcomponent(bcConfiguration); 
-//        break;
-//      case MQTT:
-//        block1Component = new BcMQTTSubcomponent(bcConfiguration); 
-//        break;
-//      }
-//
-//      bcConfiguration = new BcConfiguration();
-//      bcConfiguration.setSubcomponentRole(busRole);
-//      bcConfiguration.setServiceAddress(gmComponentRepresentation.getHostAddress());
-//      bcConfiguration.setServiceName((String) jsonObject.get("service_name"));
-//      bcConfiguration.setTargetNamespace((String) jsonObject.get("target_namespace"));
-//      
-//      switch(gmComponentRepresentation.getProtocol()) {
-//      case REST:
-//        block2Component = new BcRestSubcomponent(bcConfiguration); 
-//        break;
-//      case SOAP:
-//        block2Component = new BcSoapSubcomponent(bcConfiguration); 
-//        break;
-//      case MQTT:
-//        block2Component = new BcMQTTSubcomponent(bcConfiguration); 
-//        break;
-//      }
-//
-//      block1Component.setNextComponent(block2Component);
-//      block2Component.setNextComponent(block1Component);
-//      
-//      block1Component.start();
-//      block2Component.start();
-//      
-//    }
-

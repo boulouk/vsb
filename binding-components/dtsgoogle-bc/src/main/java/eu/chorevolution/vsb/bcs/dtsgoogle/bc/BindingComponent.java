@@ -35,10 +35,11 @@ public class BindingComponent {
 	}
 
 	@WebMethod
-	public RootClass routeRequest(String origin, String destination) {
+	public RootClass routeRequest(String origin, String destination, String key) {
 		List<Data<?>> datas = new ArrayList<Data<?>>();
 		datas.add(new Data<String>("origin", "String", true, origin, "PATH"));
 		datas.add(new Data<String>("destination", "String", true, destination, "PATH"));
+		datas.add(new Data<String>("key", "String", true, destination, "PATH"));
 //		datas.add(new Data<String>("key", "String", true, key, "PATH"));
 		
 //		String request = "Request to REST for parameters:  " + "origin: " + origin + " and destination: " + destination;
@@ -47,7 +48,7 @@ public class BindingComponent {
 //    this.client.handle(restRequest);
 //    System.out.println(request);
     
-		java.lang.String serializedrootClass = this.apiRef.mgetTwowaySync("/maps/api/directions/json?origin={origin}&destination={destination}&key=AIzaSyBhfNR1PHo8EsuxjLr3EO-sNnfoUDh4ilw", datas);
+		java.lang.String serializedrootClass = this.apiRef.mgetTwowaySync("/maps/api/directions/json?origin={origin}&destination={destination}&key={key}", datas);//AIzaSyBhfNR1PHo8EsuxjLr3EO-sNnfoUDh4ilw
 		
 //		String response = "Response from REST: " + serializedrootClass;
 //    restRequest = new Request(Method.POST, this.uri, new StringRepresentation(response));

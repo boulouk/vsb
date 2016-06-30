@@ -1,4 +1,4 @@
-package org.apache.ws.java2wsdl;
+package eu.chorevolution.vsb.java2wsdl;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements. See the NOTICE file
@@ -20,29 +20,41 @@ package org.apache.ws.java2wsdl;
 
 
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Map;
 
 import org.apache.axis2.description.java2wsdl.Java2WSDLConstants;
 import org.apache.axis2.util.CommandLineOptionConstants;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.ws.java2wsdl.Java2WSDLCodegenEngine;
 import org.apache.ws.java2wsdl.jaxws.JAXWS2WSDLCodegenEngine;
 import org.apache.ws.java2wsdl.utils.Java2WSDLCommandLineOption;
 import org.apache.ws.java2wsdl.utils.Java2WSDLCommandLineOptionParser;
 import org.apache.ws.java2wsdl.utils.Java2WSDLOptionsValidator;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import eu.chorevolution.vsb.bc.manager.BcManager;
 
 public class Java2WSDL {
-	private static Log log = LogFactory.getLog(Java2WSDL.class);
+	  private static Log log = LogFactory.getLog(Java2WSDL.class);
 	
     public static void main(String[] args) throws Exception {
       String[] arguments = {"-o", "/home/siddhartha/Downloads/chor/evolution-service-bus/vsb-manager/src/test/java", 
           "-of", "test", 
           "-sn", "BindingComponent", 
-          "-tn", "generated.bindingcomponent.vsb.chorevolution.eu", 
-          "-cn", "eu.chorevolution.vsb.bindingcomponent.generated.BindingComponent", 
+          "-tn", "bc.dtsgoogle.bcs.vsb.chorevolution.eu", 
+          "-cn", "eu.chorevolution.vsb.bcs.dtsgoogle.bc.BindingComponent", 
           "-l", "http://localhost:8888/BindingComponent", 
           "-ptn", "BindingComponent",
-          "-disableSOAP11", "-disableSOAP12"
+          "-st", "document",
+          "-u", "literal",
+          "-dlb",
+          "-soap11BindingName", "BindingComponentPortBinding",
+          "-disableSOAP12", "-disableREST"
           };//new String[1];
       
       
@@ -58,6 +70,61 @@ public class Java2WSDL {
         Java2WSDLCodegenEngine engine = new Java2WSDLCodegenEngine(commandLineOptionParser.getAllOptions());
         engine.generate();
         log.info("WSDL created at "+ engine.getOutputFile());
+    }
+    
+    public void generateWSDL() {
+      
+      String configPath = BcManager.class.getClassLoader().getResource("config.json").toExternalForm().substring(5);
+
+      JSONParser parser = new JSONParser();
+      JSONObject jsonObject = null;
+
+      try {
+        jsonObject = (JSONObject) parser.parse(new FileReader(configPath));
+      } catch (IOException | ParseException e) {
+        e.printStackTrace();
+      }
+
+      String generatedCodePath = (String) jsonObject.get("generatedCodePath");
+      String target_namespace = (String) jsonObject.get("target_namespace");
+      String service_name = (String) jsonObject.get("service_name");
+
+      
+      String[] arguments = {"-o", generatedCodePath, 
+          "-of", "test", 
+          "-sn", service_name, 
+          "-tn", "bc.dtsgoogle.bcs.vsb.chorevolution.eu", 
+          "-cn", target_namespace + "." + service_name, 
+          "-l", "http://localhost:8888/" + service_name, 
+          "-ptn", service_name,
+          "-st", "document",
+          "-u", "literal",
+          "-dlb",
+          "-soap11BindingName", service_name+"PortBinding",
+          "-disableSOAP12", "-disableREST"
+          };
+      
+        Java2WSDLCommandLineOptionParser commandLineOptionParser = new Java2WSDLCommandLineOptionParser(
+                arguments);
+        if (isJwsOptionEnabled(commandLineOptionParser)){
+            JAXWS2WSDLCodegenEngine engine = new JAXWS2WSDLCodegenEngine(commandLineOptionParser.getAllOptions(), arguments);
+            try {
+              engine.generate();
+            } catch (Exception e) {
+              e.printStackTrace();
+            }
+            return;
+         }        
+        //  validate the arguments
+        validateCommandLineOptions(commandLineOptionParser);
+        Java2WSDLCodegenEngine engine;
+        try {
+          engine = new Java2WSDLCodegenEngine(commandLineOptionParser.getAllOptions());
+          engine.generate();
+          log.info("WSDL created at "+ engine.getOutputFile());
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
     }
 
     public static void printUsage() {

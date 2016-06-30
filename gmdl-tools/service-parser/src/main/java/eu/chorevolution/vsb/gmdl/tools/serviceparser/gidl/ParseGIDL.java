@@ -37,17 +37,6 @@ import eu.chorevolution.vsb.gmdl.utils.enums.RoleType;
 import eu.chorevolution.vsb.gmdl.utils.enums.Verb;
 
 public class ParseGIDL {
-  private static final String DTS_GOOGLE_RESOURCE = "." + File.separatorChar + "src" + File.separatorChar + "main" + File.separatorChar + "resources" + File.separatorChar+"DtsGoogle.gidl";
-  private static final String TRAFFIC_LIGHTS_RESOURCE = "." + File.separatorChar + "src" + File.separatorChar + "main" + File.separatorChar + "resources" + File.separatorChar+"traffic-lights.gidl";
-
-  public static void main(String[] args) throws Exception {
-
-    GIDLModel  dts = Utils.loadGIDLModel( URI.createURI(new File(DTS_GOOGLE_RESOURCE).toURI().toString()));
-    System.out.println("DTS GOOGLE host address > " + dts.getHostAddress());
-
-    GIDLModel  traffic = Utils.loadGIDLModel( URI.createURI(new File(TRAFFIC_LIGHTS_RESOURCE).toURI().toString()));
-    System.out.println("TRAFFIC LIGHTs host address > " + traffic.getHostAddress());
-  }
 
   static class Utils {
     public static GIDLModel loadGIDLModel(URI cltsURI) throws Exception {

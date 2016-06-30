@@ -17,18 +17,18 @@ public class GeneratedFactory {
 
 
     public static void run() {
-        JSONParser parser = new JSONParser();
-        JSONObject jsonObject = new JSONObject();
+//        JSONParser parser = new JSONParser();
+//        JSONObject jsonObject = new JSONObject();
         java.lang.Integer intFive;
         intFive = Integer.parseInt("5");
         java.lang.Integer intOne;
         intOne = Integer.parseInt("1");
-        String configFilePath = BindingComponent.class.getClassLoader().getResource("config.json").toExternalForm().substring(intFive);
-        try {
-            FileReader fileReader = new FileReader(configFilePath);
-            jsonObject = ((JSONObject) parser.parse(fileReader));
-        } catch (Exception _x) {
-        }
+//        String configFilePath = BindingComponent.class.getClassLoader().getResource("config.json").toExternalForm().substring(intFive);
+//        try {
+//            FileReader fileReader = new FileReader(configFilePath);
+//            jsonObject = ((JSONObject) parser.parse(fileReader));
+//        } catch (Exception _x) {
+//        }
         GmServiceRepresentation gmComponentRepresentation = null;
         String interfaceDescFilePath = BindingComponent.class.getClassLoader().getResource("dts-google1.json").toExternalForm().substring(intFive);
         gmComponentRepresentation = ServiceDescriptionParser.getRepresentationFromGMDL(interfaceDescFilePath);

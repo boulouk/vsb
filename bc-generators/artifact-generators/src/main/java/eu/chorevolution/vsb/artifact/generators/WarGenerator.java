@@ -6,64 +6,79 @@
 package eu.chorevolution.vsb.artifact.generators;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.impl.base.exporter.zip.ZipExporterImpl;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-/**
- * @author Georgios Bouloukakis (boulouk@gmail.com)
- * 
- * WarGenerator.java Created: 27 janv. 2016 Description:
- */
+import eu.chorevolution.vsb.bc.manager.BcManager;
+
 public class WarGenerator {
-    private static final String WEBAPP_SRC = "D:\\inria\\code\\chorevolution\\evolution-service-bus\\artifact-generators\\src\\main\\webapp";
-    
-    public WarGenerator () {
-        
+
+  private WebArchive archive = null;
+  private JSONObject jsonObject = null;
+
+  public WarGenerator () {
+    String configPath = BcManager.class.getClassLoader().getResource("config.json").toExternalForm().substring(5);
+    JSONParser parser = new JSONParser();
+
+    try {
+      jsonObject = (JSONObject) parser.parse(new FileReader(configPath));
+    } catch (IOException | ParseException e) {
+      e.printStackTrace();
     }
-    
-    public void generate() {
-//        File[] files = Maven.resolver().loadPomFromFile("pom.xml").importRuntimeDependencies().resolve().withTransitivity().asFile();
-        File[] files = Maven.resolver().loadPomFromFile("D:\\inria\\code\\chorevolution\\evolution-service-bus\\artifact-generators\\pom.xml").importRuntimeDependencies().resolve().withTransitivity().asFile();
 
-//        WebArchive archive = ShrinkWrap.create(WebArchive.class, "D:\\inria\\code\\chorevolution\\evolution-service-bus\\artifact-generators\\GBindingComponent.war");
-        WebArchive archive = ShrinkWrap.create(WebArchive.class, "D:\\programs\\Apache Tomcat 8.0.27\\webapps\\GBindingComponent.war");
+    String warDestination = (String) jsonObject.get("warDestination");
+    archive = ShrinkWrap.create(WebArchive.class, warDestination);
+  }
 
-        archive.setWebXML(new File(WEBAPP_SRC, "WEB-INF/web.xml"));
+  public void addPackage(Package pack) {
+    archive.addPackage(pack);
+  }
 
-        //For weather
-//        archive.addPackage(eu.chorevolution.vsb.bcs.weather.BCStarter.class.getPackage());
-//        archive.addPackage(eu.chorevolution.vsb.bcs.weather.bc.BindingComponent.class.getPackage());
+  public void addDependencyFiles(String pathToPom) {
+    File[] files = Maven.resolver().loadPomFromFile(pathToPom).importRuntimeDependencies().resolve().withTransitivity().asFile();
+    archive.addAsLibraries(files);
+  }
 
-        //For DTSGoogle
-        archive.addPackage(eu.chorevolution.vsb.bcs.dtsgoogle.BCStarter.class.getPackage());
-        archive.addPackage(eu.chorevolution.vsb.bcs.dtsgoogle.bc.BindingComponent.class.getPackage());
+  public void generate() {
 
-        archive.addPackage(eu.chorevolution.vsb.artifact.war.BCStarterServlet.class.getPackage());
-        archive.addAsLibraries(files);
-        archive.addAsWebResource(new File(WEBAPP_SRC, "index.jsp"));
+    String WEBAPP_SRC = (String) jsonObject.get("webapp_src");
 
-        for (File f : new File(WEBAPP_SRC + "\\assets\\css").listFiles()) {
-                archive.addAsWebResource(f, "assets/css/" + f.getName());
-        }
+    archive.setWebXML(new File(WEBAPP_SRC, "WEB-INF/web.xml"));
 
-        for (File f : new File(WEBAPP_SRC + "\\assets\\fonts").listFiles()) {
-                archive.addAsWebResource(f, "assets/fonts/" + f.getName());
-        }
+    //For DTSGoogle
+    //        addPackage(eu.chorevolution.vsb.bcs.dtsgoogle.BCStarter.class.getPackage());
+    //        archive.addPackage(eu.chorevolution.vsb.bcs.dtsgoogle.bc.BindingComponent.class.getPackage());
+    //
+    //        archive.addPackage(eu.chorevolution.vsb.artifact.war.BCStarterServlet.class.getPackage());
 
-        for (File f : new File(WEBAPP_SRC + "\\assets\\img").listFiles()) {
-                archive.addAsWebResource(f, "assets/img/" + f.getName());
-        }
+    archive.addAsWebResource(new File(WEBAPP_SRC, "index.jsp"));
 
-        for (File f : new File(WEBAPP_SRC + "\\assets\\js").listFiles()) {
-                archive.addAsWebResource(f, "assets/js/" + f.getName());
-        }
-
-        new ZipExporterImpl(archive).exportTo(new File(archive.getName()), true);
+    for (File f : new File(WEBAPP_SRC + "/assets/css").listFiles()) {
+      archive.addAsWebResource(f, "assets/css/" + f.getName());
     }
-    
-    
+
+    for (File f : new File(WEBAPP_SRC + "/assets/fonts").listFiles()) {
+      archive.addAsWebResource(f, "assets/fonts/" + f.getName());
+    }
+
+    for (File f : new File(WEBAPP_SRC + "/assets/img").listFiles()) {
+      archive.addAsWebResource(f, "assets/img/" + f.getName());
+    }
+
+    for (File f : new File(WEBAPP_SRC + "/assets/js").listFiles()) {
+      archive.addAsWebResource(f, "assets/js/" + f.getName());
+    }
+
+    new ZipExporterImpl(archive).exportTo(new File(archive.getName()), true);
+  }
+
 }
