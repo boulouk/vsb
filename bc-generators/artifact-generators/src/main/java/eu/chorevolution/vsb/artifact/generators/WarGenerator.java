@@ -19,6 +19,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import eu.chorevolution.vsb.bc.manager.BcManager;
+import eu.chorevolution.vsb.gmdl.utils.Constants;
 
 public class WarGenerator {
 
@@ -26,16 +27,8 @@ public class WarGenerator {
   private JSONObject jsonObject = null;
 
   public WarGenerator () {
-    String configPath = BcManager.class.getClassLoader().getResource("config.json").toExternalForm().substring(5);
-    JSONParser parser = new JSONParser();
-
-    try {
-      jsonObject = (JSONObject) parser.parse(new FileReader(configPath));
-    } catch (IOException | ParseException e) {
-      e.printStackTrace();
-    }
-
-    String warDestination = (String) jsonObject.get("warDestination");
+    String configPath = Constants.configFilePath;
+    String warDestination = Constants.warDestination;
     archive = ShrinkWrap.create(WebArchive.class, warDestination);
   }
 
@@ -49,33 +42,26 @@ public class WarGenerator {
   }
 
   public void generate() {
+    String WEBAPP_SRC = Constants.webapp_src;
 
-    String WEBAPP_SRC = (String) jsonObject.get("webapp_src");
-
-    archive.setWebXML(new File(WEBAPP_SRC, "WEB-INF/web.xml"));
-
-    //For DTSGoogle
-    //        addPackage(eu.chorevolution.vsb.bcs.dtsgoogle.BCStarter.class.getPackage());
-    //        archive.addPackage(eu.chorevolution.vsb.bcs.dtsgoogle.bc.BindingComponent.class.getPackage());
-    //
-    //        archive.addPackage(eu.chorevolution.vsb.artifact.war.BCStarterServlet.class.getPackage());
+    archive.setWebXML(new File(WEBAPP_SRC, "WEB-INF" + File.separator + "web.xml"));
 
     archive.addAsWebResource(new File(WEBAPP_SRC, "index.jsp"));
 
-    for (File f : new File(WEBAPP_SRC + "/assets/css").listFiles()) {
-      archive.addAsWebResource(f, "assets/css/" + f.getName());
+    for (File f : new File(WEBAPP_SRC + File.separator + "assets" + File.separator + "css").listFiles()) {
+      archive.addAsWebResource(f, "assets" + File.separator + "css" + File.separator + f.getName());
     }
 
-    for (File f : new File(WEBAPP_SRC + "/assets/fonts").listFiles()) {
-      archive.addAsWebResource(f, "assets/fonts/" + f.getName());
+    for (File f : new File(WEBAPP_SRC + File.separator + "assets" + File.separator + "fonts").listFiles()) {
+      archive.addAsWebResource(f, "assets" + File.separator + "fonts" + File.separator + f.getName());
     }
 
-    for (File f : new File(WEBAPP_SRC + "/assets/img").listFiles()) {
-      archive.addAsWebResource(f, "assets/img/" + f.getName());
+    for (File f : new File(WEBAPP_SRC + File.separator + "assets" + File.separator + "img").listFiles()) {
+      archive.addAsWebResource(f, "assets" + File.separator + "img" + File.separator + f.getName());
     }
 
-    for (File f : new File(WEBAPP_SRC + "/assets/js").listFiles()) {
-      archive.addAsWebResource(f, "assets/js/" + f.getName());
+    for (File f : new File(WEBAPP_SRC + File.separator + "assets" + File.separator + "js").listFiles()) {
+      archive.addAsWebResource(f, "assets" + File.separator + "js" + File.separator + f.getName());
     }
 
     new ZipExporterImpl(archive).exportTo(new File(archive.getName()), true);

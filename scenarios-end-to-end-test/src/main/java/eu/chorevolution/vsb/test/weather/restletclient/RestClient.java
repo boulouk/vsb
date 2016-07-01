@@ -59,8 +59,8 @@ public class RestClient {
 
 		// builder.resolveTemplate("id", "1");
 
-		builder.resolveTemplate("collection", "weather");
-		builder.resolveTemplate("period", "3600");
+//		builder.resolveTemplate("collection", "weather");
+//		builder.resolveTemplate("period", "3600");
 		// builder.resolveTemplate("latitude", "44.41016");
 		// builder.resolveTemplate("longitude", "8.92637");
 		// builder.resolveTemplate("radius", "1.5");
@@ -85,17 +85,17 @@ public class RestClient {
 		String serializedObject = response.getEntityAsText();
 		ObjectMapper mapper = new ObjectMapper();
 
-		try {
-
-			// Convert JSON string to Object
-			ComplexType Ti = mapper.readValue(serializedObject, ComplexType.class);
-			System.out.println(Ti.getstatus());
-
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//
+//			// Convert JSON string to Object
+////			ComplexType Ti = mapper.readValue(serializedObject, ComplexType.class);
+//			System.out.println(Ti.getstatus());
+//
+//		} catch (JsonMappingException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 
 		return null;
 

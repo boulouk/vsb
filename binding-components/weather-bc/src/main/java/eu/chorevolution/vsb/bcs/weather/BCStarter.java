@@ -2,6 +2,7 @@ package eu.chorevolution.vsb.bcs.weather;
 
 import eu.chorevolution.vsb.bc.manager.BcManager;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
+import eu.chorevolution.vsb.gmdl.utils.enums.RoleType;
 
 /**
  * @author Georgios Bouloukakis (boulouk@gmail.com)
@@ -31,8 +32,8 @@ public class BCStarter {
 		configuration.setTargetNamespace("eu.chorevolution.vsb.bcs.weather.bc");
 		// END test purpose
 
-		manager = new BcManager(configuration);
-		manager.setEndpointAddress("http://localhost:8888/BindingComponent");
+//		manager = new BcManager(configuration);
+//		manager.setEndpointAddress("http://localhost:8888/BindingComponent");
 	}
 
 	public String start() {

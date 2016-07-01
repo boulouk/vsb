@@ -30,6 +30,7 @@ import eu.chorevolution.vsb.gmdl.utils.Data;
 import eu.chorevolution.vsb.gmdl.utils.GmServiceRepresentation;
 import eu.chorevolution.vsb.gmdl.utils.Operation;
 import eu.chorevolution.vsb.gmdl.utils.enums.OperationType;
+import eu.chorevolution.vsb.java2wsdl.Java2WSDL;
 
 // TODO: refactor, clean & clear as much as possible...
 public class BcSoapGenerator extends BcSubcomponentGenerator {
@@ -47,6 +48,11 @@ public class BcSoapGenerator extends BcSubcomponentGenerator {
       includePackageReference(attrType.substring(firstBracket+1, attrType.length()-1), codeModel);
     }
 
+  }
+  
+  public void generateWSDL() {
+    Java2WSDL java2wsdl = new Java2WSDL();
+    java2wsdl.generateWSDL();
   }
 
   @Override

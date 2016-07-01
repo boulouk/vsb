@@ -28,8 +28,8 @@ public class BCStarter {
 //		configuration.setTargetNamespace("eu.chorevolution.vsb.bcs.dtsgoogle.bc");
 		// END test purpose
 
-		manager = new BcManager(configuration);
-		manager.setEndpointAddress("http://localhost:8888/BindingComponent");
+//		manager = new BcManager(configuration);
+//		manager.setEndpointAddress("http://localhost:8888/BindingComponent");
 	}
 
 	public String start() {

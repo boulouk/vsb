@@ -1,7 +1,4 @@
 {
   "service_name": "BindingComponent",
-  "target_namespace": "eu.chorevolution.vsb.bindingcomponent.generated",
-  "generatedCodePath":"/home/siddhartha/Downloads/chor/evolution-service-bus/vsb-manager/src/main/java",
-  "webapp_src": "/home/siddhartha/Downloads/chor/evolution-service-bus/bc-generators/artifact-generators/src/main/webapp",
-  "warDestination": "/home/siddhartha/Documents/output/test.war"
+  "target_namespace": "eu.chorevolution.vsb.bindingcomponent.generated"
 }

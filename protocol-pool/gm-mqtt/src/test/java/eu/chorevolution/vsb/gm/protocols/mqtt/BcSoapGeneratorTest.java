@@ -14,6 +14,7 @@ import eu.chorevolution.vsb.gmdl.utils.Operation;
 import eu.chorevolution.vsb.gmdl.utils.Scope;
 import eu.chorevolution.vsb.gmdl.utils.enums.OperationType;
 import eu.chorevolution.vsb.gmdl.utils.enums.ProtocolType;
+import eu.chorevolution.vsb.gmdl.utils.enums.RoleType;
 import eu.chorevolution.vsb.gmdl.utils.enums.Verb;
 
 public class BcSoapGeneratorTest {
@@ -23,7 +24,7 @@ public class BcSoapGeneratorTest {
   @Before
   public void initGenerator() {
     BcConfiguration compConfServer = new BcConfiguration();
-    compConfServer.setSubcomponentRole("SERVER");
+    compConfServer.setSubcomponentRole(RoleType.SERVER);
     compConfServer.setServiceAddress("http://127.0.0.1:8282");
     compConfServer.setGeneratedCodePath("src/test/resources/generated/traffic");
     compConfServer.setTargetNamespace("");

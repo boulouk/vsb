@@ -1,11 +1,13 @@
 package eu.chorevolution.vsb.playgrounds.clientserver.rest;
 
 import java.io.IOException;
+
 import org.restlet.Component;
 import org.restlet.Server;
 import org.restlet.data.Protocol;
 import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
+import org.restlet.resource.Get;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
@@ -35,6 +37,7 @@ public class RestServer {
 
   public void mget(String scope) {
     this.component.getDefaultHost().attach("/"+scope, RestServerResource.class);
+    this.component.getDefaultHost().attach("/power/" + "{power}", RestServerResource.class);
   }
   
   public static class RestServerResource extends ServerResource {
@@ -50,6 +53,14 @@ public class RestServer {
 //      System.err.println("Server responded: ss");
       return new StringRepresentation("ss");
     }
+    
+    @Override
+    protected Representation get() throws ResourceException {
+      String power = (String) this.getRequestAttributes().get("power");
+      System.out.println(power);
+      return new StringRepresentation("bon!");
+    }
+    
   }
 
   

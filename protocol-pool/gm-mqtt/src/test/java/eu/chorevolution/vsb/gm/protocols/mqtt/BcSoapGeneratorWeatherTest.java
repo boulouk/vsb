@@ -14,6 +14,7 @@ import eu.chorevolution.vsb.gmdl.utils.Operation;
 import eu.chorevolution.vsb.gmdl.utils.Scope;
 import eu.chorevolution.vsb.gmdl.utils.enums.OperationType;
 import eu.chorevolution.vsb.gmdl.utils.enums.ProtocolType;
+import eu.chorevolution.vsb.gmdl.utils.enums.RoleType;
 import eu.chorevolution.vsb.gmdl.utils.enums.Verb;
 
 /**
@@ -29,7 +30,7 @@ public class BcSoapGeneratorWeatherTest {
 	@Before
 	public void initGenerator() {
 		BcConfiguration compConfServer = new BcConfiguration();
-		compConfServer.setSubcomponentRole("SERVER");
+		compConfServer.setSubcomponentRole(RoleType.SERVER);
 		compConfServer.setServiceAddress("http://93.62.202.227");
 		compConfServer.setGeneratedCodePath("src/test/resources/generated/weather");
 		compConfServer.setTargetNamespace("");

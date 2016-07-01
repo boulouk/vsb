@@ -10,16 +10,16 @@ public class BindingComponentManager {
     BcConfiguration configuration = new BcConfiguration(/*path/to/local/config/file*/);
     
     // test purpose: should be extract when parsing the config file
-    configuration.setSubcomponentRole("SERVER");
+//    configuration.setSubcomponentRole("SERVER");
     configuration.setServiceAddress("http://localhost:8282");
     configuration.setServiceName("BindingComponent");
     configuration.setTargetNamespace("eu.chorevolution.vsb.test.trafficlight.bc");
     // END test purpose
     
-    BcManager manager = new BcManager(configuration);
+//    BcManager manager = new BcManager(configuration);
      
-    manager.setEndpointAddress("http://localhost:8888/BindingComponent"); // should be called remotely via Manager REST interface
-    manager.start();
+//    manager.setEndpointAddress("http://localhost:8888/BindingComponent"); // should be called remotely via Manager REST interface
+//    manager.start();
     
     /*try {
       Thread.sleep(10000);

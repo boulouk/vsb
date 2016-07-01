@@ -37,7 +37,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import eu.chorevolution.vsb.bc.manager.BcManager;
+import eu.chorevolution.vsb.gmdl.utils.Constants;
 
 public class Java2WSDL {
 	  private static Log log = LogFactory.getLog(Java2WSDL.class);
@@ -74,7 +74,7 @@ public class Java2WSDL {
     
     public void generateWSDL() {
       
-      String configPath = BcManager.class.getClassLoader().getResource("config.json").toExternalForm().substring(5);
+      String configPath = Constants.configFilePath;
 
       JSONParser parser = new JSONParser();
       JSONObject jsonObject = null;
@@ -85,7 +85,7 @@ public class Java2WSDL {
         e.printStackTrace();
       }
 
-      String generatedCodePath = (String) jsonObject.get("generatedCodePath");
+      String generatedCodePath = Constants.generatedCodePath;
       String target_namespace = (String) jsonObject.get("target_namespace");
       String service_name = (String) jsonObject.get("service_name");
 

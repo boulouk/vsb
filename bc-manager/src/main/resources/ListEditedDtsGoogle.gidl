@@ -8,16 +8,16 @@
   <hasDefinitions name="GeocodedWayPoints">
     <hasProperties name="geocoder_status" type="string" required="true"/>
     <hasProperties name="place_id" type="string" required="true"/>
-    <hasProperties name="types" type="string" required="true"/>
+    <hasProperties name="types" type="List<string>" required="true"/>
   </hasDefinitions>
   <hasDefinitions name="Routes">
     <hasProperties name="bounds" type="object" required="true" referenceDefinition="//@hasDefinitions.3"/>
     <hasProperties name="copyrights" type="string" required="true"/>
-    <hasProperties name="legs" type="object" required="true" referenceDefinition="//@hasDefinitions.7"/>
+    <hasProperties name="legs" type="List<object>" required="true" referenceDefinition="//@hasDefinitions.7"/>
     <hasProperties name="overview_polyline" type="object" required="true" referenceDefinition="//@hasDefinitions.15"/>
     <hasProperties name="summary" type="string" required="true"/>
-    <hasProperties name="warnings" type="object required="true" referenceDefinition="//@hasDefinitions.16"/>
-    <hasProperties name="waypoint_order" type="object required="true" referenceDefinition="//@hasDefinitions.17"/>
+    <hasProperties name="warnings" type="List<object>" required="true" referenceDefinition="//@hasDefinitions.16"/>
+    <hasProperties name="waypoint_order" type="List<object>" required="true" referenceDefinition="//@hasDefinitions.17"/>
   </hasDefinitions>
   <hasDefinitions name="Bounds">
     <hasProperties name="northeast" type="object" required="true" referenceDefinition="//@hasDefinitions.5"/>
@@ -38,8 +38,8 @@
     <hasProperties name="end_location" type="object" required="true" referenceDefinition="//@hasDefinitions.10"/>
     <hasProperties name="start_address" type="string" required="true"/>
     <hasProperties name="start_location" type="object" required="true" referenceDefinition="//@hasDefinitions.11"/>
-    <hasProperties name="steps" type="object required="true" referenceDefinition="//@hasDefinitions.12"/>
-    <hasProperties name="via_waypoint" type="object" required="true" referenceDefinition="//@hasDefinitions.13"/>
+    <hasProperties name="steps" type="List<object>" required="true" referenceDefinition="//@hasDefinitions.12"/>
+    <hasProperties name="via_waypoint" type="List<object>" required="true" referenceDefinition="//@hasDefinitions.13"/>
   </hasDefinitions>
   <hasDefinitions name="Distance">
     <hasProperties name="text" type="string" required="true"/>
@@ -66,7 +66,19 @@
     <hasProperties name="polyline" type="object" required="true" referenceDefinition="//@hasDefinitions.14"/>
     <hasProperties name="start_location" type="object" required="true" referenceDefinition="//@hasDefinitions.11"/>
     <hasProperties name="travel_mode" type="string" required="true"/>
-
+  </hasDefinitions>
+  <hasDefinitions name="ViaWaypoint">
+  </hasDefinitions>  
+  <hasDefinitions name="Polyline">
+  	<hasProperties name="points" type="string" required="true"/>
+  </hasDefinitions>
+    <hasDefinitions name="OverviewPolyline">
+  	<hasProperties name="points" type="string" required="true"/>
+  </hasDefinitions> 
+  <hasDefinitions name="Warnings">
+  </hasDefinitions>  
+  <hasDefinitions name="WaypointOrder">
+  </hasDefinitions>  
   <hasInterfaces role="provider">
     <hasOperations name="operation_1" type="two_way_sync">
       <inputData name="origin" type="string" context="query"/>

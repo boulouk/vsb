@@ -46,6 +46,7 @@ public class ParseGIDL {
         // load the resource
         resource.load(null);
       } catch (IOException e) {
+        System.out.println(e.getMessage());
         throw new Exception("Error to load the resource: " + resource.getURI().toFileString());
       }
       GIDLModel gidlModel = (GIDLModel) resource.getContents().get(0);
