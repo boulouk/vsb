@@ -30,11 +30,8 @@ public class WarGeneratorMain {
 //		archive.addPackage(eu.chorevolution.vsb.bcs.weather.BCStarter.class.getPackage());
 //		archive.addPackage(eu.chorevolution.vsb.bcs.weather.bc.BindingComponent.class.getPackage());
 		
-		//For DTSGoogle
-		archive.addPackage(eu.chorevolution.vsb.bcs.dtsgoogle.BCStarter.class.getPackage());
-		archive.addPackage(eu.chorevolution.vsb.bcs.dtsgoogle.bc.BindingComponent.class.getPackage());
 		
-		archive.addPackage(eu.chorevolution.vsb.artifact.war.BCStarterServlet.class.getPackage());
+//		archive.addPackage(eu.chorevolution.vsb.artifact.war.BCStarterServlet.class.getPackage());
 		archive.addAsLibraries(files);
 		archive.addAsWebResource(new File(WEBAPP_SRC, "index.jsp"));
 

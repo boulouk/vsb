@@ -13,7 +13,7 @@
 	<modules>
 		<module>bc-gui</module>
 		<module>weather-bc</module>
-		<module>dtsgoogle-bc</module>
+		
 		<module>rest-bc</module>
   </modules>
 </project>

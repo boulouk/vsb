@@ -46,8 +46,8 @@ public class Java2WSDL {
       String[] arguments = {"-o", "/home/siddhartha/Downloads/chor/evolution-service-bus/vsb-manager/src/test/java", 
           "-of", "test", 
           "-sn", "BindingComponent", 
-          "-tn", "bc.dtsgoogle.bcs.vsb.chorevolution.eu", 
-          "-cn", "eu.chorevolution.vsb.bcs.dtsgoogle.bc.BindingComponent", 
+          "-tn", "generated.bindingcomponent.vsb.chorevolution.eu", 
+          "-cn", "eu.chorevolution.vsb.bindingcomponent.generated.BindingComponent", 
           "-l", "http://localhost:8888/BindingComponent", 
           "-ptn", "BindingComponent",
           "-st", "document",
@@ -91,17 +91,22 @@ public class Java2WSDL {
 
       
       String[] arguments = {"-o", generatedCodePath, 
-          "-of", "test", 
+          "-of", "service.wsdl", 
           "-sn", service_name, 
-          "-tn", "bc.dtsgoogle.bcs.vsb.chorevolution.eu", 
+          "-stn", "eu.chorevolution.vsb.bindingcomponent.generated", //"bc.dtsgoogle.bcs.vsb.chorevolution.eu", eu.chorevolution.vsb.bindingcomponent.generated
+          "-tn", "eu.chorevolution.vsb.bindingcomponent.generated",
+          //"-tp", "eu",
           "-cn", target_namespace + "." + service_name, 
           "-l", "http://localhost:8888/" + service_name, 
           "-ptn", service_name,
+          "-p2n", "[all, eu.chorevolution.vsb.bindingcomponent.generated]",
           "-st", "document",
           "-u", "literal",
           "-dlb",
           "-soap11BindingName", service_name+"PortBinding",
-          "-disableSOAP12", "-disableREST"
+          "-disableSOAP12", "-disableREST",
+          "-efd", "unqualified",
+          "-afd", "unqualified",
           };
       
         Java2WSDLCommandLineOptionParser commandLineOptionParser = new Java2WSDLCommandLineOptionParser(

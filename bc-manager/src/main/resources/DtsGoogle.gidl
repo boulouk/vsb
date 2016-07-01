@@ -13,66 +13,79 @@
   <hasDefinitions name="Routes">
     <hasProperties name="bounds" type="object" required="true" referenceDefinition="//@hasDefinitions.3"/>
     <hasProperties name="copyrights" type="string" required="true"/>
-    <hasProperties name="legs" type="object" required="true" referenceDefinition="//@hasDefinitions.7"/>
-    <hasProperties name="overview_polyline" type="object" required="true" referenceDefinition="//@hasDefinitions.15"/>
+    <hasProperties name="legs" type="object" required="true" referenceDefinition="//@hasDefinitions.6"/>
+    <hasProperties name="overview_polyline" type="object" required="true" referenceDefinition="//@hasDefinitions.14"/>
     <hasProperties name="summary" type="string" required="true"/>
-    <hasProperties name="warnings" type="object required="true" referenceDefinition="//@hasDefinitions.16"/>
-    <hasProperties name="waypoint_order" type="object required="true" referenceDefinition="//@hasDefinitions.17"/>
+    <hasProperties name="warnings" type="object" required="true" referenceDefinition="//@hasDefinitions.15"/>
+    <hasProperties name="waypoint_order" type="object" required="true" referenceDefinition="//@hasDefinitions.16"/>
   </hasDefinitions>
   <hasDefinitions name="Bounds">
-    <hasProperties name="northeast" type="object" required="true" referenceDefinition="//@hasDefinitions.5"/>
-    <hasProperties name="southwest" type="object" required="true" referenceDefinition="//@hasDefinitions.6"/>
+    <hasProperties name="northeast" type="object" required="true" referenceDefinition="//@hasDefinitions.4"/>
+    <hasProperties name="southwest" type="object" required="true" referenceDefinition="//@hasDefinitions.5"/>
   </hasDefinitions>
   <hasDefinitions name="Northeast">
-    <hasProperties name="lat" type="double" required="true"/>
-    <hasProperties name="lng" type="double" required="true"/>
+    <hasProperties name="lat" type="decimal" required="true"/>
+    <hasProperties name="lng" type="decimal" required="true"/>
   </hasDefinitions>
   <hasDefinitions name="Southwest">
-    <hasProperties name="lat" type="double" required="true"/>
-    <hasProperties name="lng" type="double" required="true"/>
+    <hasProperties name="lat" type="decimal" required="true"/>
+    <hasProperties name="lng" type="decimal" required="true"/>
   </hasDefinitions>
   <hasDefinitions name="Legs">
-    <hasProperties name="distance" type="object" required="true" referenceDefinition="//@hasDefinitions.8"/>
-    <hasProperties name="duration" type="object" required="true" referenceDefinition="//@hasDefinitions.9"/>
+    <hasProperties name="distance" type="object" required="true" referenceDefinition="//@hasDefinitions.7"/>
+    <hasProperties name="duration" type="object" required="true" referenceDefinition="//@hasDefinitions.8"/>
     <hasProperties name="end_address" type="string" required="true"/>
-    <hasProperties name="end_location" type="object" required="true" referenceDefinition="//@hasDefinitions.10"/>
+    <hasProperties name="end_location" type="object" required="true" referenceDefinition="//@hasDefinitions.9"/>
     <hasProperties name="start_address" type="string" required="true"/>
-    <hasProperties name="start_location" type="object" required="true" referenceDefinition="//@hasDefinitions.11"/>
-    <hasProperties name="steps" type="object required="true" referenceDefinition="//@hasDefinitions.12"/>
-    <hasProperties name="via_waypoint" type="object" required="true" referenceDefinition="//@hasDefinitions.13"/>
+    <hasProperties name="start_location" type="object" required="true" referenceDefinition="//@hasDefinitions.10"/>
+    <hasProperties name="steps" type="object" required="true" referenceDefinition="//@hasDefinitions.11"/>
+    <hasProperties name="traffic_speed_entry" type="decimal" required="true"/>
+    <hasProperties name="via_waypoint" type="object" required="true" referenceDefinition="//@hasDefinitions.12"/>
   </hasDefinitions>
   <hasDefinitions name="Distance">
     <hasProperties name="text" type="string" required="true"/>
-    <hasProperties name="value" type="double" required="true"/>
+    <hasProperties name="value" type="decimal" required="true"/>
   </hasDefinitions>
   <hasDefinitions name="Duration">
     <hasProperties name="text" type="string" required="true"/>
-    <hasProperties name="value" type="double" required="true"/>
+    <hasProperties name="value" type="decimal" required="true"/>
   </hasDefinitions>
   <hasDefinitions name="EndLocation">
-    <hasProperties name="lat" type="double" required="true"/>
-    <hasProperties name="lng" type="double" required="true"/>
+    <hasProperties name="lat" type="decimal" required="true"/>
+    <hasProperties name="lng" type="decimal" required="true"/>
   </hasDefinitions>
   <hasDefinitions name="StartLocation">
-    <hasProperties name="lat" type="double" required="true"/>
-    <hasProperties name="lng" type="double" required="true"/>
+    <hasProperties name="lat" type="decimal" required="true"/>
+    <hasProperties name="lng" type="decimal" required="true"/>
   </hasDefinitions>  
   <hasDefinitions name="Steps">
-    <hasProperties name="distance" type="object" required="true" referenceDefinition="//@hasDefinitions.8"/>
-    <hasProperties name="duration" type="object" required="true" referenceDefinition="//@hasDefinitions.9"/>
-    <hasProperties name="end_location" type="object" required="true" referenceDefinition="//@hasDefinitions.10"/>
+    <hasProperties name="distance" type="object" required="true" referenceDefinition="//@hasDefinitions.7"/>
+    <hasProperties name="duration" type="object" required="true" referenceDefinition="//@hasDefinitions.8"/>
+    <hasProperties name="end_location" type="object" required="true" referenceDefinition="//@hasDefinitions.9"/>
     <hasProperties name="html_instructions" type="string" required="true"/>
     <hasProperties name="maneuver" type="string" required="true"/>
-    <hasProperties name="polyline" type="object" required="true" referenceDefinition="//@hasDefinitions.14"/>
-    <hasProperties name="start_location" type="object" required="true" referenceDefinition="//@hasDefinitions.11"/>
+    <hasProperties name="polyline" type="object" required="true" referenceDefinition="//@hasDefinitions.13"/>
+    <hasProperties name="start_location" type="object" required="true" referenceDefinition="//@hasDefinitions.10"/>
     <hasProperties name="travel_mode" type="string" required="true"/>
-
+  </hasDefinitions>
+  <hasDefinitions name="ViaWaypoint">
+  </hasDefinitions>  
+  <hasDefinitions name="Polyline">
+  	<hasProperties name="points" type="string" required="true"/>
+  </hasDefinitions>
+    <hasDefinitions name="OverviewPolyline">
+  	<hasProperties name="points" type="string" required="true"/>
+  </hasDefinitions> 
+  <hasDefinitions name="Warnings">
+  </hasDefinitions>  
+  <hasDefinitions name="WaypointOrder">
+  </hasDefinitions>  
   <hasInterfaces role="provider">
     <hasOperations name="operation_1" type="two_way_sync">
-      <inputData name="origin" type="string" context="query"/>
-      <inputData name="destination" type="string" context="query"/>
+      <inputData name="arg0" type="string" context="path"/>
+      <inputData name="arg1" type="string" context="path"/>
       <outputData name="route" type="object" context="body" hasDefinition="//@hasDefinitions.0"/>
-      <hasScope name="routeRequest" verb="GET" uri="/maps/api/directions/json?origin={origin}&amp;destination={destination}&amp;key={key}"/>
+      <hasScope name="routeRequest" verb="GET" uri="/maps/api/directions/json?origin={arg0}&amp;destination={arg1}&amp;key={key}"/>
     </hasOperations>
   </hasInterfaces>
 </gidl:GIDLModel>

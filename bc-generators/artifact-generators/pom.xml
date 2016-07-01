@@ -64,11 +64,7 @@
 			<artifactId>weather-bc</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		<dependency>
-			<groupId>eu.chorevolution.vsb</groupId>
-			<artifactId>dtsgoogle-bc</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+		
 		<!-- CodeModel -->
 		<dependency>
 			<groupId>com.sun.codemodel</groupId>

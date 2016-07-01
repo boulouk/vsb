@@ -39,6 +39,7 @@
     <hasProperties name="start_address" type="string" required="true"/>
     <hasProperties name="start_location" type="object" required="true" referenceDefinition="//@hasDefinitions.11"/>
     <hasProperties name="steps" type="List<object>" required="true" referenceDefinition="//@hasDefinitions.12"/>
+    <hasProperties name="traffic_speed_entry" type="List<decimal>" required="true"/>
     <hasProperties name="via_waypoint" type="List<object>" required="true" referenceDefinition="//@hasDefinitions.13"/>
   </hasDefinitions>
   <hasDefinitions name="Distance">

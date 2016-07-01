@@ -65,6 +65,8 @@ public class BcSoapGenerator extends BcSubcomponentGenerator {
 
     definitionClass.annotate(javax.xml.bind.annotation.XmlRootElement.class).param("name", definition.getClassName());
     
+    System.out.println(definition.getName());
+    
     for (Data<?> attr : definition.getAttributes()) { 
       JFieldVar attrField = null;
       if(attr.getClassName().indexOf("<")!=-1) {

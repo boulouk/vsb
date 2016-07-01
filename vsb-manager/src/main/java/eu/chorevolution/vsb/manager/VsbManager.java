@@ -127,7 +127,8 @@ public class VsbManager {
     
     if(busProtocol == ProtocolType.SOAP) {
       BcSoapGenerator soapGenerator = (BcSoapGenerator) new BcSoapGenerator(gmServiceRepresentation, bcConfiguration).setDebug(true); 
-      soapGenerator.generateBc();
+      // temporarily disabled
+//      soapGenerator.generateBc();
       soapGenerator.generateWSDL();;
     }
 
@@ -210,11 +211,11 @@ public class VsbManager {
     JVar GmServiceRepresentationVar = jBlock.decl(GmServiceRepresentationClass, "gmServiceRepresentation", JExpr._null());
 
     JVar interfaceDescriptionPathVar = null;
-    interfaceDescriptionPathVar = jBlock.decl(StringClass, "interfaceDescFilePath", BcManagerClass.dotclass().invoke("getClassLoader").invoke("getResource").arg("dts-google1.json").invoke("toExternalForm").invoke("substring").arg(intFiveVar));
+    interfaceDescriptionPathVar = jBlock.decl(StringClass, "interfaceDescFilePath", BcManagerClass.dotclass().invoke("getClassLoader").invoke("getResource").arg("DtsGoogle.gidl").invoke("toExternalForm").invoke("substring").arg(intFiveVar));
 
     JClass serviceDescriptionClass = jCodeModel.ref(ServiceDescriptionParser.class);
 
-    JInvocation getInterfaceRepresentation = serviceDescriptionClass.staticInvoke("getRepresentationFromGMDL").arg(interfaceDescriptionPathVar); 
+    JInvocation getInterfaceRepresentation = serviceDescriptionClass.staticInvoke("getRepresentationFromGIDL").arg(interfaceDescriptionPathVar); 
     //    jBlock.add(getInterfaceRepresentation);
     jBlock.assign(GmServiceRepresentationVar, getInterfaceRepresentation);
 
@@ -364,11 +365,12 @@ public class VsbManager {
       jsonObject.put("service_name", (String) configJsonObject.get("service_name"));
     }
 
-    try (FileWriter file = new FileWriter(filename)) {
-      file.write(jsonObject.toJSONString());
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+ // temporarily disabled
+//    try (FileWriter file = new FileWriter(filename)) {
+//      file.write(jsonObject.toJSONString());
+//    } catch (IOException e) {
+//      e.printStackTrace();
+//    }
   }
 
 }
