@@ -149,7 +149,7 @@ public class VsbManager {
       JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
       
       if(compiler == null) {
-        System.setProperty("java.home", System.getProperty("JAVA_HOME"));
+        System.setProperty("java.home", System.getenv("JAVA_HOME"));
         compiler = ToolProvider.getSystemJavaCompiler();
         if(compiler == null) {
           try {
