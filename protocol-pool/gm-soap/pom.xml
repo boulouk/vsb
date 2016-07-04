@@ -84,13 +84,5 @@
 			<artifactId>axis2-java2wsdl</artifactId>
 			<version>1.7.3</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/axis2/axis2 -->
-		<dependency>
-			<groupId>axis2</groupId>
-			<artifactId>axis2</artifactId>
-			<version>1.0</version>
-		</dependency>
-		
-	
 	</dependencies>
 </project>
