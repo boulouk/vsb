@@ -19,7 +19,8 @@ public class GeneratedFactory {
         java.lang.Integer intOne;
         intOne = Integer.parseInt("1");
         GmServiceRepresentation gmServiceRepresentation = null;
-        String interfaceDescFilePath = BindingComponent.class.getClassLoader().getResource("DtsGoogle.gidl").toExternalForm().substring(intFive);
+        String interfaceDescFilePath;
+        interfaceDescFilePath = "/home/siddhartha/Downloads/chor/evolution-service-bus/bc-manager/target/classes/DtsGoogle.gidl";
         gmServiceRepresentation = ServiceDescriptionParser.getRepresentationFromGIDL(interfaceDescFilePath);
         for (int i = 0; (i<gmServiceRepresentation.getInterfaces().size()); i += 1) {
             Interface inter = null;

@@ -1,6 +1,7 @@
 
 package eu.chorevolution.vsb.bindingcomponent.copy.generated;
 
+import eu.chorevolution.vsb.bc.manager.BcManager;
 import eu.chorevolution.vsb.gm.protocols.primitives.BcGmSubcomponent;
 import eu.chorevolution.vsb.gm.protocols.rest.BcRestSubcomponent;
 import eu.chorevolution.vsb.gm.protocols.soap.BcSoapSubcomponent;
@@ -14,13 +15,12 @@ public class GeneratedFactory {
 
 
     public static void run() {
-        java.lang.Integer intFive;
-        intFive = Integer.parseInt("5");
         java.lang.Integer intOne;
         intOne = Integer.parseInt("1");
         GmServiceRepresentation gmServiceRepresentation = null;
-        String interfaceDescFilePath = BindingComponent.class.getClassLoader().getResource("dts-google1.json").toExternalForm().substring(intFive);
-        gmServiceRepresentation = ServiceDescriptionParser.getRepresentationFromGMDL(interfaceDescFilePath);
+        String interfaceDescFilePath;
+        interfaceDescFilePath = "/home/siddhartha/Downloads/chor/evolution-service-bus/bc-manager/target/classes/DtsGoogle.gidl";
+        gmServiceRepresentation = ServiceDescriptionParser.getRepresentationFromGIDL(interfaceDescFilePath);
         for (int i = 0; (i<gmServiceRepresentation.getInterfaces().size()); i += 1) {
             Interface inter = null;
             inter = gmServiceRepresentation.getInterfaces().get(i);

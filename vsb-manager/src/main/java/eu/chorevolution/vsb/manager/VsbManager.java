@@ -188,7 +188,7 @@ public class VsbManager {
 
     
     JClass BcManagerClass = null;
-    BcManagerClass = jCodeModel.ref((String) jsonObject.get("target_namespace") + "." + (String) jsonObject.get("service_name"));
+    BcManagerClass = jCodeModel.ref(eu.chorevolution.vsb.bc.manager.BcManager.class);
 //    JVar StringObjectVar = null;
     //    StringObjectVar = jBlock.decl(StringClass, "configFilePath", BcManagerClass.dotclass().invoke("getClassLoader").invoke("getResource").arg("config.json").invoke("toExternalForm").invoke("substring").arg(intFiveVar));
 //    JClass ExceptionClass = jCodeModel.ref(java.lang.Exception.class);
@@ -210,12 +210,27 @@ public class VsbManager {
     JClass GmServiceRepresentationClass = jCodeModel.ref(eu.chorevolution.vsb.gmdl.utils.GmServiceRepresentation.class);
     JVar GmServiceRepresentationVar = jBlock.decl(GmServiceRepresentationClass, "gmServiceRepresentation", JExpr._null());
 
+    JClass ConstantsClass = jCodeModel.ref(eu.chorevolution.vsb.gmdl.utils.Constants.class);
+    
     JVar interfaceDescriptionPathVar = null;
-    interfaceDescriptionPathVar = jBlock.decl(StringClass, "interfaceDescFilePath", BcManagerClass.dotclass().invoke("getClassLoader").invoke("getResource").arg("DtsGoogle.gidl").invoke("toExternalForm").invoke("substring").arg(intFiveVar));
-
+    interfaceDescriptionPathVar = jBlock.decl(StringClass, "interfaceDescFilePath");
+    jBlock.assign(JExpr.ref(interfaceDescriptionPathVar.name()), JExpr.lit(Constants.intefaceDescriptionFilePath));
+    
+    
     JClass serviceDescriptionClass = jCodeModel.ref(ServiceDescriptionParser.class);
 
-    JInvocation getInterfaceRepresentation = serviceDescriptionClass.staticInvoke("getRepresentationFromGIDL").arg(interfaceDescriptionPathVar); 
+    String interfaceDescriptionPath = Constants.intefaceDescriptionFilePath;
+    String extension = ""; 
+    String[] interfaceDescPieces = interfaceDescriptionPath.split("\\.");
+    extension = interfaceDescPieces[interfaceDescPieces.length-1];
+    JInvocation getInterfaceRepresentation = null;
+    switch(extension) {
+    case "gmdl":
+      getInterfaceRepresentation = serviceDescriptionClass.staticInvoke("getRepresentationFromGIDL").arg(interfaceDescriptionPathVar); 
+    case "gidl":
+      getInterfaceRepresentation = serviceDescriptionClass.staticInvoke("getRepresentationFromGIDL").arg(interfaceDescriptionPathVar); 
+    }
+    
     //    jBlock.add(getInterfaceRepresentation);
     jBlock.assign(GmServiceRepresentationVar, getInterfaceRepresentation);
 
