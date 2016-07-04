@@ -6,6 +6,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -41,9 +45,11 @@ import com.sun.codemodel.JMod;
 import com.sun.codemodel.JPackage;
 import com.sun.codemodel.JTryBlock;
 import com.sun.codemodel.JVar;
+import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import eu.chorevolution.vsb.artifact.generators.WarGenerator;
 import eu.chorevolution.vsb.bc.manager.BcManager;
+import eu.chorevolution.vsb.bindingcomponent.copy.generated.BindingComponent;
 import eu.chorevolution.vsb.gm.protocols.generators.BcSubcomponentGenerator;
 import eu.chorevolution.vsb.gm.protocols.mqtt.BcMQTTSubcomponent;
 import eu.chorevolution.vsb.gm.protocols.primitives.BcGmSubcomponent;
@@ -160,6 +166,26 @@ public class VsbManager {
       if (!compilerTask.call()) {
         System.out.println("Could not compile project");
       }
+      
+//      URL[] urls = new java.net.URL[1];
+//      java.net.URL url = null;
+//      try {
+//        url = new URL("file://home/siddhartha/Downloads/chor"
+//            + "/evolution-service-bus/vsb-manager/src/main/java/eu/"
+//            + "chorevolution/vsb/bindingcomponent/generated/BindingComponent.class");
+//      } catch (MalformedURLException e1) {
+//        e1.printStackTrace();
+//      }
+//      urls[0] = url;
+//      URLClassLoader urlclass = new URLClassLoader(urls);
+   
+//      ClassLoader classLoader = VsbManager.class.getClassLoader();
+//      try {
+//          Class aClass = classLoader.loadClass("eu.chorevolution.vsb.bindingcomponent.generated.BindingComponent");
+//          System.out.println("aClass.getName() = " + aClass.getName());
+//      } catch (ClassNotFoundException e) {
+//          e.printStackTrace();
+//      }
 
       soapGenerator.generateWSDL();;
     }
@@ -282,7 +308,7 @@ public class VsbManager {
     JInvocation getInterfaceRepresentation = null;
     switch(extension) {
     case "gmdl":
-      getInterfaceRepresentation = serviceDescriptionClass.staticInvoke("getRepresentationFromGIDL").arg(interfaceDescriptionPathVar); 
+      getInterfaceRepresentation = serviceDescriptionClass.staticInvoke("getRepresentationFromGMDL").arg(interfaceDescriptionPathVar); 
     case "gidl":
       getInterfaceRepresentation = serviceDescriptionClass.staticInvoke("getRepresentationFromGIDL").arg(interfaceDescriptionPathVar); 
     }
