@@ -1,13 +1,10 @@
 
 package eu.chorevolution.vsb.bindingcomponent.generated;
 
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
 
 
 /**
@@ -19,25 +16,25 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Itinerary {
 
     @XmlElement(name = "geocoded_waypoints", required = true)
-    private List<GeocodedWayPoints> geocoded_waypoints;
+    private GeocodedWayPoints geocoded_waypoints;
     @XmlElement(name = "routes", required = true)
-    private List<Routes> routes;
+    private Routes routes;
     @XmlElement(name = "status", required = true)
     private String status;
 
-    public List<GeocodedWayPoints> getgeocoded_waypoints() {
+    public GeocodedWayPoints getgeocoded_waypoints() {
         return geocoded_waypoints;
     }
 
-    public void setgeocoded_waypoints(List<GeocodedWayPoints> geocoded_waypoints) {
+    public void setgeocoded_waypoints(GeocodedWayPoints geocoded_waypoints) {
         this.geocoded_waypoints = geocoded_waypoints;
     }
 
-    public List<Routes> getroutes() {
+    public Routes getroutes() {
         return routes;
     }
 
-    public void setroutes(List<Routes> routes) {
+    public void setroutes(Routes routes) {
         this.routes = routes;
     }
 

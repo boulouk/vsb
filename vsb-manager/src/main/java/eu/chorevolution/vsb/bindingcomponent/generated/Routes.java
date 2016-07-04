@@ -1,13 +1,10 @@
 
 package eu.chorevolution.vsb.bindingcomponent.generated;
 
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
 
 
 /**
@@ -23,15 +20,15 @@ public class Routes {
     @XmlElement(name = "copyrights", required = true)
     private String copyrights;
     @XmlElement(name = "legs", required = true)
-    private List<Legs> legs;
+    private Legs legs;
     @XmlElement(name = "overview_polyline", required = true)
     private OverviewPolyline overview_polyline;
     @XmlElement(name = "summary", required = true)
     private String summary;
     @XmlElement(name = "warnings", required = true)
-    private List<Warnings> warnings;
+    private Warnings warnings;
     @XmlElement(name = "waypoint_order", required = true)
-    private List<WaypointOrder> waypoint_order;
+    private WaypointOrder waypoint_order;
 
     public Bounds getbounds() {
         return bounds;
@@ -49,11 +46,11 @@ public class Routes {
         this.copyrights = copyrights;
     }
 
-    public List<Legs> getlegs() {
+    public Legs getlegs() {
         return legs;
     }
 
-    public void setlegs(List<Legs> legs) {
+    public void setlegs(Legs legs) {
         this.legs = legs;
     }
 
@@ -73,19 +70,19 @@ public class Routes {
         this.summary = summary;
     }
 
-    public List<Warnings> getwarnings() {
+    public Warnings getwarnings() {
         return warnings;
     }
 
-    public void setwarnings(List<Warnings> warnings) {
+    public void setwarnings(Warnings warnings) {
         this.warnings = warnings;
     }
 
-    public List<WaypointOrder> getwaypoint_order() {
+    public WaypointOrder getwaypoint_order() {
         return waypoint_order;
     }
 
-    public void setwaypoint_order(List<WaypointOrder> waypoint_order) {
+    public void setwaypoint_order(WaypointOrder waypoint_order) {
         this.waypoint_order = waypoint_order;
     }
 

@@ -1,8 +1,6 @@
 
 package eu.chorevolution.vsb.bindingcomponent.generated;
 
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -22,7 +20,7 @@ public class GeocodedWayPoints {
     @XmlElement(name = "place_id", required = true)
     private String place_id;
     @XmlElement(name = "types", required = true)
-    private List<String> types;
+    private String types;
 
     public String getgeocoder_status() {
         return geocoder_status;
@@ -40,11 +38,11 @@ public class GeocodedWayPoints {
         this.place_id = place_id;
     }
 
-    public List<String> gettypes() {
+    public String gettypes() {
         return types;
     }
 
-    public void settypes(List<String> types) {
+    public void settypes(String types) {
         this.types = types;
     }
 

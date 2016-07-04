@@ -6,7 +6,17 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+
+import javax.tools.JavaCompiler;
+import javax.tools.JavaCompiler.CompilationTask;
+import javax.tools.JavaFileObject;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.ToolProvider;
 
 import org.apache.camel.language.Constant;
 import org.json.simple.JSONObject;
@@ -56,30 +66,30 @@ public class VsbManager {
     Constants.configFilePath = BcManager.class.getClassLoader().getResource("config.json").toExternalForm().substring(5);
     Constants.intefaceDescriptionFilePath = BcManager.class.getClassLoader().getResource("DtsGoogle.gidl").toExternalForm().substring(5);
     Constants.webapp_src = new File(".." + File.separator + "bc-generators" + File.separator + "artifact-generators" 
-                                          + File.separator + "src" + File.separator + "main" + File.separator 
-                                          + "webapp").getAbsolutePath();
+        + File.separator + "src" + File.separator + "main" + File.separator 
+        + "webapp").getAbsolutePath();
     Constants.warDestination = new File(".." + File.separator + "bc-generators" + File.separator + "artifact-generators" 
-                                          + File.separator + "src" + File.separator + "main" + File.separator 
-                                          + "webapp" + File.separator + "test.war").getAbsolutePath();
+        + File.separator + "src" + File.separator + "main" + File.separator 
+        + "webapp" + File.separator + "test.war").getAbsolutePath();
   }
 
   public static void main(String[] args) {
-    
+
     setConstants();
-    
+
     String interfaceDescriptionPath = Constants.intefaceDescriptionFilePath;
 
     generateBindingComponent(interfaceDescriptionPath, ProtocolType.SOAP);
-    
+
     // TODO: instantiate the right generator based on the bcConfig
     // could use JAVA Service Provider Interface (SPI) for a clean and clear implementation
     //    JarGenerator.generateBc(new BcSoapGenerator(gmComponentDescription, new BcConfiguration(bcConfiguration)));
     WarGenerator warGenerator = new WarGenerator();
-//    warGenerator.addPackage(pack);
-//    System.out.println(VsbManager.class.getClassLoader().getResource("pom.xml").toExternalForm().substring(5));
+    //    warGenerator.addPackage(pack);
+    //    System.out.println(VsbManager.class.getClassLoader().getResource("pom.xml").toExternalForm().substring(5));
     warGenerator.addPackage(eu.chorevolution.vsb.manager.VsbManager.class.getPackage());
     warGenerator.addPackage(eu.chorevolution.vsb.java2wsdl.Java2WSDL.class.getPackage());
-//    warGenerator.addPackage(eu.chorevolution.vsb.bindingcomponent.generated.GeneratedFactory.class.getPackage());
+    //    warGenerator.addPackage(eu.chorevolution.vsb.bindingcomponent.generated.GeneratedFactory.class.getPackage());
     warGenerator.addPackage(eu.chorevolution.vsb.gmdl.tools.serviceparser.ServiceDescriptionParser.class.getPackage());
     warGenerator.addPackage(eu.chorevolution.vsb.gmdl.tools.serviceparser.gidl.ParseGIDL.class.getPackage());
     warGenerator.addPackage(eu.chorevolution.vsb.gmdl.tools.serviceparser.gmdl.ParseGMDL.class.getPackage());
@@ -87,8 +97,8 @@ public class VsbManager {
     warGenerator.addPackage(eu.chorevolution.vsb.gmdl.utils.enums.OperationType.class.getPackage());
     warGenerator.addPackage(eu.chorevolution.vsb.gm.protocols.soap.BcSoapGenerator.class.getPackage());
     warGenerator.addPackage(eu.chorevolution.vsb.gm.protocols.rest.BcRestGenerator.class.getPackage());
-    
-//    warGenerator.addDependencyFiles("/home/siddhartha/Downloads/chor/evolution-service-bus/vsb-manager/pom.xml");
+
+    //    warGenerator.addDependencyFiles("/home/siddhartha/Downloads/chor/evolution-service-bus/vsb-manager/pom.xml");
     warGenerator.generate();
   }
 
@@ -113,28 +123,75 @@ public class VsbManager {
     bcConfiguration.setGeneratedCodePath(Constants.generatedCodePath);
     bcConfiguration.setTargetNamespace((String) jsonObject.get("target_namespace"));
     bcConfiguration.setServiceName((String) jsonObject.get("service_name"));
-    
+
     String extension = ""; 
     String[] interfaceDescPieces = interfaceDescription.split("\\.");
     extension = interfaceDescPieces[interfaceDescPieces.length-1];
-    
+
     switch(extension) {
     case "gmdl":
       gmServiceRepresentation = ServiceDescriptionParser.getRepresentationFromGMDL(interfaceDescription);
     case "gidl":
       gmServiceRepresentation = ServiceDescriptionParser.getRepresentationFromGIDL(interfaceDescription);
     }
-    
+
     if(busProtocol == ProtocolType.SOAP) {
       BcSoapGenerator soapGenerator = (BcSoapGenerator) new BcSoapGenerator(gmServiceRepresentation, bcConfiguration).setDebug(true); 
       // temporarily disabled
-//      soapGenerator.generateBc();
+      soapGenerator.generateBc();
+
+      JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+      StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, Locale.getDefault(), null);
+      File sourceDir = new File("/home/siddhartha/"
+          + "Downloads/chor/evolution-service-bus/vsb-manager/src/main/java/eu/chorevolution/vsb/"
+          + "bindingcomponent/generated");
+      List<JavaFileObject> javaObjects = scanRecursivelyForJavaObjects(sourceDir, fileManager);
+
+      if (javaObjects.size() == 0) {
+        System.out.println("There are no source files to compile in " + sourceDir.getAbsolutePath());
+      }
+      
+      File classDir = new File("/home/siddhartha/"
+          + "Downloads/chor/evolution-service-bus/vsb-manager/src/main/java");
+      String[] compileOptions = new String[]{"-d", classDir.getAbsolutePath()} ;
+      Iterable<String> compilationOptions = Arrays.asList(compileOptions);
+
+      CompilationTask compilerTask = compiler.getTask(null, fileManager, null, compilationOptions, null, javaObjects) ;
+
+      if (!compilerTask.call()) {
+        System.out.println("Could not compile project");
+      }
+
       soapGenerator.generateWSDL();;
     }
 
     generateBCClass(gmServiceRepresentation, busProtocol);
 
   }
+
+  private static List<JavaFileObject> scanRecursivelyForJavaObjects(File dir, StandardJavaFileManager fileManager) { 
+    List<JavaFileObject> javaObjects = new LinkedList<JavaFileObject>(); 
+    File[] files = dir.listFiles(); 
+    for (File file : files) { 
+      if (file.isDirectory()) { 
+        javaObjects.addAll(scanRecursivelyForJavaObjects(file, fileManager)); 
+      } 
+      else if (file.isFile() && file.getName().toLowerCase().endsWith(".java")) { 
+        javaObjects.add(readJavaObject(file, fileManager)); 
+      } 
+    } 
+    return javaObjects; 
+  } 
+
+
+  private static JavaFileObject readJavaObject(File file, StandardJavaFileManager fileManager) { 
+    Iterable<? extends JavaFileObject> javaFileObjects = fileManager.getJavaFileObjects(file); 
+    Iterator<? extends JavaFileObject> it = javaFileObjects.iterator(); 
+    if (it.hasNext()) { 
+      return it.next(); 
+    } 
+    throw new RuntimeException("Could not load " + file.getAbsolutePath() + " java file object"); 
+  } 
 
   public static void generateBCClass(GmServiceRepresentation gmServiceRepresentation, ProtocolType busProtocol) {
 
@@ -168,13 +225,13 @@ public class VsbManager {
     /* Adding method body */
     JBlock jBlock = jmCreate.body();
 
-//    JClass JSONParserClass = jCodeModel.ref(org.json.simple.parser.JSONParser.class);
-//    JVar JSONParserVar = jBlock.decl(JSONParserClass, "parser");
-//    JSONParserVar.init(JExpr._new(JSONParserClass));
-//
-//    JClass JSONObjectClass = jCodeModel.ref(org.json.simple.JSONObject.class);
-//    JVar JSONObjectVar = jBlock.decl(JSONObjectClass, "jsonObject");
-//    JSONObjectVar.init(JExpr._new(JSONObjectClass));
+    //    JClass JSONParserClass = jCodeModel.ref(org.json.simple.parser.JSONParser.class);
+    //    JVar JSONParserVar = jBlock.decl(JSONParserClass, "parser");
+    //    JSONParserVar.init(JExpr._new(JSONParserClass));
+    //
+    //    JClass JSONObjectClass = jCodeModel.ref(org.json.simple.JSONObject.class);
+    //    JVar JSONObjectVar = jBlock.decl(JSONObjectClass, "jsonObject");
+    //    JSONObjectVar.init(JExpr._new(JSONObjectClass));
 
 
     JClass integerClass = jCodeModel.ref(java.lang.Integer.class);
@@ -186,37 +243,37 @@ public class VsbManager {
     JVar intOneVar = jBlock.decl(integerClass, "intOne");
     jBlock.assign(JExpr.ref(intOneVar.name()),jCodeModel.ref("Integer").staticInvoke("parseInt").arg("1"));
 
-    
+
     JClass BcManagerClass = null;
     BcManagerClass = jCodeModel.ref(eu.chorevolution.vsb.bc.manager.BcManager.class);
-//    JVar StringObjectVar = null;
+    //    JVar StringObjectVar = null;
     //    StringObjectVar = jBlock.decl(StringClass, "configFilePath", BcManagerClass.dotclass().invoke("getClassLoader").invoke("getResource").arg("config.json").invoke("toExternalForm").invoke("substring").arg(intFiveVar));
-//    JClass ExceptionClass = jCodeModel.ref(java.lang.Exception.class);
-//
-//    JTryBlock parseTryBlock = jBlock._try();
-//    JBlock parseBlock = parseTryBlock.body();
-//
-//    JClass FileReaderClass = jCodeModel.ref(java.io.FileReader.class);
-//    JVar FileReaderVar = parseBlock.decl(FileReaderClass, "fileReader");
-//    FileReaderVar.init(JExpr._new(FileReaderClass).arg(StringObjectVar));
-//
-//    JInvocation parserInvocation = JSONParserVar.invoke("parse");
-//    parserInvocation.arg(FileReaderVar);
-//
-//    parseBlock.assign(JExpr.ref(JSONObjectVar.name()),JExpr.cast(JSONObjectClass, parserInvocation));
-//
-//    JCatchBlock parseCatchBlock = parseTryBlock._catch(ExceptionClass);
+    //    JClass ExceptionClass = jCodeModel.ref(java.lang.Exception.class);
+    //
+    //    JTryBlock parseTryBlock = jBlock._try();
+    //    JBlock parseBlock = parseTryBlock.body();
+    //
+    //    JClass FileReaderClass = jCodeModel.ref(java.io.FileReader.class);
+    //    JVar FileReaderVar = parseBlock.decl(FileReaderClass, "fileReader");
+    //    FileReaderVar.init(JExpr._new(FileReaderClass).arg(StringObjectVar));
+    //
+    //    JInvocation parserInvocation = JSONParserVar.invoke("parse");
+    //    parserInvocation.arg(FileReaderVar);
+    //
+    //    parseBlock.assign(JExpr.ref(JSONObjectVar.name()),JExpr.cast(JSONObjectClass, parserInvocation));
+    //
+    //    JCatchBlock parseCatchBlock = parseTryBlock._catch(ExceptionClass);
 
     JClass GmServiceRepresentationClass = jCodeModel.ref(eu.chorevolution.vsb.gmdl.utils.GmServiceRepresentation.class);
     JVar GmServiceRepresentationVar = jBlock.decl(GmServiceRepresentationClass, "gmServiceRepresentation", JExpr._null());
 
     JClass ConstantsClass = jCodeModel.ref(eu.chorevolution.vsb.gmdl.utils.Constants.class);
-    
+
     JVar interfaceDescriptionPathVar = null;
     interfaceDescriptionPathVar = jBlock.decl(StringClass, "interfaceDescFilePath");
     jBlock.assign(JExpr.ref(interfaceDescriptionPathVar.name()), JExpr.lit(Constants.intefaceDescriptionFilePath));
-    
-    
+
+
     JClass serviceDescriptionClass = jCodeModel.ref(ServiceDescriptionParser.class);
 
     String interfaceDescriptionPath = Constants.intefaceDescriptionFilePath;
@@ -230,7 +287,7 @@ public class VsbManager {
     case "gidl":
       getInterfaceRepresentation = serviceDescriptionClass.staticInvoke("getRepresentationFromGIDL").arg(interfaceDescriptionPathVar); 
     }
-    
+
     //    jBlock.add(getInterfaceRepresentation);
     jBlock.assign(GmServiceRepresentationVar, getInterfaceRepresentation);
 
@@ -346,7 +403,7 @@ public class VsbManager {
     String configPath = BcManager.class.getClassLoader().getResource("config.json").toExternalForm().substring(5);
     JSONParser configParser = new JSONParser();
     JSONObject configJsonObject = null;
-    
+
     String configTemplatePath = "";
     JSONParser parser = new JSONParser();
     JSONObject jsonObject = null;
@@ -380,12 +437,12 @@ public class VsbManager {
       jsonObject.put("service_name", (String) configJsonObject.get("service_name"));
     }
 
- // temporarily disabled
-//    try (FileWriter file = new FileWriter(filename)) {
-//      file.write(jsonObject.toJSONString());
-//    } catch (IOException e) {
-//      e.printStackTrace();
-//    }
+    // temporarily disabled
+    try (FileWriter file = new FileWriter(filename)) {
+      file.write(jsonObject.toJSONString());
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
 }

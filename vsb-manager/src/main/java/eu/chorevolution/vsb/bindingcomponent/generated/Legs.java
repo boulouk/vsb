@@ -1,13 +1,10 @@
 
 package eu.chorevolution.vsb.bindingcomponent.generated;
 
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
 
 
 /**
@@ -31,11 +28,11 @@ public class Legs {
     @XmlElement(name = "start_location", required = true)
     private StartLocation start_location;
     @XmlElement(name = "steps", required = true)
-    private List<Steps> steps;
+    private Steps steps;
     @XmlElement(name = "traffic_speed_entry", required = true)
-    private List<Double> traffic_speed_entry;
+    private double traffic_speed_entry;
     @XmlElement(name = "via_waypoint", required = true)
-    private List<ViaWaypoint> via_waypoint;
+    private ViaWaypoint via_waypoint;
 
     public Distance getdistance() {
         return distance;
@@ -85,28 +82,28 @@ public class Legs {
         this.start_location = start_location;
     }
 
-    public List<Steps> getsteps() {
+    public Steps getsteps() {
         return steps;
     }
 
-    public void setsteps(List<Steps> steps) {
+    public void setsteps(Steps steps) {
         this.steps = steps;
     }
 
-    public List<ViaWaypoint> getvia_waypoint() {
+    public double gettraffic_speed_entry() {
+        return traffic_speed_entry;
+    }
+
+    public void settraffic_speed_entry(double traffic_speed_entry) {
+        this.traffic_speed_entry = traffic_speed_entry;
+    }
+
+    public ViaWaypoint getvia_waypoint() {
         return via_waypoint;
     }
 
-    public void setvia_waypoint(List<ViaWaypoint> via_waypoint) {
+    public void setvia_waypoint(ViaWaypoint via_waypoint) {
         this.via_waypoint = via_waypoint;
     }
-    
-    public List<Double> gettraffic_speed_entry() {
-      return traffic_speed_entry;
-  }
-
-  public void settraffic_speed_entry(List<Double> traffic_speed_entry) {
-      this.traffic_speed_entry = traffic_speed_entry;
-  }
 
 }

@@ -4,15 +4,15 @@
             <xs:element name="routeRequest">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element minOccurs="0" name="origin1" nillable="true" type="xs:string"/>
-                        <xs:element minOccurs="0" name="destination1" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="arg0" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="arg1" nillable="true" type="xs:string"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
             <xs:complexType name="Itinerary">
                 <xs:sequence>
-                    <xs:element maxOccurs="unbounded" minOccurs="0" name="geocoded_waypoints" nillable="true" type="ns:GeocodedWayPoints"/>
-                    <xs:element maxOccurs="unbounded" minOccurs="0" name="routes" nillable="true" type="ns:Routes"/>
+                    <xs:element minOccurs="0" name="geocoded_waypoints" nillable="true" type="ns:GeocodedWayPoints"/>
+                    <xs:element minOccurs="0" name="routes" nillable="true" type="ns:Routes"/>
                     <xs:element minOccurs="0" name="status" nillable="true" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
@@ -20,18 +20,18 @@
                 <xs:sequence>
                     <xs:element minOccurs="0" name="geocoder_status" nillable="true" type="xs:string"/>
                     <xs:element minOccurs="0" name="place_id" nillable="true" type="xs:string"/>
-                    <xs:element maxOccurs="unbounded" minOccurs="0" name="types" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="types" nillable="true" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="Routes">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="bounds" nillable="true" type="ns:Bounds"/>
                     <xs:element minOccurs="0" name="copyrights" nillable="true" type="xs:string"/>
-                    <xs:element maxOccurs="unbounded" minOccurs="0" name="legs" nillable="true" type="ns:Legs"/>
+                    <xs:element minOccurs="0" name="legs" nillable="true" type="ns:Legs"/>
                     <xs:element minOccurs="0" name="overview_polyline" nillable="true" type="ns:OverviewPolyline"/>
                     <xs:element minOccurs="0" name="summary" nillable="true" type="xs:string"/>
-                    <xs:element maxOccurs="unbounded" minOccurs="0" name="warnings" nillable="true" type="ns:Warnings"/>
-                    <xs:element maxOccurs="unbounded" minOccurs="0" name="waypoint_order" nillable="true" type="ns:WaypointOrder"/>
+                    <xs:element minOccurs="0" name="warnings" nillable="true" type="ns:Warnings"/>
+                    <xs:element minOccurs="0" name="waypoint_order" nillable="true" type="ns:WaypointOrder"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="Bounds">
@@ -60,9 +60,9 @@
                     <xs:element minOccurs="0" name="end_location" nillable="true" type="ns:EndLocation"/>
                     <xs:element minOccurs="0" name="start_address" nillable="true" type="xs:string"/>
                     <xs:element minOccurs="0" name="start_location" nillable="true" type="ns:StartLocation"/>
-                    <xs:element maxOccurs="unbounded" minOccurs="0" name="steps" nillable="true" type="ns:Steps"/>
-                    <xs:element maxOccurs="unbounded" name="traffic_speed_entry" type="xs:double"/>
-                    <xs:element maxOccurs="unbounded" minOccurs="0" name="via_waypoint" nillable="true" type="ns:ViaWaypoint"/>
+                    <xs:element minOccurs="0" name="steps" nillable="true" type="ns:Steps"/>
+                    <xs:element minOccurs="0" name="traffic_speed_entry" type="xs:double"/>
+                    <xs:element minOccurs="0" name="via_waypoint" nillable="true" type="ns:ViaWaypoint"/>
                 </xs:sequence>
             </xs:complexType>
             <xs:complexType name="Distance">
