@@ -147,6 +147,19 @@ public class VsbManager {
       soapGenerator.generateBc();
 
       JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+      
+      if(compiler == null) {
+        System.setProperty("java.home", System.getProperty("JAVA_HOME"));
+        compiler = ToolProvider.getSystemJavaCompiler();
+        if(compiler == null) {
+          try {
+            throw new Exception("Set JAVA_HOME env variable to point to JDK");
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        }
+      } 
+      
       StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, Locale.getDefault(), null);
       File sourceDir = new File("src" + File.separator + "main" + File.separator + "java" + File.separator +
           "eu" + File.separator + "chorevolution" + File.separator + "vsb" + File.separator 
