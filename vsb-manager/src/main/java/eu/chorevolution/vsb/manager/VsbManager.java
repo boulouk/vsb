@@ -142,17 +142,16 @@ public class VsbManager {
 
       JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
       StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, Locale.getDefault(), null);
-      File sourceDir = new File("/home/siddhartha/"
-          + "Downloads/chor/evolution-service-bus/vsb-manager/src/main/java/eu/chorevolution/vsb/"
-          + "bindingcomponent/generated");
+      File sourceDir = new File("src" + File.separator + "main" + File.separator + "java" + File.separator +
+          "eu" + File.separator + "chorevolution" + File.separator + "vsb" + File.separator 
+          + "bindingcomponent" + File.separator + "generated");
       List<JavaFileObject> javaObjects = scanRecursivelyForJavaObjects(sourceDir, fileManager);
 
       if (javaObjects.size() == 0) {
         System.out.println("There are no source files to compile in " + sourceDir.getAbsolutePath());
       }
       
-      File classDir = new File("/home/siddhartha/"
-          + "Downloads/chor/evolution-service-bus/vsb-manager/src/main/java");
+      File classDir = new File("src" + File.separator + "main" + File.separator + "java");
       String[] compileOptions = new String[]{"-d", classDir.getAbsolutePath()} ;
       Iterable<String> compilationOptions = Arrays.asList(compileOptions);
 
