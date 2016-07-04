@@ -3,7 +3,7 @@ import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import eu.chorevolution.vsb.gm.protocols.builders.ResponseBuilder;
-import eu.chorevolution.vsb.gm.protocols.primitives.BcGmComponent;
+import eu.chorevolution.vsb.gm.protocols.primitives.BcGmSubcomponent;
 import eu.chorevolution.vsb.gmdl.utils.Data;
 
 
@@ -14,9 +14,9 @@ import eu.chorevolution.vsb.gmdl.utils.Data;
 @WebService(serviceName = "BindingComponent", targetNamespace = "")
 public class BindingComponent {
 
-    private final BcGmComponent apiRef;
+    private final BcGmSubcomponent apiRef;
 
-    public BindingComponent(BcGmComponent apiRef) {
+    public BindingComponent(BcGmSubcomponent apiRef) {
         this.apiRef = apiRef;
     }
 
