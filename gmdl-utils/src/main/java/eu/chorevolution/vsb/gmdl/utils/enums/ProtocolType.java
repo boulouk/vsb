@@ -4,5 +4,10 @@ public enum ProtocolType {
   SOAP,
   REST,
   MQTT,
-  WebSocket;
+  WEB_SOCKETS,
+  SEMI_SPACE,
+  JMS,
+  PUB_NUB,
+  COAP,
+  ZERO_MQ;
 }

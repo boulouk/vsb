@@ -67,10 +67,16 @@ import eu.chorevolution.vsb.java2wsdl.Java2WSDL;
 
 public class VsbManager {
 
-  private static void setConstants() {
+  public static void main(String[] args) {
+    VsbManager vsbm = new VsbManager();
+    vsbm.generate(BcManager.class.getClassLoader().getResource("DtsGoogle.gidl").toExternalForm().substring(5), ProtocolType.SOAP);
+  }
+
+  private static void setConstants(String interfaceDescriptionPath) {
     Constants.generatedCodePath = new File("src" + File.separator + "main" + File.separator + "java").getAbsolutePath();
     Constants.configFilePath = BcManager.class.getClassLoader().getResource("config.json").toExternalForm().substring(5);
-    Constants.intefaceDescriptionFilePath = BcManager.class.getClassLoader().getResource("DtsGoogle.gidl").toExternalForm().substring(5);
+    //Constants.intefaceDescriptionFilePath = BcManager.class.getClassLoader().getResource("DtsGoogle.gidl").toExternalForm().substring(5);
+    Constants.intefaceDescriptionFilePath = interfaceDescriptionPath;
     Constants.webapp_src = new File(".." + File.separator + "bc-generators" + File.separator + "artifact-generators" 
         + File.separator + "src" + File.separator + "main" + File.separator 
         + "webapp").getAbsolutePath();
@@ -79,13 +85,14 @@ public class VsbManager {
         + "webapp" + File.separator + "test.war").getAbsolutePath();
   }
 
-  public static void main(String[] args) {
 
-    setConstants();
+  public void generate(String interfaceDescriptionPath, ProtocolType busProtocol) {
 
-    String interfaceDescriptionPath = Constants.intefaceDescriptionFilePath;
+    setConstants(interfaceDescriptionPath);
 
-    generateBindingComponent(interfaceDescriptionPath, ProtocolType.SOAP);
+    //    String interfaceDescriptionPath = Constants.intefaceDescriptionFilePath;
+
+    generateBindingComponent(interfaceDescriptionPath, busProtocol);
 
     // TODO: instantiate the right generator based on the bcConfig
     // could use JAVA Service Provider Interface (SPI) for a clean and clear implementation
@@ -147,7 +154,7 @@ public class VsbManager {
       soapGenerator.generateBc();
 
       JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-      
+
       if(compiler == null) {
         System.setProperty("java.home", System.getProperty("JAVA_HOME"));
         compiler = ToolProvider.getSystemJavaCompiler();
@@ -159,7 +166,7 @@ public class VsbManager {
           }
         }
       } 
-      
+
       StandardJavaFileManager fileManager = compiler.getStandardFileManager(null, Locale.getDefault(), null);
       File sourceDir = new File("src" + File.separator + "main" + File.separator + "java" + File.separator +
           "eu" + File.separator + "chorevolution" + File.separator + "vsb" + File.separator 
@@ -169,7 +176,7 @@ public class VsbManager {
       if (javaObjects.size() == 0) {
         System.out.println("There are no source files to compile in " + sourceDir.getAbsolutePath());
       }
-      
+
       File classDir = new File("src" + File.separator + "main" + File.separator + "java");
       String[] compileOptions = new String[]{"-d", classDir.getAbsolutePath()} ;
       Iterable<String> compilationOptions = Arrays.asList(compileOptions);
@@ -179,26 +186,26 @@ public class VsbManager {
       if (!compilerTask.call()) {
         System.out.println("Could not compile project");
       }
-      
-//      URL[] urls = new java.net.URL[1];
-//      java.net.URL url = null;
-//      try {
-//        url = new URL("file://home/siddhartha/Downloads/chor"
-//            + "/evolution-service-bus/vsb-manager/src/main/java/eu/"
-//            + "chorevolution/vsb/bindingcomponent/generated/BindingComponent.class");
-//      } catch (MalformedURLException e1) {
-//        e1.printStackTrace();
-//      }
-//      urls[0] = url;
-//      URLClassLoader urlclass = new URLClassLoader(urls);
-   
-//      ClassLoader classLoader = VsbManager.class.getClassLoader();
-//      try {
-//          Class aClass = classLoader.loadClass("eu.chorevolution.vsb.bindingcomponent.generated.BindingComponent");
-//          System.out.println("aClass.getName() = " + aClass.getName());
-//      } catch (ClassNotFoundException e) {
-//          e.printStackTrace();
-//      }
+
+      //      URL[] urls = new java.net.URL[1];
+      //      java.net.URL url = null;
+      //      try {
+      //        url = new URL("file://home/siddhartha/Downloads/chor"
+      //            + "/evolution-service-bus/vsb-manager/src/main/java/eu/"
+      //            + "chorevolution/vsb/bindingcomponent/generated/BindingComponent.class");
+      //      } catch (MalformedURLException e1) {
+      //        e1.printStackTrace();
+      //      }
+      //      urls[0] = url;
+      //      URLClassLoader urlclass = new URLClassLoader(urls);
+
+      //      ClassLoader classLoader = VsbManager.class.getClassLoader();
+      //      try {
+      //          Class aClass = classLoader.loadClass("eu.chorevolution.vsb.bindingcomponent.generated.BindingComponent");
+      //          System.out.println("aClass.getName() = " + aClass.getName());
+      //      } catch (ClassNotFoundException e) {
+      //          e.printStackTrace();
+      //      }
 
       soapGenerator.generateWSDL();;
     }
