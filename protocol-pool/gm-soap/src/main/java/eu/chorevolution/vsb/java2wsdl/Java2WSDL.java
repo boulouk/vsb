@@ -87,8 +87,8 @@ public class Java2WSDL {
     }
 
     String generatedCodePath = Constants.generatedCodePath;
-    String target_namespace = (String) jsonObject.get("target_namespace");
-    String service_name = (String) jsonObject.get("service_name");
+    String target_namespace = Constants.target_namespace;
+    String service_name = Constants.service_name;
 
 
     String[] arguments = {"-o", generatedCodePath, 

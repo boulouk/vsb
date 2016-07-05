@@ -48,7 +48,7 @@ import com.sun.codemodel.JVar;
 import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import eu.chorevolution.vsb.artifact.generators.WarGenerator;
-import eu.chorevolution.vsb.bc.manager.BcManager;
+import eu.chorevolution.vsb.bc.manager.BcManagerRestService;
 import eu.chorevolution.vsb.bindingcomponent.copy.generated.BindingComponent;
 import eu.chorevolution.vsb.gm.protocols.generators.BcSubcomponentGenerator;
 import eu.chorevolution.vsb.gm.protocols.mqtt.BcMQTTSubcomponent;
@@ -69,12 +69,12 @@ public class VsbManager {
 
   public static void main(String[] args) {
     VsbManager vsbm = new VsbManager();
-    vsbm.generate(BcManager.class.getClassLoader().getResource("DtsGoogle.gidl").toExternalForm().substring(5), ProtocolType.SOAP);
+    vsbm.generate(BcManagerRestService.class.getClassLoader().getResource("DtsGoogle.gidl").toExternalForm().substring(5), ProtocolType.SOAP);
   }
 
   private static void setConstants(String interfaceDescriptionPath) {
     Constants.generatedCodePath = new File("src" + File.separator + "main" + File.separator + "java").getAbsolutePath();
-    Constants.configFilePath = BcManager.class.getClassLoader().getResource("config.json").toExternalForm().substring(5);
+    Constants.configFilePath = BcManagerRestService.class.getClassLoader().getResource("config.json").toExternalForm().substring(5);
     //Constants.intefaceDescriptionFilePath = BcManager.class.getClassLoader().getResource("DtsGoogle.gidl").toExternalForm().substring(5);
     Constants.intefaceDescriptionFilePath = interfaceDescriptionPath;
     Constants.webapp_src = new File(".." + File.separator + "bc-generators" + File.separator + "artifact-generators" 
@@ -83,6 +83,9 @@ public class VsbManager {
     Constants.warDestination = new File(".." + File.separator + "bc-generators" + File.separator + "artifact-generators" 
         + File.separator + "src" + File.separator + "main" + File.separator 
         + "webapp" + File.separator + "test.war").getAbsolutePath();
+    
+    Constants.target_namespace = "eu.chorevolution.vsb.bindingcomponent.generated";
+    Constants.service_name = "BindingComponent";
   }
 
 
@@ -110,7 +113,8 @@ public class VsbManager {
     warGenerator.addPackage(eu.chorevolution.vsb.gmdl.utils.enums.OperationType.class.getPackage());
     warGenerator.addPackage(eu.chorevolution.vsb.gm.protocols.soap.BcSoapGenerator.class.getPackage());
     warGenerator.addPackage(eu.chorevolution.vsb.gm.protocols.rest.BcRestGenerator.class.getPackage());
-
+    warGenerator.addPackage(eu.chorevolution.vsb.bc.manager.BcManagerRestService.class.getPackage());
+    
     //    warGenerator.addDependencyFiles("/home/siddhartha/Downloads/chor/evolution-service-bus/vsb-manager/pom.xml");
     warGenerator.generate();
   }
@@ -134,8 +138,8 @@ public class VsbManager {
     }
 
     bcConfiguration.setGeneratedCodePath(Constants.generatedCodePath);
-    bcConfiguration.setTargetNamespace((String) jsonObject.get("target_namespace"));
-    bcConfiguration.setServiceName((String) jsonObject.get("service_name"));
+    bcConfiguration.setTargetNamespace(Constants.target_namespace);
+    bcConfiguration.setServiceName(Constants.service_name);
 
     String extension = ""; 
     String[] interfaceDescPieces = interfaceDescription.split("\\.");
@@ -186,26 +190,6 @@ public class VsbManager {
       if (!compilerTask.call()) {
         System.out.println("Could not compile project");
       }
-
-      //      URL[] urls = new java.net.URL[1];
-      //      java.net.URL url = null;
-      //      try {
-      //        url = new URL("file://home/siddhartha/Downloads/chor"
-      //            + "/evolution-service-bus/vsb-manager/src/main/java/eu/"
-      //            + "chorevolution/vsb/bindingcomponent/generated/BindingComponent.class");
-      //      } catch (MalformedURLException e1) {
-      //        e1.printStackTrace();
-      //      }
-      //      urls[0] = url;
-      //      URLClassLoader urlclass = new URLClassLoader(urls);
-
-      //      ClassLoader classLoader = VsbManager.class.getClassLoader();
-      //      try {
-      //          Class aClass = classLoader.loadClass("eu.chorevolution.vsb.bindingcomponent.generated.BindingComponent");
-      //          System.out.println("aClass.getName() = " + aClass.getName());
-      //      } catch (ClassNotFoundException e) {
-      //          e.printStackTrace();
-      //      }
 
       soapGenerator.generateWSDL();;
     }
@@ -290,7 +274,7 @@ public class VsbManager {
 
 
     JClass BcManagerClass = null;
-    BcManagerClass = jCodeModel.ref(eu.chorevolution.vsb.bc.manager.BcManager.class);
+    BcManagerClass = jCodeModel.ref(eu.chorevolution.vsb.bc.manager.BcManagerRestService.class);
     //    JVar StringObjectVar = null;
     //    StringObjectVar = jBlock.decl(StringClass, "configFilePath", BcManagerClass.dotclass().invoke("getClassLoader").invoke("getResource").arg("config.json").invoke("toExternalForm").invoke("substring").arg(intFiveVar));
     //    JClass ExceptionClass = jCodeModel.ref(java.lang.Exception.class);
@@ -354,7 +338,7 @@ public class VsbManager {
     JClass RoleTypeClass = jCodeModel.ref(eu.chorevolution.vsb.gmdl.utils.enums.RoleType.class);
     JClass BcRestSubcomponentClass = jCodeModel.ref(eu.chorevolution.vsb.gm.protocols.rest.BcRestSubcomponent.class);
     JClass BcSoapSubcomponentClass = jCodeModel.ref(eu.chorevolution.vsb.gm.protocols.soap.BcSoapSubcomponent.class);
-    JClass BcMQTTSubcomponentClass = jCodeModel.ref(eu.chorevolution.vsb.gm.protocols.mqtt.BcMQTTSubcomponent.class);
+    JClass BcMQTTSubcomponpackagePathentClass = jCodeModel.ref(eu.chorevolution.vsb.gm.protocols.mqtt.BcMQTTSubcomponent.class);
     JClass BcConfigurationClass = jCodeModel.ref(eu.chorevolution.vsb.gmdl.utils.BcConfiguration.class);
 
     JClass EnumClass = jCodeModel.ref("eu.chorevolution.vsb.gmdl.utils.enums.RoleType");
@@ -445,7 +429,7 @@ public class VsbManager {
   }
 
   private static void createConfigFile(ProtocolType protocol, String filename) {
-    String configPath = BcManager.class.getClassLoader().getResource("config.json").toExternalForm().substring(5);
+    String configPath = BcManagerRestService.class.getClassLoader().getResource("config.json").toExternalForm().substring(5);
     JSONParser configParser = new JSONParser();
     JSONObject configJsonObject = null;
 
@@ -455,13 +439,13 @@ public class VsbManager {
 
     switch(protocol) {
     case REST:
-      configTemplatePath = BcManager.class.getClassLoader().getResource("rest-config.json").toExternalForm().substring(5);
+      configTemplatePath = BcManagerRestService.class.getClassLoader().getResource("rest-config.json").toExternalForm().substring(5);
       break;
     case SOAP:
-      configTemplatePath = BcManager.class.getClassLoader().getResource("soap-config.json").toExternalForm().substring(5);
+      configTemplatePath = BcManagerRestService.class.getClassLoader().getResource("soap-config.json").toExternalForm().substring(5);
       break;
     case MQTT:
-      configTemplatePath = BcManager.class.getClassLoader().getResource("mqtt-config.json").toExternalForm().substring(5);
+      configTemplatePath = BcManagerRestService.class.getClassLoader().getResource("mqtt-config.json").toExternalForm().substring(5);
       break;
     }
 
@@ -478,8 +462,8 @@ public class VsbManager {
     }
 
     if(protocol==ProtocolType.SOAP) {
-      jsonObject.put("target_namespace", (String) configJsonObject.get("target_namespace"));
-      jsonObject.put("service_name", (String) configJsonObject.get("service_name"));
+      jsonObject.put("target_namespace", Constants.target_namespace);
+      jsonObject.put("service_name", Constants.service_name);
     }
 
     // temporarily disabled

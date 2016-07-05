@@ -18,7 +18,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import eu.chorevolution.vsb.bc.manager.BcManager;
+import eu.chorevolution.vsb.bc.manager.BcManagerRestService;
 import eu.chorevolution.vsb.gmdl.utils.Constants;
 
 public class WarGenerator {

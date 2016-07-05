@@ -1,7 +1,7 @@
 
 package eu.chorevolution.vsb.bindingcomponent.copy.generated;
 
-import eu.chorevolution.vsb.bc.manager.BcManager;
+import eu.chorevolution.vsb.bc.manager.BcManagerRestService;
 import eu.chorevolution.vsb.gm.protocols.primitives.BcGmSubcomponent;
 import eu.chorevolution.vsb.gm.protocols.rest.BcRestSubcomponent;
 import eu.chorevolution.vsb.gm.protocols.soap.BcSoapSubcomponent;

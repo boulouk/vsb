@@ -1,6 +1,6 @@
 package eu.chorevolution.vsb.bcs.weather;
 
-import eu.chorevolution.vsb.bc.manager.BcManager;
+import eu.chorevolution.vsb.bc.manager.BcManagerRestService;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
 import eu.chorevolution.vsb.gmdl.utils.enums.RoleType;
 
@@ -13,7 +13,7 @@ public class BCStarter {
 
 	private String messageStart = "";
 	private String messageStop = "";
-	private BcManager manager;
+	private BcManagerRestService manager;
 
 	public BCStarter() {
 		manager = null;

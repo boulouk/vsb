@@ -1,7 +1,7 @@
 package eu.chorevolution.vsb.test.weather;
 
 import eu.chorevolution.vsb.test.trafficlight.*;
-import eu.chorevolution.vsb.bc.manager.BcManager;
+import eu.chorevolution.vsb.bc.manager.BcManagerRestService;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
 
 public class BindingComponentManager {

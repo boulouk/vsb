@@ -20,51 +20,26 @@ import eu.chorevolution.vsb.gm.protocols.primitives.BcGmSubcomponent;
 import eu.chorevolution.vsb.gm.protocols.rest.BcRestSubcomponent;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
 
-public class BcManager implements Manageable {
-  
-//  private BcGmSubcomponent endpointApi;
-//  private BcGmSubcomponent clientApi;
+public class BcManagerRestService implements Manageable {
 
   private Component component;
   private Server server;  
   private Boolean serverOnline = false;
 
-  public BcManager(final int port) {
+  public BcManagerRestService(final int port) {
     this.server = new Server(Protocol.HTTP, port);
     this.component = new Component();
     this.component.getServers().add(server);
-    this.component.getDefaultHost().attach("/configure", SetConfiguration.class);
-    this.component.getDefaultHost().attach("/power/" + "{power}", ToggleBC.class);
+    this.component.getDefaultHost().attach("/getconfiguration", GetConfiguration.class);
+    this.component.getDefaultHost().attach("/setconfiguration", SetConfiguration.class);
+    try {
+      this.component.start();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }      
   }
 
-  public void startServer() {
-    if (!this.serverOnline) {
-      try {
-        this.component.start();
-      } catch (Exception e) {
-        e.printStackTrace();
-      }      
-    }
-  }
-  
-  public static class ToggleBC extends ServerResource {
-    @Override
-    protected Representation get() throws ResourceException {
-      String power = (String) this.getRequestAttributes().get("power");
-      String returnMessage = "";
-      switch(power) {
-      case "on":
-        returnMessage = "Binding component turned on successfully!";
-        break;
-      case "off":
-        returnMessage = "Binding component turned off successfully!";
-        break;
-      }
-      return new StringRepresentation(returnMessage);
-    }
-  }
-
-  public static class SetConfiguration extends ServerResource {
+  static class GetConfiguration extends ServerResource {
     @Override
     protected Representation post(Representation entity) throws ResourceException {
       String receivedText = null;
@@ -73,7 +48,7 @@ public class BcManager implements Manageable {
       } catch (IOException e1) {
         e1.printStackTrace();
       }
-      
+
       JSONParser parser = new JSONParser();
       JSONObject jsonObject = null;
 
@@ -82,24 +57,56 @@ public class BcManager implements Manageable {
       } catch (ParseException e) {
         e.printStackTrace();
       }
-      
+
       try (FileWriter file = new FileWriter("")) {
         file.write(jsonObject.toJSONString());
       } catch (IOException e) {
         e.printStackTrace();
       }
-      
+
       System.out.println("rec: " + receivedText);
-      
+
       String returnMessage = "";
       returnMessage = "Configuration Complete!";
       return new StringRepresentation(returnMessage);
     }
   }
-  
+
+  static class SetConfiguration extends ServerResource {
+    @Override
+    protected Representation post(Representation entity) throws ResourceException {
+      String receivedText = null;
+      try {
+        receivedText = entity.getText();
+      } catch (IOException e1) {
+        e1.printStackTrace();
+      }
+
+      JSONParser parser = new JSONParser();
+      JSONObject jsonObject = null;
+
+      try {
+        jsonObject = (JSONObject) parser.parse(receivedText);
+      } catch (ParseException e) {
+        e.printStackTrace();
+      }
+
+      try (FileWriter file = new FileWriter("")) {
+        file.write(jsonObject.toJSONString());
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+
+      System.out.println("rec: " + receivedText);
+
+      String returnMessage = "";
+      returnMessage = "Configuration Complete!";
+      return new StringRepresentation(returnMessage);
+    }
+  }
+
   public static void main(String[] args) {
-    BcManager bcmanager = new BcManager(1111);
-    bcmanager.startServer();
+    BcManagerRestService bcmanager = new BcManagerRestService(1111);
   }
 
   @Override
@@ -118,16 +125,7 @@ public class BcManager implements Manageable {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    
+
   }
 
-//  public void start() {    
-//    this.endpointApi.start();
-//    this.clientApi.start();
-//  }
-//
-//  public void stop() {
-//    this.endpointApi.stop();
-//    this.clientApi.stop();
-//  }
 }
