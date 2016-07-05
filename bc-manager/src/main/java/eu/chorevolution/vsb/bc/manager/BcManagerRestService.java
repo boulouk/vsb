@@ -1,7 +1,12 @@
 package eu.chorevolution.vsb.bc.manager;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.FilenameFilter;
+import java.util.Arrays;
+import java.util.List;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -15,10 +20,6 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
 import eu.chorevolution.vsb.gm.protocols.Manageable;
-import eu.chorevolution.vsb.gm.protocols.soap.BcSoapSubcomponent;
-import eu.chorevolution.vsb.gm.protocols.primitives.BcGmSubcomponent;
-import eu.chorevolution.vsb.gm.protocols.rest.BcRestSubcomponent;
-import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
 
 public class BcManagerRestService implements Manageable {
 
@@ -39,32 +40,86 @@ public class BcManagerRestService implements Manageable {
     }      
   }
 
-  static class GetConfiguration extends ServerResource {
+ public static class GetConfiguration extends ServerResource {
     @Override
     protected Representation post(Representation entity) throws ResourceException {
-      String receivedText = null;
-      try {
-        receivedText = entity.getText();
-      } catch (IOException e1) {
-        e1.printStackTrace();
+      String packagePath = "eu.chorevolution.vsb.bindingcomponent.generated";
+      packagePath = packagePath.replace(".", File.separator);
+
+      String generatedCodePath = "BindingComponent";
+      generatedCodePath = generatedCodePath + File.separator;
+
+      File dir = new File(".." + File.separator + "vsb-manager" + File.separator + "src" +
+          File.separator + "main" + File.separator + "java" + File.separator + packagePath);
+
+
+      List<File> configFiles = Arrays.asList(dir.listFiles(new FilenameFilter() {
+        @Override
+        public boolean accept(File dir, String name) {
+          return name.startsWith("config_block");
+        }}));
+
+      for (File file : configFiles) {
+
+        String configTemplatePath = file.getAbsolutePath();
+        JSONParser parser = new JSONParser();
+        JSONObject jsonObject = null;
+
+        try {
+          jsonObject = (JSONObject) parser.parse(new FileReader(configTemplatePath));
+        } catch (IOException | ParseException e) {
+          e.printStackTrace();
+        }
+
+        try (FileWriter output_file = new FileWriter(file.getName())) {
+          output_file.write(jsonObject.toJSONString());
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+
       }
 
-      JSONParser parser = new JSONParser();
-      JSONObject jsonObject = null;
+      String returnMessage = "";
+      returnMessage = "Configuration Complete!";
+      return new StringRepresentation(returnMessage);
+    }
 
-      try {
-        jsonObject = (JSONObject) parser.parse(receivedText);
-      } catch (ParseException e) {
-        e.printStackTrace();
+    @Override
+    protected Representation get() throws ResourceException {
+      String packagePath = "eu.chorevolution.vsb.bindingcomponent.generated";
+      packagePath = packagePath.replace(".", File.separator);
+
+      String generatedCodePath = "BindingComponent";
+      generatedCodePath = generatedCodePath + File.separator;
+
+      File dir = new File(BcManagerRestService.class.getClassLoader().getResource("example.json").toExternalForm().substring(5)).getParentFile();
+      
+      System.out.println(dir.getAbsolutePath());
+      System.out.println(new File(".").getAbsolutePath());
+
+      List<File> configFiles = Arrays.asList(dir.listFiles(new FilenameFilter() {
+        @Override
+        public boolean accept(File dir, String name) {
+          return name.startsWith("config_block");
+        }}));
+
+      for (File file : configFiles) {
+        String configTemplatePath = file.getAbsolutePath();
+        JSONParser parser = new JSONParser();
+        JSONObject jsonObject = null;
+
+        try {
+          jsonObject = (JSONObject) parser.parse(new FileReader(configTemplatePath));
+        } catch (IOException | ParseException e) {
+          e.printStackTrace();
+        }
+
+        try (FileWriter output_file = new FileWriter(file.getName())) {
+          output_file.write(jsonObject.toJSONString());
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
       }
-
-      try (FileWriter file = new FileWriter("")) {
-        file.write(jsonObject.toJSONString());
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-
-      System.out.println("rec: " + receivedText);
 
       String returnMessage = "";
       returnMessage = "Configuration Complete!";
@@ -72,41 +127,97 @@ public class BcManagerRestService implements Manageable {
     }
   }
 
-  static class SetConfiguration extends ServerResource {
+  public static class SetConfiguration extends ServerResource {
     @Override
     protected Representation post(Representation entity) throws ResourceException {
-      String receivedText = null;
-      try {
-        receivedText = entity.getText();
-      } catch (IOException e1) {
-        e1.printStackTrace();
+      String packagePath = "eu.chorevolution.vsb.bindingcomponent.generated";
+      packagePath = packagePath.replace(".", File.separator);
+
+      String generatedCodePath = "BindingComponent";
+      generatedCodePath = generatedCodePath + File.separator;
+
+      File dir = new File(".." + File.separator + "vsb-manager" + File.separator + "src" +
+          File.separator + "main" + File.separator + "java" + File.separator + packagePath);
+
+
+      List<File> configFiles = Arrays.asList(new File(".").listFiles(new FilenameFilter() {
+        @Override
+        public boolean accept(File dir, String name) {
+          return name.startsWith("config_block");
+        }}));
+
+      for (File file : configFiles) {
+
+        String configTemplatePath = file.getAbsolutePath();
+        JSONParser parser = new JSONParser();
+        JSONObject jsonObject = null;
+
+        try {
+          jsonObject = (JSONObject) parser.parse(new FileReader(configTemplatePath));
+        } catch (IOException | ParseException e) {
+          e.printStackTrace();
+        }
+
+        try (FileWriter output_file = new FileWriter(dir.getAbsolutePath() + File.separator + file.getName())) {
+          output_file.write(jsonObject.toJSONString());
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+
       }
-
-      JSONParser parser = new JSONParser();
-      JSONObject jsonObject = null;
-
-      try {
-        jsonObject = (JSONObject) parser.parse(receivedText);
-      } catch (ParseException e) {
-        e.printStackTrace();
-      }
-
-      try (FileWriter file = new FileWriter("")) {
-        file.write(jsonObject.toJSONString());
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-
-      System.out.println("rec: " + receivedText);
 
       String returnMessage = "";
       returnMessage = "Configuration Complete!";
       return new StringRepresentation(returnMessage);
     }
+    
+    @Override
+    protected Representation get() throws ResourceException {
+      String packagePath = "eu.chorevolution.vsb.bindingcomponent.generated";
+      packagePath = packagePath.replace(".", File.separator);
+
+      String generatedCodePath = "BindingComponent";
+      generatedCodePath = generatedCodePath + File.separator;
+
+      File dir = new File(".." + File.separator + "vsb-manager" + File.separator + "src" +
+          File.separator + "main" + File.separator + "java" + File.separator + packagePath);
+
+
+      List<File> configFiles = Arrays.asList(new File(".").listFiles(new FilenameFilter() {
+        @Override
+        public boolean accept(File dir, String name) {
+          return name.startsWith("config_block");
+        }}));
+
+      for (File file : configFiles) {
+
+        String configTemplatePath = file.getAbsolutePath();
+        JSONParser parser = new JSONParser();
+        JSONObject jsonObject = null;
+
+        try {
+          jsonObject = (JSONObject) parser.parse(new FileReader(configTemplatePath));
+        } catch (IOException | ParseException e) {
+          e.printStackTrace();
+        }
+
+        try (FileWriter output_file = new FileWriter(dir.getAbsolutePath() + File.separator + file.getName())) {
+          output_file.write(jsonObject.toJSONString());
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+
+      }
+      
+      String returnMessage = "";
+      returnMessage = "Configuration Complete!";
+      return new StringRepresentation(returnMessage);
+    }
+
   }
 
   public static void main(String[] args) {
-    BcManagerRestService bcmanager = new BcManagerRestService(1111);
+    BcManagerRestService bcmanager = new BcManagerRestService(2222);
   }
 
   @Override

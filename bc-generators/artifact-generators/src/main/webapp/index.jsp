@@ -8,7 +8,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
-<%@page import="eu.chorevolution.vsb.bc.manager.BcManager"%>
 <%@page import="eu.chorevolution.vsb.gmdl.utils.BcConfiguration"%>
 
 

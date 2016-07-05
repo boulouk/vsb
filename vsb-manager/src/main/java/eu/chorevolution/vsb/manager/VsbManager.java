@@ -77,13 +77,13 @@ public class VsbManager {
     Constants.configFilePath = BcManagerRestService.class.getClassLoader().getResource("config.json").toExternalForm().substring(5);
     //Constants.intefaceDescriptionFilePath = BcManager.class.getClassLoader().getResource("DtsGoogle.gidl").toExternalForm().substring(5);
     Constants.intefaceDescriptionFilePath = interfaceDescriptionPath;
-    Constants.webapp_src = new File(".." + File.separator + "bc-generators" + File.separator + "artifact-generators" 
+    Constants.webapp_src = new File(".." + File.separator + "bc-generators" + File.separator + "webapp-bc-generator" 
         + File.separator + "src" + File.separator + "main" + File.separator 
         + "webapp").getAbsolutePath();
-    Constants.warDestination = new File(".." + File.separator + "bc-generators" + File.separator + "artifact-generators" 
+    Constants.warDestination = new File(".." + File.separator + "bc-generators" + File.separator + "webapp-bc-generator" 
         + File.separator + "src" + File.separator + "main" + File.separator 
         + "webapp" + File.separator + "test.war").getAbsolutePath();
-    
+
     Constants.target_namespace = "eu.chorevolution.vsb.bindingcomponent.generated";
     Constants.service_name = "BindingComponent";
   }
@@ -114,8 +114,10 @@ public class VsbManager {
     warGenerator.addPackage(eu.chorevolution.vsb.gm.protocols.soap.BcSoapGenerator.class.getPackage());
     warGenerator.addPackage(eu.chorevolution.vsb.gm.protocols.rest.BcRestGenerator.class.getPackage());
     warGenerator.addPackage(eu.chorevolution.vsb.bc.manager.BcManagerRestService.class.getPackage());
-    
-    //    warGenerator.addDependencyFiles("/home/siddhartha/Downloads/chor/evolution-service-bus/vsb-manager/pom.xml");
+    warGenerator.addPackage(eu.chorevolution.vsb.webappbcgenerator.StartBcManagerServlet.class.getPackage());
+    warGenerator.addPackage(eu.chorevolution.vsb.artifact.generators.WarGenerator.class.getPackage());
+    warGenerator.addPackage(eu.chorevolution.vsb.gm.protocols.Manageable.class.getPackage());
+    warGenerator.addDependencyFiles("/home/siddhartha/Downloads/chor/evolution-service-bus/vsb-manager/pom.xml");
     warGenerator.generate();
   }
 
@@ -338,7 +340,7 @@ public class VsbManager {
     JClass RoleTypeClass = jCodeModel.ref(eu.chorevolution.vsb.gmdl.utils.enums.RoleType.class);
     JClass BcRestSubcomponentClass = jCodeModel.ref(eu.chorevolution.vsb.gm.protocols.rest.BcRestSubcomponent.class);
     JClass BcSoapSubcomponentClass = jCodeModel.ref(eu.chorevolution.vsb.gm.protocols.soap.BcSoapSubcomponent.class);
-    JClass BcMQTTSubcomponpackagePathentClass = jCodeModel.ref(eu.chorevolution.vsb.gm.protocols.mqtt.BcMQTTSubcomponent.class);
+    JClass BcMQTTSubcomponentClass = jCodeModel.ref(eu.chorevolution.vsb.gm.protocols.mqtt.BcMQTTSubcomponent.class);
     JClass BcConfigurationClass = jCodeModel.ref(eu.chorevolution.vsb.gmdl.utils.BcConfiguration.class);
 
     JClass EnumClass = jCodeModel.ref("eu.chorevolution.vsb.gmdl.utils.enums.RoleType");
@@ -364,16 +366,16 @@ public class VsbManager {
     JInvocation setRole2 = bcConfig2Var.invoke("setSubcomponentRole").arg(RoleTypeClassVar);
     forBlock.add(setRole2);
 
-    String packagePath = (String) jsonObject.get("target_namespace");
+    String packagePath = Constants.target_namespace;
     packagePath = packagePath.replace(".", File.separator);
 
     String generatedCodePath = Constants.generatedCodePath;
     generatedCodePath = generatedCodePath + File.separator;
 
-    JInvocation parseInvocation1 = bcConfig1Var.invoke("parseFromJSON").arg(JExpr._new(StringClass).arg(generatedCodePath + packagePath + "/config_block1_interface_").plus(jCodeModel.ref(java.lang.String.class).staticInvoke("valueOf").arg(ivar.plus(intOneVar))));
+    JInvocation parseInvocation1 = bcConfig1Var.invoke("parseFromJSON").arg(JExpr._new(StringClass).arg(BcManagerRestService.class.getClassLoader().getResource("example.json").toExternalForm().substring(5) + File.separator + "config_block1_interface_").plus(jCodeModel.ref(java.lang.String.class).staticInvoke("valueOf").arg(ivar.plus(intOneVar))));
     forBlock.add(parseInvocation1);
 
-    JInvocation parseInvocation2 = bcConfig2Var.invoke("parseFromJSON").arg(JExpr._new(StringClass).arg(generatedCodePath + packagePath + "/config_block2_interface_").plus(jCodeModel.ref(java.lang.String.class).staticInvoke("valueOf").arg(ivar.plus(intOneVar))));
+    JInvocation parseInvocation2 = bcConfig2Var.invoke("parseFromJSON").arg(JExpr._new(StringClass).arg(BcManagerRestService.class.getClassLoader().getResource("example.json").toExternalForm().substring(5) + File.separator + "config_block2_interface_").plus(jCodeModel.ref(java.lang.String.class).staticInvoke("valueOf").arg(ivar.plus(intOneVar))));
     forBlock.add(parseInvocation2);
 
     JVar BcGmSubcomponentVar1 = forBlock.decl(BcGmSubcomponentClass, "block1Component", null);
@@ -382,17 +384,17 @@ public class VsbManager {
     switch(busProtocol) {
     case REST:
       for(int i=1; i<=gmServiceRepresentation.getInterfaces().size(); i++)  
-        createConfigFile(ProtocolType.REST, generatedCodePath + packagePath + File.separator + "config_block1_interface_" + String.valueOf(i));
+        createConfigFile(ProtocolType.REST, new File(BcManagerRestService.class.getClassLoader().getResource("example.json").toExternalForm().substring(5)).getParent() + File.separator + "config_block1_interface_" + String.valueOf(i));
       BcGmSubcomponentVar1.init(JExpr._new(BcRestSubcomponentClass).arg(bcConfig1Var));
       break;
     case SOAP:
       for(int i=1; i<=gmServiceRepresentation.getInterfaces().size(); i++)  
-        createConfigFile(ProtocolType.SOAP, generatedCodePath + packagePath + File.separator + "config_block1_interface_" + String.valueOf(i));
+        createConfigFile(ProtocolType.SOAP, new File(BcManagerRestService.class.getClassLoader().getResource("example.json").toExternalForm().substring(5)).getParent() + File.separator + "config_block1_interface_" + String.valueOf(i));
       BcGmSubcomponentVar1.init(JExpr._new(BcSoapSubcomponentClass).arg(bcConfig1Var));
       break;
     case MQTT:
       for(int i=1; i<=gmServiceRepresentation.getInterfaces().size(); i++)  
-        createConfigFile(ProtocolType.MQTT, generatedCodePath +packagePath + File.separator + "config_block1_interface_" + String.valueOf(i));
+        createConfigFile(ProtocolType.MQTT, BcManagerRestService.class.getClassLoader().getResource("example.json").toExternalForm().substring(5) + File.separator + "config_block1_interface_" + String.valueOf(i));
       BcGmSubcomponentVar1.init(JExpr._new(BcMQTTSubcomponentClass).arg(bcConfig1Var));
       break;
     }
@@ -400,17 +402,17 @@ public class VsbManager {
     switch(gmServiceRepresentation.getProtocol()) {
     case REST:
       for(int i=1; i<=gmServiceRepresentation.getInterfaces().size(); i++)  
-        createConfigFile(ProtocolType.REST, generatedCodePath+packagePath + File.separator + "config_block2_interface_" + String.valueOf(i));
+        createConfigFile(ProtocolType.REST, new File(BcManagerRestService.class.getClassLoader().getResource("example.json").toExternalForm().substring(5)).getParent() + File.separator + "config_block2_interface_" + String.valueOf(i));
       BcGmSubcomponentVar2.init(JExpr._new(BcRestSubcomponentClass).arg(bcConfig2Var));
       break;
     case SOAP:
       for(int i=1; i<=gmServiceRepresentation.getInterfaces().size(); i++)  
-        createConfigFile(ProtocolType.SOAP, generatedCodePath+packagePath + File.separator + "config_block2_interface_" + String.valueOf(i));
+        createConfigFile(ProtocolType.SOAP, BcManagerRestService.class.getClassLoader().getResource("example.json").toExternalForm().substring(5) + File.separator + "config_block2_interface_" + String.valueOf(i));
       BcGmSubcomponentVar2.init(JExpr._new(BcSoapSubcomponentClass).arg(bcConfig2Var));
       break;
     case MQTT:
       for(int i=1; i<=gmServiceRepresentation.getInterfaces().size(); i++)  
-        createConfigFile(ProtocolType.MQTT, generatedCodePath+packagePath + File.separator + "config_block2_interface_" + String.valueOf(i));
+        createConfigFile(ProtocolType.MQTT, BcManagerRestService.class.getClassLoader().getResource("example.json").toExternalForm().substring(5) + File.separator + "config_block2_interface_" + String.valueOf(i));
       BcGmSubcomponentVar2.init(JExpr._new(BcMQTTSubcomponentClass).arg(bcConfig2Var));
       break;
     }

@@ -10,7 +10,7 @@
     <groupId>eu.chorevolution.vsb</groupId>
     <artifactId>webapp-bc-generator</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>webapp-bc-generator Maven Webapp</name>
     <repositories>
         <repository>

@@ -20,7 +20,7 @@ public class GeneratedFactory {
         intOne = Integer.parseInt("1");
         GmServiceRepresentation gmServiceRepresentation = null;
         String interfaceDescFilePath;
-        interfaceDescFilePath = "/home/siddhartha/Downloads/chor/evolution-service-bus/bc-manager/target/classes/DtsGoogle.gidl";
+        interfaceDescFilePath = "/home/siddhartha/Downloads/chor/evolution-service-bus/bc-manager/src/main/resources/DtsGoogle.gidl";
         gmServiceRepresentation = ServiceDescriptionParser.getRepresentationFromGIDL(interfaceDescFilePath);
         for (int i = 0; (i<gmServiceRepresentation.getInterfaces().size()); i += 1) {
             Interface inter = null;
@@ -35,8 +35,8 @@ public class GeneratedFactory {
             BcConfiguration bcConfiguration2 = new BcConfiguration();
             bcConfiguration1 .setSubcomponentRole(inter.getRole());
             bcConfiguration2 .setSubcomponentRole(busRole);
-            bcConfiguration1 .parseFromJSON((new String("/home/siddhartha/Downloads/chor/evolution-service-bus/vsb-manager/src/main/java/eu/chorevolution/vsb/bindingcomponent/generated/config_block1_interface_")+ String.valueOf((i + intOne))));
-            bcConfiguration2 .parseFromJSON((new String("/home/siddhartha/Downloads/chor/evolution-service-bus/vsb-manager/src/main/java/eu/chorevolution/vsb/bindingcomponent/generated/config_block2_interface_")+ String.valueOf((i + intOne))));
+            bcConfiguration1 .parseFromJSON((new String("/home/siddhartha/Downloads/chor/evolution-service-bus/bc-generators/webapp-bc-generator/target/classes/example.json/config_block1_interface_")+ String.valueOf((i + intOne))));
+            bcConfiguration2 .parseFromJSON((new String("/home/siddhartha/Downloads/chor/evolution-service-bus/bc-generators/webapp-bc-generator/target/classes/example.json/config_block2_interface_")+ String.valueOf((i + intOne))));
             BcGmSubcomponent block1Component = new BcSoapSubcomponent(bcConfiguration1);
             BcGmSubcomponent block2Component = new BcRestSubcomponent(bcConfiguration2);
             block1Component.setNextComponent(block2Component);
