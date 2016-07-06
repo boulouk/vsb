@@ -48,12 +48,12 @@
 			<version>2.3.1</version>
 		</dependency>
 		<!-- Chorevolution -->
-		
 		<dependency>
 			<groupId>eu.chorevolution.vsb</groupId>
 			<artifactId>webapp-bc-generator</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>eu.chorevolution.vsb</groupId>
 			<artifactId>gmdl-utils</artifactId>

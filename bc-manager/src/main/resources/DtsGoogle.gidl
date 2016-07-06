@@ -85,7 +85,7 @@
       <inputData name="arg0" type="string" context="path"/>
       <inputData name="arg1" type="string" context="path"/>
       <outputData name="route" type="object" context="body" hasDefinition="//@hasDefinitions.0"/>
-      <hasScope name="routeRequest" verb="GET" uri="/maps/api/directions/json?origin={arg0}&amp;destination={arg1}&amp;key={key}"/>
+      <hasScope name="routeRequest" verb="GET" uri="/maps/api/directions/json?origin={arg0}&amp;destination={arg1}&amp;key=AIzaSyBhfNR1PHo8EsuxjLr3EO-sNnfoUDh4ilw"/>
     </hasOperations>
   </hasInterfaces>
 </gidl:GIDLModel>

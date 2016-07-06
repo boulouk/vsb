@@ -5,7 +5,8 @@ public class Constants {
   public static String configFilePath;
   public static String intefaceDescriptionFilePath;
   public static String warDestination;
-  public static String webapp_src;
+  public static String webapp_src_bc;
+  public static String webapp_src_artifact;
   public static String service_name;
   public static String target_namespace;
 }

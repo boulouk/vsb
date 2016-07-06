@@ -5,7 +5,7 @@
 <web-app>
     <display-name>Archetype Created Web Application</display-name>
 
-
+<!-- 
     <servlet>
         <servlet-name>BCGeneratorServlet</servlet-name>
         <servlet-class>eu.chorevolution.vsb.webappbcgenerator.BCGeneratorServlet</servlet-class>
@@ -14,7 +14,7 @@
         <servlet-name>BCGeneratorServlet</servlet-name>
         <url-pattern>/BCGeneratorServlet</url-pattern>
     </servlet-mapping>
-
+ -->
 
  	<servlet>
         <servlet-name>StartBcManagerServlet</servlet-name>

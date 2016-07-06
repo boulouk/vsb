@@ -21,8 +21,8 @@ function getXMLHTTPRequest() {
 
 function ajaxCallGet(param) {
 	var request = getXMLHTTPRequest();
-	var url = "BCStarterServlet"; // or my jsp page (e.g. "page.jsp")
-	var params = "param=" + param;
+	var url = "bcm"; // or my jsp page (e.g. "page.jsp")
+	var params = "op=" + param;
 
 	var asynchr = true;
 

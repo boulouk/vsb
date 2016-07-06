@@ -26,7 +26,7 @@
                                     //var myElem = document.getElementById("myElem").value;
 
                                     var url = "RestServlet"; // or my jsp page (e.g. "page.jsp")
-                                    //var params = "myElem="+myElem+"&param="+param;
+
                                     var params = "param=" + "get";
 
                                     var asynchr = true;
@@ -63,6 +63,54 @@
                                 }
 
                                 executeQuery();
+                            });
+                            
+                 $(document)
+                    .ready(
+                            function () {
+                                function executeQuery1() {
+                                    var request = getXMLHTTPRequest();
+
+                                    //var myElem = document.getElementById("myElem").value;
+
+                                    var url = "bcm"; // or my jsp page (e.g. "page.jsp")
+
+                                    var params = "op=" + "startbcm";
+
+                                    var asynchr = true;
+
+                                    var randomNumber = new Date().getTime()
+                                            + parseInt(Math.random() * 9999999);
+                                    // xtizw to full url pou tha kalesw
+                                    var fullURL = url + "?" + params + "&rand="
+                                            + randomNumber;
+
+                                    request.open("GET", fullURL, asynchr);
+                                    request.onreadystatechange = function () {
+                                        if (request.readyState == 4) {
+                                            if (request.status == 200) {
+
+                                                var response = request.responseText;
+
+                                                if (response) {
+                                                    response = "<div class='notify successbox'><p><span class='alerticon'><img src='assets/img/mail.png' alt='start' /></span>"
+                                                            + response + "</p></div>";
+                                                    var content = document
+                                                            .getElementById("content");
+                                                    content.innerHTML += response;
+                                                }
+
+                                            } else {
+                                                //alert("An error has occured: "+ request.statusText);
+                                            }
+                                        } else {
+                                        }
+                                    }
+                                    request.send(null);
+                                        
+                                }
+
+                                executeQuery1();
                             });
         </script>
         <meta charset="utf-8">

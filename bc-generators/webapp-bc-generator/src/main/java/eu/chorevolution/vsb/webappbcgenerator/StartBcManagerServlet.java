@@ -1,19 +1,19 @@
 package eu.chorevolution.vsb.webappbcgenerator;
 
 
-import eu.chorevolution.vsb.artifact.generators.WarGenerator;
-import eu.chorevolution.vsb.bc.manager.BcManagerRestService;
-
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class StartBcManagerServlet extends HttpServlet {
+import eu.chorevolution.vsb.bc.manager.BcManagerRestService;
 
+public class StartBcManagerServlet extends HttpServlet {
+  
+  BcManagerRestService server = null;
+  
   /**
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
 	 * methods.
@@ -29,8 +29,20 @@ public class StartBcManagerServlet extends HttpServlet {
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	  response.setContentType("text/html;charset=UTF-8");
-	  BcManagerRestService server = new BcManagerRestService(2222);
-	  response.getWriter().println("started!");
+	  
+	  String op = request.getParameter("op");
+	  if(op.equals("start")) {
+	    server = new BcManagerRestService(2222);
+	    response.getWriter().println("started!");
+	  }
+	  else if(op.equals("stop")) {
+	    if(server!=null) {
+	      server.stop();
+	      server = null;
+	      response.getWriter().println("stopped!");
+	    }
+	  }
+	  
 	}
 
 	// <editor-fold defaultstate="collapsed"

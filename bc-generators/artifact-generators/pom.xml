@@ -33,6 +33,7 @@
 	</build>
 
 	<dependencies>
+	
 		<!-- Chorevolution -->
 		<dependency>
 			<groupId>eu.chorevolution.vsb</groupId>

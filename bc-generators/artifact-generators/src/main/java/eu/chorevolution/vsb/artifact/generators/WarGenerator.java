@@ -42,25 +42,29 @@ public class WarGenerator {
   }
 
   public void generate() {
-    String WEBAPP_SRC = Constants.webapp_src;
+    String WEBAPP_SRC_BC = Constants.webapp_src_bc;
+    String WEBAPP_SRC_ARTIFACT = Constants.webapp_src_artifact;
+    archive.setWebXML(new File(WEBAPP_SRC_ARTIFACT, "WEB-INF" + File.separator + "web.xml"));
 
-    archive.setWebXML(new File(WEBAPP_SRC, "WEB-INF" + File.separator + "web.xml"));
+    archive.addAsWebResource(new File(WEBAPP_SRC_ARTIFACT, "index.jsp"));
 
-    archive.addAsWebResource(new File(WEBAPP_SRC, "index.jsp"));
-
-    for (File f : new File(WEBAPP_SRC + File.separator + "assets" + File.separator + "css").listFiles()) {
+    for (File f : new File(WEBAPP_SRC_BC + File.separator + "config").listFiles()) {
+      archive.addAsWebResource(f, "config" + File.separator + f.getName());
+    }
+    
+    for (File f : new File(WEBAPP_SRC_ARTIFACT + File.separator + "assets" + File.separator + "css").listFiles()) {
       archive.addAsWebResource(f, "assets" + File.separator + "css" + File.separator + f.getName());
     }
 
-    for (File f : new File(WEBAPP_SRC + File.separator + "assets" + File.separator + "fonts").listFiles()) {
+    for (File f : new File(WEBAPP_SRC_ARTIFACT + File.separator + "assets" + File.separator + "fonts").listFiles()) {
       archive.addAsWebResource(f, "assets" + File.separator + "fonts" + File.separator + f.getName());
     }
 
-    for (File f : new File(WEBAPP_SRC + File.separator + "assets" + File.separator + "img").listFiles()) {
+    for (File f : new File(WEBAPP_SRC_ARTIFACT + File.separator + "assets" + File.separator + "img").listFiles()) {
       archive.addAsWebResource(f, "assets" + File.separator + "img" + File.separator + f.getName());
     }
 
-    for (File f : new File(WEBAPP_SRC + File.separator + "assets" + File.separator + "js").listFiles()) {
+    for (File f : new File(WEBAPP_SRC_ARTIFACT + File.separator + "assets" + File.separator + "js").listFiles()) {
       archive.addAsWebResource(f, "assets" + File.separator + "js" + File.separator + f.getName());
     }
 
