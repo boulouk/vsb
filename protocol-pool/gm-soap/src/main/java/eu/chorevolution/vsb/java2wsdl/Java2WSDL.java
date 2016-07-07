@@ -18,8 +18,6 @@ package eu.chorevolution.vsb.java2wsdl;
  * under the License.
  */
 
-
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;

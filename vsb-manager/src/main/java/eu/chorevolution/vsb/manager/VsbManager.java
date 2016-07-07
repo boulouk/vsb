@@ -95,6 +95,7 @@ public class VsbManager {
         + "webapp" + File.separator + "test.war").getAbsolutePath();
 
     Constants.target_namespace = "eu.chorevolution.vsb.bindingcomponent.generated";
+    Constants.target_namespace_path = Constants.target_namespace.replace(".", File.separator);
     Constants.service_name = "BindingComponent";
   }
 
@@ -132,6 +133,20 @@ public class VsbManager {
     warGenerator.addDependencyFiles(new File(".").getAbsolutePath() + File.separator + "pom.xml");
     warGenerator.addDependencyFiles(new File(".").getAbsolutePath() + File.separator + ".." + File.separator + "protocol-pool" + File.separator + "gm-soap" + File.separator + "pom.xml");
     warGenerator.generate();
+
+//    deleteGeneratedFiles();
+
+  }
+
+  public void deleteGeneratedFiles() {
+    File directory = new File(Constants.generatedCodePath + File.separator + Constants.target_namespace_path);
+    // make sure directory exists
+    if(!directory.exists()){
+      System.out.println("Delete reques failed: Directory does not exist.");
+    }
+    else {
+      delete(directory);
+    }
   }
 
   public void copyInterfaceDesc(String interfaceDescription) {
@@ -226,7 +241,7 @@ public class VsbManager {
         System.out.println("Could not compile project");
       }
 
-      soapGenerator.generateWSDL();;
+      soapGenerator.generateWSDL();
     }
 
     //copyBCClass(gmServiceRepresentation, busProtocol);
@@ -496,28 +511,28 @@ public class VsbManager {
 
     JVar BcGmSubcomponentVar1 = forBlock.decl(BcGmSubcomponentClass, "block1Component", JExpr.ref("subcomponent[i][0]"));
     JVar BcGmSubcomponentVar2 = forBlock.decl(BcGmSubcomponentClass, "block2Component", JExpr.ref("subcomponent[i][1]"));
-    
-//    JExpr.ref("component[i][0].start();");
+
+    //    JExpr.ref("component[i][0].start();");
     forBlock.add(BcGmSubcomponentVar1.invoke("setNextComponent").arg(BcGmSubcomponentVar2));
     forBlock.add(BcGmSubcomponentVar2.invoke("setNextComponent").arg(BcGmSubcomponentVar1));
 
     forBlock.add(BcGmSubcomponentVar1.invoke("start"));
     forBlock.add(BcGmSubcomponentVar2.invoke("start"));
-    
+
     JMethod jmCreatePause = jc.method(JMod.PUBLIC, void.class, "pause");
     JBlock jBlockPause = jmCreatePause.body();
-    
+
     JForLoop forLoopPause = jBlockPause._for();
     JVar ivarPause = forLoopPause.init(jCodeModel.INT, "i", JExpr.lit(0));
     forLoopPause.test(ivarPause.lt( GmServiceRepresentationVar.invoke("getInterfaces").invoke("size") ));
     forLoopPause.update(ivarPause.assignPlus(JExpr.lit(1)));
 
     JBlock forBlockPause = forLoopPause.body();
-    
+
     JVar BcGmSubcomponentVar1Pause = forBlockPause.decl(BcGmSubcomponentClass, "block1Component", JExpr.ref("subcomponent[i][0]"));
     JVar BcGmSubcomponentVar2Pause = forBlockPause.decl(BcGmSubcomponentClass, "block2Component", JExpr.ref("subcomponent[i][1]"));
-    
-//    JExpr.ref("component[i][0].start();");
+
+    //    JExpr.ref("component[i][0].start();");
     forBlockPause.add(BcGmSubcomponentVar1Pause.invoke("stop"));
     forBlockPause.add(BcGmSubcomponentVar2Pause.invoke("stop"));
 
@@ -575,6 +590,35 @@ public class VsbManager {
       file.write(jsonObject.toJSONString());
     } catch (IOException e) {
       e.printStackTrace();
+    }
+  }
+
+  public static void delete(File file) {
+    if(file.isDirectory()) {
+      //directory is empty, then delete it
+      if(file.list().length==0){
+        file.delete();
+      } 
+      else {
+        //list all the directory contents
+        String files[] = file.list();
+
+        for (String temp : files) {
+          //construct the file structure
+          File fileDelete = new File(file, temp);
+          //recursive delete
+          delete(fileDelete);
+        }
+
+        //check the directory again, if empty then delete it
+        if(file.list().length==0){
+          file.delete();
+        }
+      }
+    } 
+    else {
+      //if file, then delete it
+      file.delete();
     }
   }
 

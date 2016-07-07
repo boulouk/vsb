@@ -9,4 +9,5 @@ public class Constants {
   public static String webapp_src_artifact;
   public static String service_name;
   public static String target_namespace;
+  public static String target_namespace_path;
 }
