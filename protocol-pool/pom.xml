@@ -13,6 +13,7 @@
   	<module>gm-rest</module>
   	<module>gm-soap</module>
     <module>gm-mqtt</module>
+    <module>gm-coap</module>
   </modules>
   <dependencies>
     <!-- Chorevolution -->

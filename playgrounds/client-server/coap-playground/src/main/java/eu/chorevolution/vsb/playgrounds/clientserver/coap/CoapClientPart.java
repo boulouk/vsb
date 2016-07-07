@@ -15,18 +15,15 @@ public class CoapClientPart {
     private CoapClient client;
     private Boolean clientOnline = false;
     
-    public CoapClientPart (){
+    public CoapClientPart() {
         
     }
     
     public void startClient (String destination, String resource) {
-        
         if(!clientOnline) {
             // Create a client
             client = new CoapClient();
-                
         }
-        
     }
     
     public void post_oneway(String destination, String scope, String dataPost, long lease){
@@ -36,7 +33,6 @@ public class CoapClientPart {
         
         System.err.println("Client sent:" + dataPost);
         CoapResponse response = client.post(dataPost, MediaTypeRegistry.TEXT_PLAIN);
-        
     }
     
     public void post_twoway(String destination, String scope, String dataPost, long lease){
