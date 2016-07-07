@@ -106,7 +106,6 @@ public class BcManagerRestService implements Manageable {
         }
       }
 
-      returnMessage = "Configuration Complete!";
       return new StringRepresentation(returnMessage);
     }
 

@@ -42,6 +42,7 @@ import com.sun.codemodel.JEnumConstant;
 import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JExpression;
 import com.sun.codemodel.JFieldRef;
+import com.sun.codemodel.JFieldVar;
 import com.sun.codemodel.JForLoop;
 import com.sun.codemodel.JFormatter;
 import com.sun.codemodel.JInvocation;
@@ -74,8 +75,8 @@ import eu.chorevolution.vsb.webappbcgenerator.StartBcManagerServlet;
 public class VsbManager {
 
   public static void main(String[] args) {
-    VsbManager vsbm = new VsbManager();
-    vsbm.generate(BcManagerRestService.class.getClassLoader().getResource("DtsGoogle.gidl").toExternalForm().substring(5), ProtocolType.SOAP);
+    //    VsbManager vsbm = new VsbManager();
+    //    vsbm.generate(BcManagerRestService.class.getClassLoader().getResource("DtsGoogle.gidl").toExternalForm().substring(5), ProtocolType.SOAP);
   }
 
   private void setConstants(String interfaceDescriptionPath) {
@@ -228,9 +229,33 @@ public class VsbManager {
       soapGenerator.generateWSDL();;
     }
 
+    //copyBCClass(gmServiceRepresentation, busProtocol);
     generateBCClass(gmServiceRepresentation, busProtocol);
 
   }
+
+  public void copyBCClass(GmServiceRepresentation gmServiceRepresentation, ProtocolType busProtocol) {
+    String namespace = Constants.target_namespace;
+    namespace = namespace.replace(".", File.separator);
+    try {
+      File input = new File(new File(BcManagerRestService.class.getClassLoader().getResource("example.json").toString()).getParent().substring(5) + File.separator + "GeneratedFactory.java");
+      File output = new File(Constants.generatedCodePath + File.separator + namespace + File.separator + "GeneratedFactory.java");
+      System.out.println(input.getAbsolutePath());
+      System.out.println(output.getAbsolutePath());
+      Scanner sc = new Scanner(input);
+      PrintWriter printer = new PrintWriter(output);
+      while(sc.hasNextLine()) {
+        String s = sc.nextLine();
+        printer.write(s+"\n");
+      }
+      sc.close();
+      printer.close();
+    }
+    catch(FileNotFoundException e) {
+      System.err.println("File not found. Please scan in new file.");
+    }
+  }
+
 
   private static List<JavaFileObject> scanRecursivelyForJavaObjects(File dir, StandardJavaFileManager fileManager) { 
     List<JavaFileObject> javaObjects = new LinkedList<JavaFileObject>(); 
@@ -283,7 +308,13 @@ public class VsbManager {
       e.printStackTrace();
     }
 
-    JMethod jmCreate = jc.method(JMod.PUBLIC | JMod.STATIC, void.class, "run");
+    JClass BcGmSubcomponentClass = jCodeModel.ref(eu.chorevolution.vsb.gm.protocols.primitives.BcGmSubcomponent.class);
+    JFieldVar ComponentsVar = jc.field(JMod.NONE, BcGmSubcomponentClass.array().array(), "subcomponent");
+
+    JClass GmServiceRepresentationClass = jCodeModel.ref(eu.chorevolution.vsb.gmdl.utils.GmServiceRepresentation.class);
+    JFieldVar GmServiceRepresentationVar = jc.field(JMod.NONE, GmServiceRepresentationClass, "gmServiceRepresentation", JExpr._null());
+
+    JMethod jmCreate = jc.method(JMod.PUBLIC, void.class, "run");
 
     /* Adding method body */
     JBlock jBlock = jmCreate.body();
@@ -329,8 +360,7 @@ public class VsbManager {
     //
     //    JCatchBlock parseCatchBlock = parseTryBlock._catch(ExceptionClass);
 
-    JClass GmServiceRepresentationClass = jCodeModel.ref(eu.chorevolution.vsb.gmdl.utils.GmServiceRepresentation.class);
-    JVar GmServiceRepresentationVar = jBlock.decl(GmServiceRepresentationClass, "gmServiceRepresentation", JExpr._null());
+
 
     JClass ConstantsClass = jCodeModel.ref(eu.chorevolution.vsb.gmdl.utils.Constants.class);
 
@@ -359,6 +389,10 @@ public class VsbManager {
     //    jBlock.add(getInterfaceRepresentation);
     jBlock.assign(GmServiceRepresentationVar, getInterfaceRepresentation);
 
+    jBlock.decl(jCodeModel.INT, "num_interfaces", GmServiceRepresentationVar.invoke("getInterfaces").invoke("size"));
+
+    jBlock.assign(ComponentsVar, JExpr.ref("new BcGmSubcomponent[num_interfaces][2]"));
+
     JForLoop forLoop = jBlock._for();
     JVar ivar = forLoop.init(jCodeModel.INT, "i", JExpr.lit(0));
     forLoop.test(ivar.lt( GmServiceRepresentationVar.invoke("getInterfaces").invoke("size") ));
@@ -371,7 +405,7 @@ public class VsbManager {
 
     forBlock.assign(JExpr.ref(InterfaceVar.name()), GmServiceRepresentationVar.invoke("getInterfaces").invoke("get").arg(ivar));
 
-    JClass BcGmSubcomponentClass = jCodeModel.ref(eu.chorevolution.vsb.gm.protocols.primitives.BcGmSubcomponent.class);
+
 
     //    JClass ProtocolClass = jCodeModel.ref(eu.chorevolution.vsb.gmdl.utils.enums.ProtocolType.class);
     JClass RoleTypeClass = jCodeModel.ref(eu.chorevolution.vsb.gmdl.utils.enums.RoleType.class);
@@ -418,24 +452,24 @@ public class VsbManager {
     JInvocation parseInvocation2 = bcConfig2Var.invoke("parseFromJSON").arg(JExpr._new(FileClass).arg(BcManagerRestServiceClass.dotclass().invoke("getClassLoader").invoke("getResource").arg("example.json").invoke("toExternalForm").invoke("substring").arg(intNineVar)).invoke("getParentFile").invoke("getParentFile").invoke("getParentFile").invoke("getParentFile").invoke("getAbsolutePath").plus(FileClass.staticRef("separator")).plus(JExpr._new(StringClass).arg("config")).plus(FileClass.staticRef("separator")).plus(JExpr._new(StringClass).arg("config_block2_interface_")).plus(jCodeModel.ref(java.lang.String.class).staticInvoke("valueOf").arg(ivar.plus(intOneVar))));
     forBlock.add(parseInvocation2);
 
-    JVar BcGmSubcomponentVar1 = forBlock.decl(BcGmSubcomponentClass, "block1Component", null);
-    JVar BcGmSubcomponentVar2 = forBlock.decl(BcGmSubcomponentClass, "block2Component", null);
-
     switch(busProtocol) {
     case REST:
       for(int i=1; i<=gmServiceRepresentation.getInterfaces().size(); i++)  
         createConfigFile(ProtocolType.REST, Constants.webapp_src_bc + File.separator + "config" + File.separator + "config_block1_interface_" + String.valueOf(i));
-      BcGmSubcomponentVar1.init(JExpr._new(BcRestSubcomponentClass).arg(bcConfig1Var));
+      forBlock.assign(JExpr.ref("subcomponent[i][0]"), JExpr._new(BcRestSubcomponentClass).arg(bcConfig1Var));
+      //      BcGmSubcomponentVar1.init(JExpr._new(BcRestSubcomponentClass).arg(bcConfig1Var));
       break;
     case SOAP:
       for(int i=1; i<=gmServiceRepresentation.getInterfaces().size(); i++)  
         createConfigFile(ProtocolType.SOAP, Constants.webapp_src_bc + File.separator + "config" + File.separator + "config_block1_interface_" + String.valueOf(i));
-      BcGmSubcomponentVar1.init(JExpr._new(BcSoapSubcomponentClass).arg(bcConfig1Var));
+      forBlock.assign(JExpr.ref("subcomponent[i][0]"), JExpr._new(BcSoapSubcomponentClass).arg(bcConfig1Var));
+      //      BcGmSubcomponentVar1.init(JExpr._new(BcSoapSubcomponentClass).arg(bcConfig1Var));
       break;
     case MQTT:
       for(int i=1; i<=gmServiceRepresentation.getInterfaces().size(); i++)  
         createConfigFile(ProtocolType.MQTT, Constants.webapp_src_bc + File.separator + "config" + File.separator + "config_block1_interface_" + String.valueOf(i));
-      BcGmSubcomponentVar1.init(JExpr._new(BcMQTTSubcomponentClass).arg(bcConfig1Var));
+      forBlock.assign(JExpr.ref("subcomponent[i][0]"), JExpr._new(BcMQTTSubcomponentClass).arg(bcConfig1Var));
+      //      BcGmSubcomponentVar1.init(JExpr._new(BcMQTTSubcomponentClass).arg(bcConfig1Var));
       break;
     }
 
@@ -443,25 +477,49 @@ public class VsbManager {
     case REST:
       for(int i=1; i<=gmServiceRepresentation.getInterfaces().size(); i++)  
         createConfigFile(ProtocolType.REST, Constants.webapp_src_bc + File.separator + "config" + File.separator + "config_block2_interface_" + String.valueOf(i));
-      BcGmSubcomponentVar2.init(JExpr._new(BcRestSubcomponentClass).arg(bcConfig2Var));
+      forBlock.assign(JExpr.ref("subcomponent[i][1]"), JExpr._new(BcRestSubcomponentClass).arg(bcConfig2Var));
+      //BcGmSubcomponentVar2.init(JExpr._new(BcRestSubcomponentClass).arg(bcConfig2Var));
       break;
     case SOAP:
       for(int i=1; i<=gmServiceRepresentation.getInterfaces().size(); i++)  
         createConfigFile(ProtocolType.SOAP, Constants.webapp_src_bc + File.separator + "config" + File.separator + "config_block2_interface_" + String.valueOf(i));
-      BcGmSubcomponentVar2.init(JExpr._new(BcSoapSubcomponentClass).arg(bcConfig2Var));
+      forBlock.assign(JExpr.ref("subcomponent[i][1]"), JExpr._new(BcSoapSubcomponentClass).arg(bcConfig2Var));
+      //     BcGmSubcomponentVar2.init(JExpr._new(BcSoapSubcomponentClass).arg(bcConfig2Var));
       break;
     case MQTT:
       for(int i=1; i<=gmServiceRepresentation.getInterfaces().size(); i++)  
         createConfigFile(ProtocolType.MQTT, Constants.webapp_src_bc + File.separator + "config" + File.separator + "config_block2_interface_" + String.valueOf(i));
-      BcGmSubcomponentVar2.init(JExpr._new(BcMQTTSubcomponentClass).arg(bcConfig2Var));
+      forBlock.assign(JExpr.ref("subcomponent[i][1]"), JExpr._new(BcMQTTSubcomponentClass).arg(bcConfig2Var));
+      //      BcGmSubcomponentVar2.init(JExpr._new(BcMQTTSubcomponentClass).arg(bcConfig2Var));
       break;
     }
 
+    JVar BcGmSubcomponentVar1 = forBlock.decl(BcGmSubcomponentClass, "block1Component", JExpr.ref("subcomponent[i][0]"));
+    JVar BcGmSubcomponentVar2 = forBlock.decl(BcGmSubcomponentClass, "block2Component", JExpr.ref("subcomponent[i][1]"));
+    
+//    JExpr.ref("component[i][0].start();");
     forBlock.add(BcGmSubcomponentVar1.invoke("setNextComponent").arg(BcGmSubcomponentVar2));
     forBlock.add(BcGmSubcomponentVar2.invoke("setNextComponent").arg(BcGmSubcomponentVar1));
 
     forBlock.add(BcGmSubcomponentVar1.invoke("start"));
     forBlock.add(BcGmSubcomponentVar2.invoke("start"));
+    
+    JMethod jmCreatePause = jc.method(JMod.PUBLIC, void.class, "pause");
+    JBlock jBlockPause = jmCreatePause.body();
+    
+    JForLoop forLoopPause = jBlockPause._for();
+    JVar ivarPause = forLoopPause.init(jCodeModel.INT, "i", JExpr.lit(0));
+    forLoopPause.test(ivarPause.lt( GmServiceRepresentationVar.invoke("getInterfaces").invoke("size") ));
+    forLoopPause.update(ivarPause.assignPlus(JExpr.lit(1)));
+
+    JBlock forBlockPause = forLoopPause.body();
+    
+    JVar BcGmSubcomponentVar1Pause = forBlockPause.decl(BcGmSubcomponentClass, "block1Component", JExpr.ref("subcomponent[i][0]"));
+    JVar BcGmSubcomponentVar2Pause = forBlockPause.decl(BcGmSubcomponentClass, "block2Component", JExpr.ref("subcomponent[i][1]"));
+    
+//    JExpr.ref("component[i][0].start();");
+    forBlockPause.add(BcGmSubcomponentVar1Pause.invoke("stop"));
+    forBlockPause.add(BcGmSubcomponentVar2Pause.invoke("stop"));
 
     try {
       jCodeModel.build(new File(generatedCodePath));

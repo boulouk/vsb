@@ -2,14 +2,21 @@
 package eu.chorevolution.vsb.bindingcomponent.generated;
 
 import java.io.File;
+
+import com.sun.codemodel.JExpr;
+import com.sun.codemodel.JInvocation;
+
 import eu.chorevolution.vsb.bc.manager.BcManagerRestService;
+import eu.chorevolution.vsb.gm.protocols.mqtt.BcMQTTSubcomponent;
 import eu.chorevolution.vsb.gm.protocols.primitives.BcGmSubcomponent;
 import eu.chorevolution.vsb.gm.protocols.rest.BcRestSubcomponent;
 import eu.chorevolution.vsb.gm.protocols.soap.BcSoapSubcomponent;
 import eu.chorevolution.vsb.gmdl.tools.serviceparser.ServiceDescriptionParser;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
+import eu.chorevolution.vsb.gmdl.utils.Constants;
 import eu.chorevolution.vsb.gmdl.utils.GmServiceRepresentation;
 import eu.chorevolution.vsb.gmdl.utils.Interface;
+import eu.chorevolution.vsb.gmdl.utils.enums.ProtocolType;
 import eu.chorevolution.vsb.gmdl.utils.enums.RoleType;
 
 public class GeneratedFactory {
@@ -19,7 +26,7 @@ public class GeneratedFactory {
   BcGmSubcomponent[][] component = null;
   
   
-  public static void run() {
+  public void run() {
     java.lang.Integer intFive;
     intFive = Integer.parseInt("5");
     java.lang.Integer intOne;
@@ -27,9 +34,20 @@ public class GeneratedFactory {
     java.lang.Integer intNine;
     intNine = Integer.parseInt("9");
 
-    String interfaceDescFilePath;
-    interfaceDescFilePath = ((((new File(BcManagerRestService.class.getClassLoader().getResource("example.json").toExternalForm().substring(intNine)).getParentFile().getParentFile().getParentFile().getParentFile().getAbsolutePath()+ File.separator)+ new String("config"))+ File.separator)+ new String("gidl.gidl"));
-    gmServiceRepresentation = ServiceDescriptionParser.getRepresentationFromGIDL(interfaceDescFilePath);
+    String interfaceDescriptionPath;
+    interfaceDescriptionPath = ((((new File(BcManagerRestService.class.getClassLoader().getResource("example.json").toExternalForm().substring(intNine)).getParentFile().getParentFile().getParentFile().getParentFile().getAbsolutePath()+ File.separator)+ new String("config"))+ File.separator)+ new String("gidl.gidl"));
+    String extension = ""; 
+    String[] interfaceDescPieces = interfaceDescriptionPath.split("\\.");
+    extension = interfaceDescPieces[interfaceDescPieces.length-1];
+    JInvocation getInterfaceRepresentation = null;
+    switch(extension) {
+    case "gmdl":
+      gmServiceRepresentation = ServiceDescriptionParser.getRepresentationFromGMDL(interfaceDescriptionPath); 
+    case "gidl":
+      gmServiceRepresentation = ServiceDescriptionParser.getRepresentationFromGIDL(interfaceDescriptionPath);
+    }
+    
+    
     
     component = new BcGmSubcomponent[gmServiceRepresentation.getInterfaces().size()][2];
     
@@ -48,8 +66,21 @@ public class GeneratedFactory {
       bcConfiguration2 .setSubcomponentRole(busRole);
       bcConfiguration1 .parseFromJSON((((((new File(BcManagerRestService.class.getClassLoader().getResource("example.json").toExternalForm().substring(intNine)).getParentFile().getParentFile().getParentFile().getParentFile().getAbsolutePath()+ File.separator)+ new String("config"))+ File.separator)+ new String("config_block1_interface_"))+ String.valueOf((i + intOne))));
       bcConfiguration2 .parseFromJSON((((((new File(BcManagerRestService.class.getClassLoader().getResource("example.json").toExternalForm().substring(intNine)).getParentFile().getParentFile().getParentFile().getParentFile().getAbsolutePath()+ File.separator)+ new String("config"))+ File.separator)+ new String("config_block2_interface_"))+ String.valueOf((i + intOne))));
+     
       component[i][0] = new BcSoapSubcomponent(bcConfiguration1);
-      component[i][1] = new BcRestSubcomponent(bcConfiguration2);
+      
+      switch(gmServiceRepresentation.getProtocol()) {
+      case REST:
+        component[i][1] = new BcRestSubcomponent(bcConfiguration2);
+        break;
+      case SOAP:
+        component[i][1] = new BcSoapSubcomponent(bcConfiguration2);
+        break;
+      case MQTT:
+        component[i][1] = new BcMQTTSubcomponent(bcConfiguration2);
+        break;
+      }
+      
       component[i][0].setNextComponent(component[i][1]);
       component[i][1].setNextComponent(component[i][0]);
       component[i][0].start();
@@ -57,7 +88,7 @@ public class GeneratedFactory {
     }
   }
 
-  public static void pause() {
+  public void pause() {
     for (int i = 0; (i<gmServiceRepresentation.getInterfaces().size()); i += 1) {
       component[i][0].stop();
       component[i][1].stop();
