@@ -8,8 +8,7 @@
 	</parent>
 	<groupId>eu.chorevolution.vsb</groupId>
 	<artifactId>gm-coap</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+
 
 	<name>gm-coap</name>
 	<url>http://maven.apache.org</url>
@@ -51,7 +50,14 @@
 		<dependency>
 			<groupId>org.eclipse.californium</groupId>
 			<artifactId>californium-core</artifactId>
-			<version>1.0.0-M3</version>
+			<version>1.0.3</version>
 		</dependency>
+		<dependency>
+			<groupId>org.eclipse.californium</groupId>
+			<artifactId>californium-osgi</artifactId>
+			<version>1.0.4</version>
+		</dependency>
+
+
 	</dependencies>
 </project>

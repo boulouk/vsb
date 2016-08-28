@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import eu.chorevolution.vsb.bc.manager.BcManagerRestService;
 
 public class StartBcManagerServlet extends HttpServlet {
-  
-  BcManagerRestService server = null;
-  
-  /**
+
+	BcManagerRestService server = null;
+
+	/**
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
 	 * methods.
 	 * 
@@ -28,29 +28,36 @@ public class StartBcManagerServlet extends HttpServlet {
 	 *           if an I/O error occurs
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	  response.setContentType("text/html;charset=UTF-8");
-	  
-	  String op = request.getParameter("op");
-	  if(op.equals("start")) {
-	    server.runBC();
-	    response.getWriter().println("BC started!");
-	  }
-	  else if(op.equals("stop")) {
-	    server.pauseBC();
-      response.getWriter().println("BC stopped!");
-	  } 
-	  else if(op.equals("startbcm")) {
-	    server = new BcManagerRestService(2222);
-      response.getWriter().println("-> BC Manager started!");
-	  }
-	  else if(op.equals("stopbcm")) {
-	    if(server!=null) {
-        server.stop();
-        server = null;
-        response.getWriter().println("stopped!");
-      }
-    }
-	  
+		response.setContentType("text/html;charset=UTF-8");
+
+		String op = request.getParameter("op");
+		if(op.equals("start")) {
+			System.out.println("StartBcManager Servlet start req");
+			server.runBC();
+			System.out.println("StartBcManager Servlet start req done");
+			response.getWriter().println("BC started!");
+		}
+		else if(op.equals("stop")) {
+			System.out.println("StartBcManager Servlet stop req");
+			server.pauseBC();
+			System.out.println("StartBcManager Servlet stop req done");
+			response.getWriter().println("BC stopped!");
+		} 
+		else if(op.equals("startbcm")) {
+			server = new BcManagerRestService(2216);
+			response.getWriter().println("-> BC Manager started!");
+		}
+		else if(op.equals("stopbcm")) {
+			if(server!=null) {
+				server.stop();
+				server = null;
+				response.getWriter().println("stopped!");
+			}
+			else {
+				response.getWriter().println("server is not running stopped!");
+			}
+		}
+
 	}
 
 	// <editor-fold defaultstate="collapsed"

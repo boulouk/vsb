@@ -41,8 +41,8 @@ public class GeneratedFactory {
             bcConfiguration2 .setSubcomponentRole(busRole);
             bcConfiguration1 .parseFromJSON((((((new File(BcManagerRestService.class.getClassLoader().getResource("example.json").toExternalForm().substring(intNine)).getParentFile().getParentFile().getParentFile().getParentFile().getAbsolutePath()+ File.separator)+ new String("config"))+ File.separator)+ new String("config_block1_interface_"))+ String.valueOf((i + intOne))));
             bcConfiguration2 .parseFromJSON((((((new File(BcManagerRestService.class.getClassLoader().getResource("example.json").toExternalForm().substring(intNine)).getParentFile().getParentFile().getParentFile().getParentFile().getAbsolutePath()+ File.separator)+ new String("config"))+ File.separator)+ new String("config_block2_interface_"))+ String.valueOf((i + intOne))));
-            BcGmSubcomponent block1Component = new BcSoapSubcomponent(bcConfiguration1);
-            BcGmSubcomponent block2Component = new BcRestSubcomponent(bcConfiguration2);
+            BcGmSubcomponent block1Component = new BcSoapSubcomponent(bcConfiguration1, gmServiceRepresentation);
+            BcGmSubcomponent block2Component = new BcRestSubcomponent(bcConfiguration2, gmServiceRepresentation);
             block1Component.setNextComponent(block2Component);
             block2Component.setNextComponent(block1Component);
             block1Component.start();

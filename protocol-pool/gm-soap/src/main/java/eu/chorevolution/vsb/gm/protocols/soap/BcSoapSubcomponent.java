@@ -18,15 +18,18 @@ import javax.xml.ws.Endpoint;
 import eu.chorevolution.vsb.gm.protocols.primitives.BcGmSubcomponent;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
 import eu.chorevolution.vsb.gmdl.utils.Data;
-import eu.chorevolution.vsb.gmdl.utils.enums.*;
+import eu.chorevolution.vsb.gmdl.utils.GmServiceRepresentation;
 
 public class BcSoapSubcomponent extends BcGmSubcomponent {
 
   private Endpoint endpoint;
   private SOAPConnection soapConnection;
+  private GmServiceRepresentation serviceRepresentation;
 
-  public BcSoapSubcomponent(BcConfiguration bcConfiguration) {
+  public BcSoapSubcomponent(BcConfiguration bcConfiguration,
+			GmServiceRepresentation serviceRepresentation) {
     super(bcConfiguration);
+    this.serviceRepresentation = serviceRepresentation;
   }
 
   @Override

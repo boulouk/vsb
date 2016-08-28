@@ -20,10 +20,10 @@ public class CoapClientPart {
     }
     
     public void startClient (String destination, String resource) {
-        if(!clientOnline) {
+//        if(!clientOnline) {
             // Create a client
-            client = new CoapClient();
-        }
+            client = new CoapClient(destination+resource);
+//        }
     }
     
     public void post_oneway(String destination, String scope, String dataPost, long lease){
@@ -32,7 +32,8 @@ public class CoapClientPart {
         client.setURI(destination+"/"+scope);   
         
         System.err.println("Client sent:" + dataPost);
-        CoapResponse response = client.post(dataPost, MediaTypeRegistry.TEXT_PLAIN);
+        CoapResponse response = client.post(dataPost, MediaTypeRegistry.APPLICATION_JSON);
+        xtget(response);
     }
     
     public void post_twoway(String destination, String scope, String dataPost, long lease){
@@ -40,9 +41,9 @@ public class CoapClientPart {
         
         client.setURI(destination+"/"+scope);   
         System.err.println("Client requested:" + dataPost);
-//        CoapResponse response = client.post(dataPost, MediaTypeRegistry.TEXT_PLAIN);
+        CoapResponse response = client.post(dataPost, MediaTypeRegistry.TEXT_PLAIN);
         
-        CoapResponse response = client.get(MediaTypeRegistry.TEXT_PLAIN);
+//        CoapResponse response = client.get(MediaTypeRegistry.TEXT_PLAIN);
         xtget(response);
     }
     

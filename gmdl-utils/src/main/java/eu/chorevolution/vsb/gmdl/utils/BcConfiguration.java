@@ -12,7 +12,7 @@ public class BcConfiguration {
   private int subcomponentPort;
   private RoleType subcomponentRole;
   private String serviceAddress;
-  private int servicePort;
+  private Integer servicePort;
   private String generatedCodePath = "src/main/resources";
   
   public BcConfiguration() {
@@ -55,11 +55,11 @@ public class BcConfiguration {
     return serviceAddress;
   }
   
-  public void setServicePort(int servicePort) {
+  public void setServicePort(Integer servicePort) {
     this.servicePort = servicePort;
   }
   
-  public int getServicePort() {
+  public Integer getServicePort() {
     return servicePort;
   }
   
@@ -95,8 +95,6 @@ public class BcConfiguration {
   public void parseFromJSON(String configFilePath) {
     JSONParser parser = new JSONParser();
     JSONObject jsonObject = new JSONObject();
-    java.lang.Integer intFive;
-    intFive = Integer.parseInt("5");
     try {
         FileReader fileReader = new FileReader(configFilePath);
         jsonObject = ((JSONObject) parser.parse(fileReader));
@@ -107,7 +105,26 @@ public class BcConfiguration {
     System.out.println(jsonObject);
     setServiceName((String) jsonObject.get("service_name"));
     setSubcomponentAddress((String) jsonObject.get("subcomponent_address"));
+    
+    String subcomponentPort = (String) jsonObject.get("subcomponent_port");
+    int subcomponentPortInt = 0;
+    if(subcomponentPort!=null && !subcomponentPort.equals("")) {
+    	subcomponentPortInt = Integer.parseInt(subcomponentPort);
+    }
+    
+    setSubcomponentPort(subcomponentPortInt);
+    
     setServiceAddress((String) jsonObject.get("service_address"));
+    
+    String servicePort = (String) jsonObject.get("service_port");
+    int servicePortInt = 0;
+    if(servicePort!=null && !servicePort.equals("")) {
+    	servicePortInt = Integer.parseInt(servicePort);
+    }
+    
+    setServicePort(servicePortInt);
+    
+    System.out.println("Done parsing config file");
   }
  
 }

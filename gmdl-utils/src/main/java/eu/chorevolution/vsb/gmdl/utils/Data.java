@@ -16,6 +16,20 @@ public class Data<T> {
   private List<Data<?>> attributes;
   private T object;
 
+  @Override
+	public String toString() {
+		String s = "";
+		s += ("** name: " + name);
+		s += ("className: " + className);
+		s += ("isPrimitiveType: " + isPrimitiveType);
+		s += ("context: " + context);
+		s += ("mediaType: " + mediaType);
+		s += ("isRequired: " + isRequired);
+		s += ("attributes: " + attributes);
+		s += ("object: " + (T)object) + " **";
+		return s;
+	}
+  
   public Data(Data<T> another) {
     this.name = another.name;
     this.className = another.className;

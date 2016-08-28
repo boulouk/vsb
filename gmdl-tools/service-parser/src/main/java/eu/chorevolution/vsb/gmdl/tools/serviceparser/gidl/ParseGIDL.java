@@ -38,267 +38,287 @@ import eu.chorevolution.vsb.gmdl.utils.enums.Verb;
 
 public class ParseGIDL {
 
-  static class Utils {
-    public static GIDLModel loadGIDLModel(URI cltsURI) throws Exception {
-      GidlPackageImpl.init();
-      Resource resource = new XMIResourceFactoryImpl().createResource(cltsURI);
-      try {
-        // load the resource
-        resource.load(null);
-      } catch (IOException e) {
-        System.out.println(e.getMessage());
-        throw new Exception("Error to load the resource: " + resource.getURI().toFileString());
-      }
-      GIDLModel gidlModel = (GIDLModel) resource.getContents().get(0);
-      return gidlModel;
-    }
-  }
+	static class Utils {
+		public static GIDLModel loadGIDLModel(URI cltsURI) throws Exception {
+			GidlPackageImpl.init();
+			Resource resource = new XMIResourceFactoryImpl().createResource(cltsURI);
+			try {
+				// load the resource
+				resource.load(null);
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+				throw new Exception("Error to load the resource: " + resource.getURI().toFileString());
+			}
+			GIDLModel gidlModel = (GIDLModel) resource.getContents().get(0);
+			return gidlModel;
+		}
+	}
 
-  public GmServiceRepresentation parse(String gidl) {
-    GIDLModel  model = null;
-    try {
-      model = Utils.loadGIDLModel(URI.createURI(new File(gidl).toURI().toString()));
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return parse_gidl(model);
-  }
+	public GmServiceRepresentation parse(String gidl) {
+		GIDLModel  model = null;
+		try {
+			model = Utils.loadGIDLModel(URI.createURI(new File(gidl).toURI().toString()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return parse_gidl(model);
+	}
 
-  private static String GIDLDataTypeToJavaType(DataType data_type) {
-    String data_type_str = "";
-    switch(data_type) {
-    case BOOLEAN:
-      data_type_str = "boolean";
-      break;
-    case INTEGER:
-      data_type_str = "int";
-      break;
-    case DATE:
-      data_type_str = "Date";
-      break;
-    case DECIMAL:
-      data_type_str = "double";
-      break;
-    case OBJECT:
-      data_type_str = "object";
-      break;
-    case STRING:
-      data_type_str = "String";
-      break;
-    case TIME:
-      data_type_str = "Time";
-      break;
-    default:
-      System.out.println("Unknown datta type while parsing GIDL");
-    }
-    return data_type_str;
-  }
-  
-  private static Data<?> getDataObject(eu.chorevolution.modelingnotations.gidl.Data getData, Map<String, Data<?>> definitonMap) {
-    String data_name = getData.getName();
-    DataType data_type = getData.getType();
-    ContextType contextType = getData.getContext();
-    Definition $ref = getData.getHasDefinition();
+	private static String GIDLDataTypeToJavaType(DataType data_type) {
+		String data_type_str = "";
+		switch(data_type) {
+		case BOOLEAN:
+			data_type_str = "boolean";
+			break;
+		case INTEGER:
+			data_type_str = "int";
+			break;
+		case DATE:
+			data_type_str = "Date";
+			break;
+		case DECIMAL:
+			data_type_str = "double";
+			break;
+		case OBJECT:
+			data_type_str = "object";
+			break;
+		case STRING:
+			data_type_str = "String";
+			break;
+		case TIME:
+			data_type_str = "Time";
+			break;
+		default:
+			System.out.println("Unknown datta type while parsing GIDL");
+		}
+		return data_type_str;
+	}
 
-    Context con = null;
-    switch(contextType) {
-    case BODY:
-      con = Context.BODY;
-      break;
-    case FORM:
-      con = Context.FORM;
-      break;
-    case HEADER:
-      con = Context.HEADER;
-      break;
-    case PATH:
-      con = Context.PATH;
-      break;
-    case QUERY:
-      con = Context.QUERY;
-      break;
-    }
+	private static Data<?> getDataObject(eu.chorevolution.modelingnotations.gidl.Data getData, Map<String, Data<?>> definitonMap) {
+		String data_name = getData.getName();
+		DataType data_type = getData.getType();
+		ContextType contextType = getData.getContext();
+		Definition $ref = getData.getHasDefinition();
 
-    String data_type_str = GIDLDataTypeToJavaType(data_type);
+		Context con = null;
+		switch(contextType) {
+		case BODY:
+			con = Context.BODY;
+			break;
+		case FORM:
+			con = Context.FORM;
+			break;
+		case HEADER:
+			con = Context.HEADER;
+			break;
+		case PATH:
+			con = Context.PATH;
+			break;
+		case QUERY:
+			con = Context.QUERY;
+			break;
+		}
 
-    Data<?> data = null;
-    if("object".equals(data_type_str)) {
-      data = new Data(definitonMap.get($ref.getName()));
-      data.setName(data_name);
-      data.setContext(con);
-    } 
-    else {
+		String data_type_str = GIDLDataTypeToJavaType(data_type);
 
-      data = new Data(data_name, data_type_str, true, "application/json", con, true);
-    }
-    return data;
-  }
+		Data<?> data = null;
+		if("object".equals(data_type_str)) {
+			data = new Data(definitonMap.get($ref.getName()));
+			data.setName(data_name);
+			data.setContext(con);
+		} 
+		else {
 
-
-
-  public GmServiceRepresentation parse_gidl(GIDLModel gidlModel) {
-    JSONParser parser = new JSONParser();
-    Map<String, Data<?>> definitonMap = new HashMap<String, Data<?>>();
-    GmServiceRepresentation serviceDefinition = new GmServiceRepresentation();
+			data = new Data(data_name, data_type_str, true, "application/json", con, true);
+		}
+		return data;
+	}
 
 
-    String host_address = gidlModel.getHostAddress();
-    eu.chorevolution.modelingnotations.gidl.ProtocolType protocol = gidlModel.getProtocol();
 
-    //      BcConfiguration compConfServer = new BcConfiguration();
-    //      compConfServer.setServiceAddress(host_address);
-    //      compConfServer.setGeneratedCodePath("src/test/generated");
-    //      compConfServer.setTargetNamespace("");
+	public GmServiceRepresentation parse_gidl(GIDLModel gidlModel) {
+		JSONParser parser = new JSONParser();
+		Map<String, Data<?>> definitonMap = new HashMap<String, Data<?>>();
+		GmServiceRepresentation serviceDefinition = new GmServiceRepresentation();
 
-    serviceDefinition.setHostAddress(host_address);
+		String host_address = gidlModel.getHostAddress();
+		eu.chorevolution.modelingnotations.gidl.ProtocolType protocol = gidlModel.getProtocol();
 
-    switch(protocol) {
-    case REST:
-      serviceDefinition.setProtocol(ProtocolType.REST);
-      break;
-    case SOAP:
-      serviceDefinition.setProtocol(ProtocolType.SOAP);
-      break;
-    }
+		//      BcConfiguration compConfServer = new BcConfiguration();
+		//      compConfServer.setServiceAddress(host_address);
+		//      compConfServer.setGeneratedCodePath("src/test/generated");
+		//      compConfServer.setTargetNamespace("");
 
-    EList<InterfaceDescription> interfaces = gidlModel.getHasInterfaces();
-    //			JSONArray operations = (JSONArray) jsonObject.get("operations");
-    EList<Definition> definitions = gidlModel.getHasDefinitions();
+		serviceDefinition.setHostAddress(host_address);
 
-    for(Definition definition: definitions) {
-      String defintionName = definition.getName();
-      //				String defintionType = (String)definition.get("definition_type");
-      Context con = Context.PATH;
+		switch(protocol) {
+		case REST:
+			serviceDefinition.setProtocol(ProtocolType.REST);
+			break;
+		case SOAP:
+			serviceDefinition.setProtocol(ProtocolType.SOAP);
+			break;
+		case COAP:
+			serviceDefinition.setProtocol(ProtocolType.COAP);
+			break;
+		case JMS:
+			serviceDefinition.setProtocol(ProtocolType.JMS);
+			break;
+		case MQTT:
+			serviceDefinition.setProtocol(ProtocolType.MQTT);
+			break;
+		case PUB_NUB:
+			serviceDefinition.setProtocol(ProtocolType.PUB_NUB);
+			break;
+		case SEMI_SPACE:
+			serviceDefinition.setProtocol(ProtocolType.SEMI_SPACE);
+			break;
+		case WEB_SOCKETS:
+			serviceDefinition.setProtocol(ProtocolType.WEB_SOCKETS);
+			break;
+		case ZERO_MQ:
+			serviceDefinition.setProtocol(ProtocolType.ZERO_MQ);
+			break;
+		}
 
-      Data<?> data = null;
-      //				if(defintionType.equals("object")) {
-      data = new Data<>(defintionName, defintionName, false, "application/json", con, false);
-      //				} 
-      //				else {
-      //					data = new Data<>(defintionName, defintionType, true, "application/json", con, false);
-      //				}
-      definitonMap.put(defintionName, data);
-    }
+		EList<InterfaceDescription> interfaces = gidlModel.getHasInterfaces();
+		//			JSONArray operations = (JSONArray) jsonObject.get("operations");
+		EList<Definition> definitions = gidlModel.getHasDefinitions();
 
-    for(Definition definition: definitions) {
-      String definitionName = definition.getName();
-      Data<?> parentData = definitonMap.get(definitionName);
+		for(Definition definition: definitions) {
+			String defintionName = definition.getName();
+			//				String defintionType = (String)definition.get("definition_type");
+			Context con = Context.PATH;
 
-      for(Property property: definition.getHasProperties()) {
-        String propertyName = property.getName();
-        DataType propertyTypeEnum = property.getType();
-        String propertyType = GIDLDataTypeToJavaType(propertyTypeEnum);
-        boolean req = property.isRequired();
-        if(propertyType.equals("object")) {
-          Definition referenceDef = property.getReferenceDefinition();
-          Data<?> data = new Data(definitonMap.get(referenceDef.getName()));
-          data.setName(propertyName);
-          if(req)
-            data.setIsRequired(true);
-          parentData.addAttribute(data);
-        }
-        else {
-          Data<?> data = new Data(propertyName, propertyType, true, "application/json", Context.PATH, req);
-          parentData.addAttribute(data);
-        }
-      }
+			Data<?> data = null;
+			//				if(defintionType.equals("object")) {
+			data = new Data<>(defintionName, defintionName, false, "application/json", con, false);
+			//				} 
+			//				else {
+			//					data = new Data<>(defintionName, defintionType, true, "application/json", con, false);
+			//				}
+			definitonMap.put(defintionName, data);
+		}
 
-      serviceDefinition.addTypeDefinition(parentData);
-    }
+		for(Definition definition: definitions) {
+			String definitionName = definition.getName();
+			Data<?> parentData = definitonMap.get(definitionName);
 
-    //			Map<String, Operation> operationMap = new HashMap<String, Operation>();
+			for(Property property: definition.getHasProperties()) {
+				String propertyName = property.getName();
+				DataType propertyTypeEnum = property.getType();
+				String propertyType = GIDLDataTypeToJavaType(propertyTypeEnum);
+				boolean req = property.isRequired();
+				if(propertyType.equals("object")) {
+					Definition referenceDef = property.getReferenceDefinition();
+					Data<?> data = new Data(definitonMap.get(referenceDef.getName()));
+					data.setName(propertyName);
+					if(req)
+						data.setIsRequired(true);
+					parentData.addAttribute(data);
+				}
+				else {
+					Data<?> data = new Data(propertyName, propertyType, true, "application/json", Context.PATH, req);
+					parentData.addAttribute(data);
+				}
+			}
 
-    for(InterfaceDescription inter: interfaces) {
-      eu.chorevolution.modelingnotations.gidl.RoleType roleNameEnum = inter.getRole();
-      EList<eu.chorevolution.modelingnotations.gidl.Operation> ops = inter.getHasOperations();
-      Interface interfaceObj = null;
-      switch(roleNameEnum) {
-      case PROVIDER:
-        interfaceObj = new Interface(RoleType.SERVER);
-        break;
-      case CONSUMER:	
-        interfaceObj = new Interface(RoleType.CLIENT);
-        break;
-      }
+			serviceDefinition.addTypeDefinition(parentData);
+		}
 
-      for(eu.chorevolution.modelingnotations.gidl.Operation opGidl: ops) {
-        String operation_name = opGidl.getName();
-        eu.chorevolution.modelingnotations.gidl.OperationType operation_type = opGidl.getType();  
-        OperationType type = null;
-        switch(operation_type) {
-        case ONE_WAY:
-          type = OperationType.ONE_WAY;
-          break;
-        case STREAM:
-          type = OperationType.STREAM;
-          break;
-        case TWO_WAY_ASYNC:
-          type = OperationType.TWO_WAY_ASYNC;
-          break;
-        case TWO_WAY_SYNC:
-          type = OperationType.TWO_WAY_SYNC;
-          break;
-        }
+		//			Map<String, Operation> operationMap = new HashMap<String, Operation>();
 
-        //        String role = (String) operation.get("role");  
-        //        if(role.equalsIgnoreCase("SERVER")) {
-        //          compConfServer.setSubcomponentRole(RoleType.SERVER);
-        //        }
-        //        else if(role.equalsIgnoreCase("CLIENT")) {
-        //          compConfServer.setSubcomponentRole(RoleType.CLIENT);
-        //        }
+		for(InterfaceDescription inter: interfaces) {
+			eu.chorevolution.modelingnotations.gidl.RoleType roleNameEnum = inter.getRole();
+			EList<eu.chorevolution.modelingnotations.gidl.Operation> ops = inter.getHasOperations();
+			Interface interfaceObj = null;
+			switch(roleNameEnum) {
+			case PROVIDER:
+				interfaceObj = new Interface(RoleType.SERVER);
+				break;
+			case CONSUMER:	
+				interfaceObj = new Interface(RoleType.CLIENT);
+				break;
+			}
 
-        eu.chorevolution.modelingnotations.gidl.Scope scopeGidl = opGidl.getHasScope();
+			for(eu.chorevolution.modelingnotations.gidl.Operation opGidl: ops) {
+				String operation_name = opGidl.getName();
+				eu.chorevolution.modelingnotations.gidl.OperationType operation_type = opGidl.getType();  
+				OperationType type = null;
+				switch(operation_type) {
+				case ONE_WAY:
+					type = OperationType.ONE_WAY;
+					break;
+				case STREAM:
+					type = OperationType.STREAM;
+					break;
+				case TWO_WAY_ASYNC:
+					type = OperationType.TWO_WAY_ASYNC;
+					break;
+				case TWO_WAY_SYNC:
+					type = OperationType.TWO_WAY_SYNC;
+					break;
+				}
 
-        Scope scope = new Scope();
+				//        String role = (String) operation.get("role");  
+				//        if(role.equalsIgnoreCase("SERVER")) {
+					//          compConfServer.setSubcomponentRole(RoleType.SERVER);
+				//        }
+				//        else if(role.equalsIgnoreCase("CLIENT")) {
+				//          compConfServer.setSubcomponentRole(RoleType.CLIENT);
+				//        }
 
-        if(scopeGidl!=null) {
-          scope.setName(scopeGidl.getName());
-          switch(scopeGidl.getVerb()) {
-          case "GET":
-            scope.setVerb(Verb.GET);            
-            break;
-          case "POST":
-            scope.setVerb(Verb.POST);            
-            break;
-          case "PUT":
-            scope.setVerb(Verb.PUT);            
-            break;
-          case "PATCH":
-            scope.setVerb(Verb.PATCH);            
-            break;
-          case "DELETE":
-            scope.setVerb(Verb.DELETE);            
-            break;
-          default:
-            System.out.println("Error: Unknown verb encountered during parsing scope block.");
-          }
-          scope.setUri(scopeGidl.getUri());
-        } 
+				eu.chorevolution.modelingnotations.gidl.Scope scopeGidl = opGidl.getHasScope();
 
-        Operation op = new Operation(operation_name, scope, type);      
+				Scope scope = new Scope();
 
-        EList<eu.chorevolution.modelingnotations.gidl.Data> get_data = opGidl.getInputData();
+				if(scopeGidl!=null) {
+					scope.setName(scopeGidl.getName());
+					switch(scopeGidl.getVerb()) {
+					case "GET":
+						scope.setVerb(Verb.GET);            
+						break;
+					case "POST":
+						scope.setVerb(Verb.POST);            
+						break;
+					case "PUT":
+						scope.setVerb(Verb.PUT);            
+						break;
+					case "PATCH":
+						scope.setVerb(Verb.PATCH);            
+						break;
+					case "DELETE":
+						scope.setVerb(Verb.DELETE);            
+						break;
+					default:
+						System.out.println("Error: Unknown verb encountered during parsing scope block.");
+					}
+					scope.setUri(scopeGidl.getUri());
+				} 
 
-        for(eu.chorevolution.modelingnotations.gidl.Data getData: get_data) {
-          Data<?> data = getDataObject(getData, definitonMap); 
-          op.addGetData(data);
-        }
+				Operation op = new Operation(operation_name, scope, type);      
 
-        EList<eu.chorevolution.modelingnotations.gidl.Data> post_data = opGidl.getOutputData();
+				EList<eu.chorevolution.modelingnotations.gidl.Data> get_data = opGidl.getInputData();
 
-        for(eu.chorevolution.modelingnotations.gidl.Data postData: post_data) {
-          Data<?> data = getDataObject(postData, definitonMap); 
-          op.setPostData(data);
-        }
+				for(eu.chorevolution.modelingnotations.gidl.Data getData: get_data) {
+					Data<?> data = getDataObject(getData, definitonMap); 
+					op.addGetData(data);
+				}
 
-        serviceDefinition.addOperation(op);
-        interfaceObj.addOperation(op);
-      }
-      //			
-      serviceDefinition.addInterface(interfaceObj);
-    }
+				EList<eu.chorevolution.modelingnotations.gidl.Data> post_data = opGidl.getOutputData();
 
-    return serviceDefinition;
-  }
+				for(eu.chorevolution.modelingnotations.gidl.Data postData: post_data) {
+					Data<?> data = getDataObject(postData, definitonMap); 
+					op.setPostData(data);
+				}
+
+				serviceDefinition.addOperation(op);
+				interfaceObj.addOperation(op);
+			}
+			//			
+			serviceDefinition.addInterface(interfaceObj);
+		}
+
+		return serviceDefinition;
+	}
 }
