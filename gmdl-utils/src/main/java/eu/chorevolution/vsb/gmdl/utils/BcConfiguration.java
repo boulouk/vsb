@@ -92,7 +92,7 @@ public class BcConfiguration {
     return targetNamespace;
   }
 
-  public void parseFromJSON(String configFilePath) {
+  public void parseFromJSON(GmServiceRepresentation gmServiceRep, String configFilePath) {
     JSONParser parser = new JSONParser();
     JSONObject jsonObject = new JSONObject();
     try {
@@ -114,7 +114,7 @@ public class BcConfiguration {
     
     setSubcomponentPort(subcomponentPortInt);
     
-    setServiceAddress((String) jsonObject.get("service_address"));
+    setServiceAddress(gmServiceRep.getHostAddress());
     
     String servicePort = (String) jsonObject.get("service_port");
     int servicePortInt = 0;

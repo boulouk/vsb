@@ -138,7 +138,9 @@ public class BcRestSubcomponent extends BcGmSubcomponent {
 
   @Override
   public <T> T postTwowaySync(final String destination, final String scope, final List<Data<?>> datas, final long lease) {
-    System.out.println((String)datas.get(0).getObject());
+	  System.out.println("Destination: " + destination);
+	  System.out.println("Scope: " + scope);
+	  System.out.println("Datas: " + datas);
 	  Request request = RestRequestBuilder.buildRestGetRequest(destination, scope, datas);
     Response response = this.client.handle(request);
     System.out.println(response.getEntityAsText());

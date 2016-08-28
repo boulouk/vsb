@@ -19,14 +19,14 @@ public class Data<T> {
   @Override
 	public String toString() {
 		String s = "";
-		s += ("** name: " + name);
-		s += ("className: " + className);
-		s += ("isPrimitiveType: " + isPrimitiveType);
-		s += ("context: " + context);
-		s += ("mediaType: " + mediaType);
-		s += ("isRequired: " + isRequired);
-		s += ("attributes: " + attributes);
-		s += ("object: " + (T)object) + " **";
+		s += ("|** name: " + name);
+		s += (" className: " + className);
+		s += (" isPrimitiveType: " + isPrimitiveType);
+		s += (" context: " + context);
+		s += (" mediaType: " + mediaType);
+		s += (" isRequired: " + isRequired);
+		s += (" attributes: " + attributes);
+		s += (" object: " + (T)object) + " **|";
 		return s;
 	}
   
@@ -61,6 +61,11 @@ public class Data<T> {
     this(name, className, isPrimitiveType, object, Context.valueOf(context), true);
   }
 
+  // Alias for setting isRequired = true by default
+  public Data(String name, String className, boolean isPrimitiveType, T object, Context context) {
+    this(name, className, isPrimitiveType, object, context, true);
+  }
+  
   // Alias for default context
   public Data(String name, String className, boolean isPrimitiveType, T object) {
     this(name, className, isPrimitiveType, object, Context.BODY, true);

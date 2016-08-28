@@ -3,6 +3,8 @@ package eu.chorevolution.vsb.gm.protocols.rest;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import javax.ws.rs.core.UriBuilder;
+
 import org.restlet.Request;
 import org.restlet.data.MediaType;
 import org.restlet.data.Method;
@@ -10,8 +12,6 @@ import org.restlet.data.Method;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-
-import javax.ws.rs.core.UriBuilder;
 
 import eu.chorevolution.vsb.gm.protocols.builders.RequestBuilder;
 import eu.chorevolution.vsb.gmdl.utils.Data;

@@ -34,8 +34,8 @@ public class GeneratedFactory {
             BcConfiguration bcConfiguration2 = new BcConfiguration();
             bcConfiguration1 .setSubcomponentRole(inter.getRole());
             bcConfiguration2 .setSubcomponentRole(busRole);
-            bcConfiguration1 .parseFromJSON((new String("/home/siddhartha/Downloads/chor/evolution-service-bus/vsb-manager/src/main/java/eu/chorevolution/vsb/bindingcomponent/generated/config_block1_interface_")+ String.valueOf((i + intOne))));
-            bcConfiguration2 .parseFromJSON((new String("/home/siddhartha/Downloads/chor/evolution-service-bus/vsb-manager/src/main/java/eu/chorevolution/vsb/bindingcomponent/generated/config_block2_interface_")+ String.valueOf((i + intOne))));
+            bcConfiguration1 .parseFromJSON(gmServiceRepresentation, (new String("/home/siddhartha/Downloads/chor/evolution-service-bus/vsb-manager/src/main/java/eu/chorevolution/vsb/bindingcomponent/generated/config_block1_interface_")+ String.valueOf((i + intOne))));
+            bcConfiguration2 .parseFromJSON(gmServiceRepresentation, (new String("/home/siddhartha/Downloads/chor/evolution-service-bus/vsb-manager/src/main/java/eu/chorevolution/vsb/bindingcomponent/generated/config_block2_interface_")+ String.valueOf((i + intOne))));
             BcGmSubcomponent block1Component = new BcSoapSubcomponent(bcConfiguration1, gmServiceRepresentation);
             BcGmSubcomponent block2Component = new BcRestSubcomponent(bcConfiguration2, gmServiceRepresentation);
             block1Component.setNextComponent(block2Component);
