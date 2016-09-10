@@ -14,6 +14,7 @@
   	<module>gm-soap</module>
     <module>gm-mqtt</module>
     <module>gm-coap</module>
+    <module>gm-dpws</module>
   </modules>
   <dependencies>
     <!-- Chorevolution -->

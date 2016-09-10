@@ -31,6 +31,7 @@ public class CoapClientPart {
         // Set the URI the client will connect
         client.setURI(destination+"/"+scope);   
         
+        
         System.err.println("Client sent:" + dataPost);
         CoapResponse response = client.post(dataPost, MediaTypeRegistry.APPLICATION_JSON);
         xtget(response);
