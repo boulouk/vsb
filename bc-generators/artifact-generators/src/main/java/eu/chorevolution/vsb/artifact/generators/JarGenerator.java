@@ -11,7 +11,7 @@ import eu.chorevolution.vsb.gm.protocols.generators.BcSubcomponentGenerator;
 public class JarGenerator {
 
   public static void generateBc(BcSubcomponentGenerator componentGenerator) {
-    componentGenerator.generateBc();
+    componentGenerator.generatePOJOAndEndpoint();
     // TODO: package as an executable jar
   }
 }

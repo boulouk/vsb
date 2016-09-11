@@ -9,5 +9,6 @@ public enum ProtocolType {
   JMS,
   PUB_NUB,
   COAP,
-  ZERO_MQ;
+  ZERO_MQ,
+  DPWS;
 }

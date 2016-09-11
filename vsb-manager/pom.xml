@@ -86,6 +86,11 @@
 		</dependency>
 		<dependency>
 			<groupId>eu.chorevolution.vsb</groupId>
+			<artifactId>gm-dpws</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>eu.chorevolution.vsb</groupId>
 			<artifactId>service-parser</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>

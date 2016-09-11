@@ -56,6 +56,7 @@ import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 import eu.chorevolution.vsb.artifact.generators.WarGenerator;
 import eu.chorevolution.vsb.bc.manager.BcManagerRestService;
 import eu.chorevolution.vsb.bindingcomponent.copy.generated.BindingComponent;
+import eu.chorevolution.vsb.gm.protocols.dpws.BcDPWSGenerator;
 import eu.chorevolution.vsb.gm.protocols.generators.BcSubcomponentGenerator;
 import eu.chorevolution.vsb.gm.protocols.mqtt.BcMQTTSubcomponent;
 import eu.chorevolution.vsb.gm.protocols.primitives.BcGmSubcomponent;
@@ -96,15 +97,14 @@ public class VsbManager {
 
 		Constants.target_namespace = "eu.chorevolution.vsb.bindingcomponent.generated";
 		Constants.target_namespace_path = Constants.target_namespace.replace(".", File.separator);
-		Constants.service_name = "BindingComponent";
+		Constants.soap_service_name = "BCSoapSubcomponentEndpoint";
+		Constants.dpws_service_name = "BCDPWSSubcomponentEndpoint";
 	}
 
 
-	public void generate(String interfaceDescriptionPath, ProtocolType busProtocol) {
+	public void generateWar(String interfaceDescriptionPath, ProtocolType busProtocol) {
 
 		setConstants(interfaceDescriptionPath);
-
-		//    String interfaceDescriptionPath = Constants.intefaceDescriptionFilePath;
 
 		// temporarily disabled
 		generateBindingComponent(interfaceDescriptionPath, busProtocol);
@@ -140,75 +140,46 @@ public class VsbManager {
 
 	}
 
-	public void deleteGeneratedFiles() {
-		File directory = new File(Constants.generatedCodePath + File.separator + Constants.target_namespace_path);
-		// make sure directory exists
-		if(!directory.exists()){
-			System.out.println("Delete reques failed: Directory does not exist.");
-		}
-		else {
-			delete(directory);
-		}
-	}
-
-	public void copyInterfaceDesc(String interfaceDescription) {
-		try {
-			File input = new File(interfaceDescription);
-			File output = new File(Constants.webapp_src_bc + File.separator + "config" + File.separator + "gidl.gidl");
-			Scanner sc = new Scanner(input);
-			PrintWriter printer = new PrintWriter(output);
-			while(sc.hasNextLine()) {
-				String s = sc.nextLine();
-				printer.write(s);
-			}
-			sc.close();
-			printer.close();
-		}
-		catch(FileNotFoundException e) {
-			System.err.println("File not found. Please scan in new file.");
-		}
-	}
-
 	public void generateBindingComponent(final String interfaceDescription, final ProtocolType busProtocol) {
 
-		copyInterfaceDesc(interfaceDescription);
-
-		GmServiceRepresentation gmServiceRepresentation = null;
+		copyInterfaceDescription(interfaceDescription);
 
 		BcConfiguration bcConfiguration = null;
 		bcConfiguration = new BcConfiguration();
 
-		//    String configPath = Constants.configFilePath;
-		//    JSONParser parser = new JSONParser();
-		//    JSONObject jsonObject = null;
-		//
-		//    try {
-		//      jsonObject = (JSONObject) parser.parse(new FileReader(configPath));
-		//    } catch (IOException | ParseException e) {
-		//      e.printStackTrace();
-		//    }
-
 		bcConfiguration.setGeneratedCodePath(Constants.generatedCodePath);
 
-		String extension = ""; 
-		String[] interfaceDescPieces = interfaceDescription.split("\\.");
-		extension = interfaceDescPieces[interfaceDescPieces.length-1];
+		GmServiceRepresentation gmServiceRepresentation = null;
 
-		switch(extension) {
+		String interfaceDescFileExtension = ""; 
+		String[] interfaceDescFileNameComponents = interfaceDescription.split("\\.");
+		interfaceDescFileExtension = interfaceDescFileNameComponents[interfaceDescFileNameComponents.length-1];
+
+		switch(interfaceDescFileExtension) {
 		case "gmdl":
 			gmServiceRepresentation = ServiceDescriptionParser.getRepresentationFromGMDL(interfaceDescription);
 		case "gidl":
 			gmServiceRepresentation = ServiceDescriptionParser.getRepresentationFromGIDL(interfaceDescription);
 		}
 
+		if(busProtocol == ProtocolType.DPWS) {
+			
+			bcConfiguration.setTargetNamespace(Constants.target_namespace);
+			bcConfiguration.setServiceName(Constants.dpws_service_name);
+			
+			BcDPWSGenerator dpwsGenerator = (BcDPWSGenerator) new BcDPWSGenerator(gmServiceRepresentation, bcConfiguration).setDebug(true); 
+			// temporarily disabled
+			dpwsGenerator.generatePOJOAndEndpoint();
+		}
+		
 		if(busProtocol == ProtocolType.SOAP) {
 
 			bcConfiguration.setTargetNamespace(Constants.target_namespace);
-			bcConfiguration.setServiceName(Constants.service_name);
+			bcConfiguration.setServiceName(Constants.soap_service_name);
 
 			BcSoapGenerator soapGenerator = (BcSoapGenerator) new BcSoapGenerator(gmServiceRepresentation, bcConfiguration).setDebug(true); 
 			// temporarily disabled
-			// soapGenerator.generateBc();
+			// soapGenerator.generatePOJOAndEndpoint();
 
 			JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 
@@ -228,7 +199,7 @@ public class VsbManager {
 			File sourceDir = new File(".." + File.separator + "bc-manager" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator +
 					"eu" + File.separator + "chorevolution" + File.separator + "vsb" + File.separator 
 					+ "bindingcomponent" + File.separator + "generated");
-			List<JavaFileObject> javaObjects = scanRecursivelyForJavaObjects(sourceDir, fileManager);
+			List<JavaFileObject> javaObjects = scanRecursivelyForJavaFiles(sourceDir, fileManager);
 
 			if (javaObjects.size() == 0) {
 				System.out.println("There are no source files to compile in " + sourceDir.getAbsolutePath());
@@ -248,39 +219,34 @@ public class VsbManager {
 		}
 
 		//copyBCClass(gmServiceRepresentation, busProtocol);
-		generateGenFacClass(gmServiceRepresentation, busProtocol);
+		generateBindingComponentClass(gmServiceRepresentation, busProtocol);
 
 	}
 
-	public void copyBCClass(GmServiceRepresentation gmServiceRepresentation, ProtocolType busProtocol) {
-		String namespace = Constants.target_namespace;
-		namespace = namespace.replace(".", File.separator);
+	public void copyInterfaceDescription(String interfaceDescription) {
 		try {
-			File input = new File(new File(BcManagerRestService.class.getClassLoader().getResource("example.json").toString()).getParent().substring(5) + File.separator + "GeneratedFactory.java");
-			File output = new File(Constants.generatedCodePath + File.separator + namespace + File.separator + "GeneratedFactory.java");
-			System.out.println(input.getAbsolutePath());
-			System.out.println(output.getAbsolutePath());
+			File input = new File(interfaceDescription);
+			File output = new File(Constants.webapp_src_bc + File.separator + "config" + File.separator + "serviceDescription.gidl");
 			Scanner sc = new Scanner(input);
 			PrintWriter printer = new PrintWriter(output);
 			while(sc.hasNextLine()) {
 				String s = sc.nextLine();
-				printer.write(s+"\n");
+				printer.write(s);
 			}
 			sc.close();
 			printer.close();
 		}
 		catch(FileNotFoundException e) {
-			System.err.println("File not found. Please scan in new file.");
+			System.err.println("File not found.");
 		}
 	}
 
-
-	private static List<JavaFileObject> scanRecursivelyForJavaObjects(File dir, StandardJavaFileManager fileManager) { 
+	private static List<JavaFileObject> scanRecursivelyForJavaFiles(File dir, StandardJavaFileManager fileManager) { 
 		List<JavaFileObject> javaObjects = new LinkedList<JavaFileObject>(); 
 		File[] files = dir.listFiles(); 
 		for (File file : files) { 
 			if (file.isDirectory()) { 
-				javaObjects.addAll(scanRecursivelyForJavaObjects(file, fileManager)); 
+				javaObjects.addAll(scanRecursivelyForJavaFiles(file, fileManager)); 
 			} 
 			else if (file.isFile() && file.getName().toLowerCase().endsWith(".java")) { 
 				javaObjects.add(readJavaObject(file, fileManager)); 
@@ -299,7 +265,7 @@ public class VsbManager {
 		throw new RuntimeException("Could not load " + file.getAbsolutePath() + " java file object"); 
 	} 
 
-	public static void generateGenFacClass(GmServiceRepresentation gmServiceRepresentation, ProtocolType busProtocol) {
+	public static void generateBindingComponentClass(GmServiceRepresentation gmServiceRepresentation, ProtocolType busProtocol) {
 
 		String configTemplatePath = "";
 		JSONParser parser = new JSONParser();
@@ -321,7 +287,7 @@ public class VsbManager {
 		/* Giving Class Name to Generate */
 		JDefinedClass jc = null;
 		try {
-			jc = jp._class("GeneratedFactory");
+			jc = jp._class("BindingComponent");
 		} catch (JClassAlreadyExistsException e) {
 			e.printStackTrace();
 		}
@@ -387,7 +353,7 @@ public class VsbManager {
 
 		JVar interfaceDescriptionPathVar = null;
 		interfaceDescriptionPathVar = jBlock.decl(StringClass, "interfaceDescFilePath");
-		jBlock.assign(JExpr.ref(interfaceDescriptionPathVar.name()), JExpr._new(FileClass).arg(BcManagerRestServiceClass.dotclass().invoke("getClassLoader").invoke("getResource").arg("example.json").invoke("toExternalForm").invoke("substring").arg(intNineVar)).invoke("getParentFile").invoke("getParentFile").invoke("getParentFile").invoke("getParentFile").invoke("getAbsolutePath").plus(FileClass.staticRef("separator")).plus(JExpr._new(StringClass).arg("config")).plus(FileClass.staticRef("separator")).plus(JExpr._new(StringClass).arg("gidl.gidl")) );
+		jBlock.assign(JExpr.ref(interfaceDescriptionPathVar.name()), JExpr._new(FileClass).arg(BcManagerRestServiceClass.dotclass().invoke("getClassLoader").invoke("getResource").arg("example.json").invoke("toExternalForm").invoke("substring").arg(intNineVar)).invoke("getParentFile").invoke("getParentFile").invoke("getParentFile").invoke("getParentFile").invoke("getAbsolutePath").plus(FileClass.staticRef("separator")).plus(JExpr._new(StringClass).arg("config")).plus(FileClass.staticRef("separator")).plus(JExpr._new(StringClass).arg("serviceDescription.gidl")) );
 
 
 		JClass serviceDescriptionClass = jCodeModel.ref(ServiceDescriptionParser.class);
@@ -421,8 +387,8 @@ public class VsbManager {
 		JClass InterfaceClass = jCodeModel.ref(eu.chorevolution.vsb.gmdl.utils.Interface.class);
 		JVar InterfaceVar = forBlock.decl(InterfaceClass, "inter", JExpr._null());
 
-		
-		
+
+
 		forBlock.assign(JExpr.ref(InterfaceVar.name()), GmServiceRepresentationVar.invoke("getInterfaces").invoke("get").arg(ivar));
 
 		//    JClass ProtocolClass = jCodeModel.ref(eu.chorevolution.vsb.gmdl.utils.enums.ProtocolType.class);
@@ -431,14 +397,15 @@ public class VsbManager {
 		JClass BcSoapSubcomponentClass = jCodeModel.ref(eu.chorevolution.vsb.gm.protocols.soap.BcSoapSubcomponent.class);
 		JClass BcMQTTSubcomponentClass = jCodeModel.ref(eu.chorevolution.vsb.gm.protocols.mqtt.BcMQTTSubcomponent.class);
 		JClass BcCoapSubcomponentClass = jCodeModel.ref(eu.chorevolution.vsb.gm.protocols.coap.BcCoapSubcomponent.class);
+		JClass BcDPWSSubcomponentClass = jCodeModel.ref(eu.chorevolution.vsb.gm.protocols.dpws.BcDPWSSubcomponent.class);
 		JClass BcConfigurationClass = jCodeModel.ref(eu.chorevolution.vsb.gmdl.utils.BcConfiguration.class);
 		JClass SystemClass = jCodeModel.ref(System.class);
-		
+
 		JClass EnumClass = jCodeModel.ref("eu.chorevolution.vsb.gmdl.utils.enums.RoleType");
 
 		JInvocation printstmt = SystemClass.staticRef("out").invoke("println").arg("genfac start iteration");
 		forBlock.add(printstmt);
-		
+
 		JFieldRef RoleTypeServerEnum = null;
 		JFieldRef RoleTypeClientEnum = null;
 
@@ -497,6 +464,11 @@ public class VsbManager {
 				createConfigFile(ProtocolType.COAP, Constants.webapp_src_bc + File.separator + "config" + File.separator + "config_block1_interface_" + String.valueOf(i));
 			forBlock.assign(JExpr.ref("subcomponent[i][0]"), JExpr._new(BcCoapSubcomponentClass).arg(bcConfig1Var).arg(GmServiceRepresentationVar));
 			break;
+		case DPWS:	
+			for(int i=1; i<=gmServiceRepresentation.getInterfaces().size(); i++)  
+				createConfigFile(ProtocolType.DPWS, Constants.webapp_src_bc + File.separator + "config" + File.separator + "config_block1_interface_" + String.valueOf(i));
+			forBlock.assign(JExpr.ref("subcomponent[i][0]"), JExpr._new(BcDPWSSubcomponentClass).arg(bcConfig1Var).arg(GmServiceRepresentationVar));
+			break;
 		case JMS:
 			break;
 		case PUB_NUB:
@@ -532,6 +504,11 @@ public class VsbManager {
 			for(int i=1; i<=gmServiceRepresentation.getInterfaces().size(); i++)  
 				createConfigFile(ProtocolType.COAP, Constants.webapp_src_bc + File.separator + "config" + File.separator + "config_block2_interface_" + String.valueOf(i));
 			forBlock.assign(JExpr.ref("subcomponent[i][1]"), JExpr._new(BcCoapSubcomponentClass).arg(bcConfig2Var).arg(GmServiceRepresentationVar));
+			break;
+		case DPWS:
+			for(int i=1; i<=gmServiceRepresentation.getInterfaces().size(); i++)  
+				createConfigFile(ProtocolType.DPWS, Constants.webapp_src_bc + File.separator + "config" + File.separator + "config_block2_interface_" + String.valueOf(i));
+			forBlock.assign(JExpr.ref("subcomponent[i][1]"), JExpr._new(BcDPWSSubcomponentClass).arg(bcConfig2Var).arg(GmServiceRepresentationVar));
 			break;
 		case JMS:
 			break;
@@ -569,7 +546,7 @@ public class VsbManager {
 
 		JInvocation printstmtPause = SystemClass.staticRef("out").invoke("println").arg("genfac stop iteration");
 		forBlockPause.add(printstmtPause);
-		
+
 		JVar BcGmSubcomponentVar1Pause = forBlockPause.decl(BcGmSubcomponentClass, "block1Component", JExpr.ref("subcomponent[i][0]"));
 		JVar BcGmSubcomponentVar2Pause = forBlockPause.decl(BcGmSubcomponentClass, "block2Component", JExpr.ref("subcomponent[i][1]"));
 
@@ -626,7 +603,7 @@ public class VsbManager {
 
 		if(protocol==ProtocolType.SOAP) {
 			jsonObject.put("target_namespace", Constants.target_namespace);
-			jsonObject.put("service_name", Constants.service_name);
+			jsonObject.put("service_name", Constants.soap_service_name);
 		}
 
 		// temporarily disabled
@@ -634,6 +611,17 @@ public class VsbManager {
 			file.write(jsonObject.toJSONString());
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	public void deleteGeneratedFiles() {
+		File directory = new File(Constants.generatedCodePath + File.separator + Constants.target_namespace_path);
+		// make sure directory exists
+		if(!directory.exists()){
+			System.out.println("Delete reques failed: Directory does not exist.");
+		}
+		else {
+			delete(directory);
 		}
 	}
 
@@ -663,6 +651,28 @@ public class VsbManager {
 		else {
 			//if file, then delete it
 			file.delete();
+		}
+	}
+
+	public void copyBCClass(GmServiceRepresentation gmServiceRepresentation, ProtocolType busProtocol) {
+		String namespace = Constants.target_namespace;
+		namespace = namespace.replace(".", File.separator);
+		try {
+			File input = new File(new File(BcManagerRestService.class.getClassLoader().getResource("example.json").toString()).getParent().substring(5) + File.separator + "BindingComponent.java");
+			File output = new File(Constants.generatedCodePath + File.separator + namespace + File.separator + "BindingComponent.java");
+			System.out.println(input.getAbsolutePath());
+			System.out.println(output.getAbsolutePath());
+			Scanner sc = new Scanner(input);
+			PrintWriter printer = new PrintWriter(output);
+			while(sc.hasNextLine()) {
+				String s = sc.nextLine();
+				printer.write(s+"\n");
+			}
+			sc.close();
+			printer.close();
+		}
+		catch(FileNotFoundException e) {
+			System.err.println("File not found. Please scan in new file.");
 		}
 	}
 

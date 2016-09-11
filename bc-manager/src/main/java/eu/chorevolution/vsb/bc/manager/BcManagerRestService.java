@@ -19,7 +19,7 @@ import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
-import eu.chorevolution.vsb.bindingcomponent.generated.GeneratedFactory;
+import eu.chorevolution.vsb.bindingcomponent.generated.BindingComponent;
 import eu.chorevolution.vsb.gm.protocols.Manageable;
 
 public class BcManagerRestService implements Manageable {
@@ -28,7 +28,7 @@ public class BcManagerRestService implements Manageable {
 	private Server server;  
 	private Boolean serverOnline = false;
 
-	GeneratedFactory genFac = new GeneratedFactory();
+	BindingComponent genFac = new BindingComponent();
 
 	public BcManagerRestService(final int port) {
 		this.server = new Server(Protocol.HTTP, port);

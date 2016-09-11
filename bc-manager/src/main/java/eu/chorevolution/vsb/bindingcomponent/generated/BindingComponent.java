@@ -12,7 +12,7 @@ import eu.chorevolution.vsb.gmdl.utils.GmServiceRepresentation;
 import eu.chorevolution.vsb.gmdl.utils.Interface;
 import eu.chorevolution.vsb.gmdl.utils.enums.RoleType;
 
-public class GeneratedFactory {
+public class BindingComponent {
 
     BcGmSubcomponent[][] subcomponent;
     GmServiceRepresentation gmServiceRepresentation = null;

@@ -16,7 +16,7 @@ public abstract class BcSubcomponentGenerator {
     this.componentDescription = componentDescription;
   }
   
-  public void generateBc() {
+  public void generatePOJOAndEndpoint() {
     this.generatePojos();
     this.generateEndpoint();
   }

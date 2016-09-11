@@ -175,7 +175,7 @@ public class BcSoapGeneratorDTSGoogleTest {
 
 	@Test
 	public void testEndpointGeneration() {
-		this.soapGenerator.generateBc();
+		this.soapGenerator.generatePOJOAndEndpoint();
 		// DifferentiaAssert.assertSourcesEqual("src/test/resources/expected/BindingComponent.java",
 		// "src/test/resources/generated/BindingComponent.java");
 	}

@@ -68,13 +68,13 @@ public class BcSoapGeneratorTest {
   
   @Test
   public void testEndpointGeneration() {
-    this.soapGenerator.generateBc();
+    this.soapGenerator.generatePOJOAndEndpoint();
     DifferentiaAssert.assertSourcesEqual("src/test/resources/expected/BindingComponent.java", "src/test/resources/generated/traffic/BindingComponent.java");
   }
   
   @Test
   public void testPojoGeneration() {
-    this.soapGenerator.generateBc();
+    this.soapGenerator.generatePOJOAndEndpoint();
     DifferentiaAssert.assertSourcesEqual("src/test/resources/expected/TrafficLight.java", "src/test/resources/generated/traffic/TrafficLight.java");
   }
 }

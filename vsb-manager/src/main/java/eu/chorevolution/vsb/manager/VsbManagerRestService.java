@@ -90,7 +90,7 @@ public class VsbManagerRestService {
       System.out.println("fref");
  
       VsbManager vsbm = new VsbManager();
-      vsbm.generate(decodedURL, busProtocol);
+      vsbm.generateWar(decodedURL, busProtocol);
       String returnMessage = "Request forwarded!";
  
       return new StringRepresentation(returnMessage);
@@ -145,7 +145,7 @@ public class VsbManagerRestService {
       }
       System.out.println("fref");
       VsbManager vsbm = new VsbManager();
-      vsbm.generate(arguments[0], busProtocol);
+      vsbm.generateWar(arguments[0], busProtocol);
 
 
       String returnMessage = "";

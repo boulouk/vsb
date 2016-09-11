@@ -86,7 +86,7 @@ public class Java2WSDL {
 
     String generatedCodePath = Constants.generatedCodePath;
     String target_namespace = Constants.target_namespace;
-    String service_name = Constants.service_name;
+    String service_name = Constants.soap_service_name;
 
 
     String[] arguments = {"-o", generatedCodePath, 
