@@ -192,8 +192,8 @@ public class BcSoapGenerator extends BcSubcomponentGenerator {
 
     method.annotate(codeModel.ref("javax.jws.WebMethod"));
 
-    JClass dataClass = codeModel.ref(List.class).narrow(codeModel.ref(Data.class).narrow(codeModel.wildcard()));
-    JVar dataList = methodBlock.decl(dataClass, "datas");
+    JClass dataListClass = codeModel.ref(List.class).narrow(codeModel.ref(Data.class).narrow(codeModel.wildcard()));
+    JVar dataList = methodBlock.decl(dataListClass, "datas");
     dataList.init(JExpr._new(codeModel.ref(ArrayList.class).narrow(codeModel.ref(Data.class).narrow(codeModel.wildcard()))));
 
     this.wrapOperationParams(method, codeModel, operation.getGetDatas(), dataList);

@@ -3,13 +3,16 @@ package eu.chorevolution.vsb.gm.protocols.dpws;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.ws4d.java.communication.CommunicationException;
 import org.ws4d.java.schema.ComplexType;
 import org.ws4d.java.schema.Element;
 import org.ws4d.java.schema.SchemaUtil;
 import org.ws4d.java.security.CredentialInfo;
+import org.ws4d.java.service.InvocationException;
 import org.ws4d.java.service.parameter.ParameterValue;
 import org.ws4d.java.service.parameter.ParameterValueManagement;
 import org.ws4d.java.types.QName;
@@ -58,22 +61,27 @@ public class BcDPWSGenerator extends BcSubcomponentGenerator {
 
 		this.addComment(dpwsOperationClass, this.classComment);
 
-		JClass ParameterValueClass = codeModel.ref(ParameterValue.class);
+		JMethod constructor = dpwsOperationClass.constructor(JMod.PUBLIC);
+
+		constructor.body().directStatement("super(\""+operationName+"\", new QName(\"BasicServices\", DPWSDevice.DOCU_NAMESPACE));") ;
+
+		wrapOperationParams(operation, codeModel, constructor);
+
+		buildInvokeImpl(operation, codeModel, dpwsOperationClass);
+		
+		this.buildGeneratedClass(codeModel);
+	}
+
+	private void wrapOperationParams(final Operation operation,
+			final JCodeModel codeModel, JMethod constructor) {
 		JClass ComplexTypeClass = codeModel.ref(ComplexType.class);
 		JClass ElementClass = codeModel.ref(Element.class);
 		JClass DPWSDeviceClass = codeModel.ref(DPWSDevice.class);
 		JClass QNameClass = codeModel.ref(QName.class);
 		JClass SchemaUtilClass = codeModel.ref(SchemaUtil.class);
-		JClass CredentialInfoClass = codeModel.ref(CredentialInfo.class);
-		JClass ParameterValueManagementClass = codeModel.ref(ParameterValueManagement.class);
-		
 
-		JMethod constructor = dpwsOperationClass.constructor(JMod.PUBLIC);
-
-		constructor.body().directStatement("super(\""+operationName+"\", new QName(\"BasicServices\", DPWSDevice.DOCU_NAMESPACE));") ;
-		
 		JVar complexInputVar = constructor.body().decl(ComplexTypeClass, "complexInputElem");
-		
+
 		constructor.body().assign(complexInputVar, 
 				JExpr._new(ComplexTypeClass).arg(JExpr._new(QNameClass).arg("complexInput").
 						arg(DPWSDeviceClass.staticRef("DOCU_NAMESPACE"))).arg(ComplexTypeClass.staticRef("CONTAINER_SEQUENCE")));
@@ -96,12 +104,44 @@ public class BcDPWSGenerator extends BcSubcomponentGenerator {
 							arg(DPWSDeviceClass.staticRef("DOCU_NAMESPACE"))).arg(SchemaUtilClass.staticRef("TYPE_STRING")));
 			constructor.body().invoke("setOutput").arg(outputComponentVar);
 		}
-		
-		this.buildGeneratedClass(codeModel);
 	}
+	
+	private void buildInvokeImpl(final Operation operation,
+			final JCodeModel codeModel, JDefinedClass dpwsOperationClass) {
+		JClass ParameterValueClass = codeModel.ref(ParameterValue.class);
+		JClass CredentialInfoClass = codeModel.ref(CredentialInfo.class);
+		JClass ParameterValueManagementClass = codeModel.ref(ParameterValueManagement.class);
 
-	private void wrapOperationParams(JMethod method, JCodeModel codeModel, List<Data<?>> getDatas, JVar dataList) {
+		JMethod invokeImplMethod = null;
+		invokeImplMethod = dpwsOperationClass.method(JMod.PUBLIC, ParameterValueClass, "invokeImpl");
+		invokeImplMethod._throws(InvocationException.class);
+		invokeImplMethod._throws(CommunicationException.class);
 
+		JVar parameterValueVar = invokeImplMethod.param(ParameterValueClass, "parameterValue");
+		invokeImplMethod.param(CredentialInfoClass, "credentialInfo");
+
+		JClass dataListClass = codeModel.ref(List.class).narrow(codeModel.ref(Data.class).narrow(codeModel.wildcard()));
+		JVar dataList = invokeImplMethod.body().decl(dataListClass, "datas");
+		dataList.init(JExpr._new(codeModel.ref(ArrayList.class).narrow(codeModel.ref(Data.class).narrow(codeModel.wildcard()))));
+
+		JClass StringClass = codeModel.ref(String.class);
+		
+		JInvocation dataCreation = null;
+		for (Data<?> data : operation.getGetDatas()) {
+			JVar inputComponentVar = null;
+			switch(data.getClassName()) {
+			case "String":
+				inputComponentVar = invokeImplMethod.body().decl(StringClass, data.getName());
+				invokeImplMethod.body().assign(inputComponentVar, 
+						ParameterValueManagementClass.staticInvoke("getString").arg(parameterValueVar).arg(data.getName()));
+				dataCreation = JExpr._new(codeModel.ref(Data.class).narrow(codeModel.directClass(data.getClassName())));
+				dataCreation.arg(data.getName()).arg(data.getClassName()).arg(JExpr.lit(data.isPrimitiveType())).arg(JExpr.ref(data.getName()))
+				.arg(JExpr.lit(data.getContext().toString()));
+				break;
+			}
+			JInvocation addData2List = dataList.invoke("add").arg(dataCreation);
+			invokeImplMethod.body().add(addData2List);
+		}
 	}
 
 	@Override
