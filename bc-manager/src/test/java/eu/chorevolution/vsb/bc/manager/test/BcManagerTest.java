@@ -10,7 +10,6 @@ import java.net.URLConnection;
 
 import org.json.JSONObject;
 
-import eu.chorevolution.vsb.bindingcomponent.generated.GeneratedFactory;
 
 public class BcManagerTest {
 	public static void main(String[] args) {

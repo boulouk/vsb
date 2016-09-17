@@ -234,7 +234,7 @@ public class BcDPWSGenerator extends BcSubcomponentGenerator {
 		}
 
 		try {
-			codeModel.build(new File(this.bcConfiguration.getGeneratedCodePath()));
+			codeModel.build(new File("."));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

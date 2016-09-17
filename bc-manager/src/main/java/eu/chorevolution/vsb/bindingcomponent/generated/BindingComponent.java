@@ -3,7 +3,7 @@ package eu.chorevolution.vsb.bindingcomponent.generated;
 
 import java.io.File;
 import eu.chorevolution.vsb.bc.manager.BcManagerRestService;
-import eu.chorevolution.vsb.gm.protocols.coap.BcCoapSubcomponent;
+import eu.chorevolution.vsb.gm.protocols.dpws.BcDPWSSubcomponent;
 import eu.chorevolution.vsb.gm.protocols.primitives.BcGmSubcomponent;
 import eu.chorevolution.vsb.gm.protocols.rest.BcRestSubcomponent;
 import eu.chorevolution.vsb.gmdl.tools.serviceparser.ServiceDescriptionParser;
@@ -25,7 +25,7 @@ public class BindingComponent {
         java.lang.Integer intNine;
         intNine = Integer.parseInt("9");
         String interfaceDescFilePath;
-        interfaceDescFilePath = ((((new File(BcManagerRestService.class.getClassLoader().getResource("example.json").toExternalForm().substring(intNine)).getParentFile().getParentFile().getParentFile().getParentFile().getAbsolutePath()+ File.separator)+ new String("config"))+ File.separator)+ new String("gidl.gidl"));
+        interfaceDescFilePath = ((((new File(BcManagerRestService.class.getClassLoader().getResource("example.json").toExternalForm().substring(intNine)).getParentFile().getParentFile().getParentFile().getParentFile().getAbsolutePath()+ File.separator)+ new String("config"))+ File.separator)+ new String("serviceDescription.gidl"));
         gmServiceRepresentation = ServiceDescriptionParser.getRepresentationFromGIDL(interfaceDescFilePath);
         int num_interfaces = gmServiceRepresentation.getInterfaces().size();
         subcomponent = new BcGmSubcomponent[num_interfaces][2];
@@ -45,7 +45,7 @@ public class BindingComponent {
             bcConfiguration2 .setSubcomponentRole(busRole);
             bcConfiguration1 .parseFromJSON(gmServiceRepresentation, (((((new File(BcManagerRestService.class.getClassLoader().getResource("example.json").toExternalForm().substring(intNine)).getParentFile().getParentFile().getParentFile().getParentFile().getAbsolutePath()+ File.separator)+ new String("config"))+ File.separator)+ new String("config_block1_interface_"))+ String.valueOf((i + intOne))));
             bcConfiguration2 .parseFromJSON(gmServiceRepresentation, (((((new File(BcManagerRestService.class.getClassLoader().getResource("example.json").toExternalForm().substring(intNine)).getParentFile().getParentFile().getParentFile().getParentFile().getAbsolutePath()+ File.separator)+ new String("config"))+ File.separator)+ new String("config_block2_interface_"))+ String.valueOf((i + intOne))));
-            subcomponent[i][0] = new BcCoapSubcomponent(bcConfiguration1, gmServiceRepresentation);
+            subcomponent[i][0] = new BcDPWSSubcomponent(bcConfiguration1, gmServiceRepresentation);
             subcomponent[i][1] = new BcRestSubcomponent(bcConfiguration2, gmServiceRepresentation);
             BcGmSubcomponent block1Component = subcomponent[i][0];
             BcGmSubcomponent block2Component = subcomponent[i][1];

@@ -76,8 +76,8 @@ import eu.chorevolution.vsb.webappbcgenerator.StartBcManagerServlet;
 public class VsbManager {
 
 	public static void main(String[] args) {
-		//    VsbManager vsbm = new VsbManager();
-		//    vsbm.generate(BcManagerRestService.class.getClassLoader().getResource("DtsGoogle.gidl").toExternalForm().substring(5), ProtocolType.SOAP);
+		VsbManager vsbm = new VsbManager();
+		vsbm.generateWar(BcManagerRestService.class.getClassLoader().getResource("DtsGoogle.gidl").toExternalForm().substring(5), ProtocolType.DPWS);
 	}
 
 	private void setConstants(String interfaceDescriptionPath) {
@@ -126,6 +126,7 @@ public class VsbManager {
 		warGenerator.addPackage(eu.chorevolution.vsb.gm.protocols.coap.BcCoapGenerator.class.getPackage());
 		warGenerator.addPackage(eu.chorevolution.vsb.gm.protocols.soap.BcSoapGenerator.class.getPackage());
 		warGenerator.addPackage(eu.chorevolution.vsb.gm.protocols.rest.BcRestGenerator.class.getPackage());
+		warGenerator.addPackage(eu.chorevolution.vsb.gm.protocols.dpws.BcDPWSGenerator.class.getPackage());
 		warGenerator.addPackage(eu.chorevolution.vsb.bc.manager.BcManagerRestService.class.getPackage());
 		warGenerator.addPackage(eu.chorevolution.vsb.webappbcgenerator.StartBcManagerServlet.class.getPackage());
 		warGenerator.addPackage(eu.chorevolution.vsb.artifact.generators.WarGenerator.class.getPackage());
@@ -163,15 +164,15 @@ public class VsbManager {
 		}
 
 		if(busProtocol == ProtocolType.DPWS) {
-			
+
 			bcConfiguration.setTargetNamespace(Constants.target_namespace);
 			bcConfiguration.setServiceName(Constants.dpws_service_name);
-			
+
 			BcDPWSGenerator dpwsGenerator = (BcDPWSGenerator) new BcDPWSGenerator(gmServiceRepresentation, bcConfiguration).setDebug(true); 
 			// temporarily disabled
 			dpwsGenerator.generatePOJOAndEndpoint();
 		}
-		
+
 		if(busProtocol == ProtocolType.SOAP) {
 
 			bcConfiguration.setTargetNamespace(Constants.target_namespace);
@@ -237,7 +238,7 @@ public class VsbManager {
 			printer.close();
 		}
 		catch(FileNotFoundException e) {
-			System.err.println("File not found.");
+			System.err.println("Interface file not found.");
 		}
 	}
 
@@ -563,9 +564,6 @@ public class VsbManager {
 
 	private static void createConfigFile(ProtocolType protocol, String filename) {
 
-		System.out.println("deffeefe");
-		System.out.println(filename);
-
 		String configPath = BcManagerRestService.class.getClassLoader().getResource("config.json").toExternalForm().substring(5);
 		JSONParser configParser = new JSONParser();
 		JSONObject configJsonObject = null;
@@ -587,6 +585,9 @@ public class VsbManager {
 		case COAP:
 			configTemplatePath = BcManagerRestService.class.getClassLoader().getResource("coap-config.json").toExternalForm().substring(5);
 			break;
+		case DPWS:
+			configTemplatePath = BcManagerRestService.class.getClassLoader().getResource("dpws-config.json").toExternalForm().substring(5);
+			break;
 		}
 
 		try {
@@ -606,6 +607,11 @@ public class VsbManager {
 			jsonObject.put("service_name", Constants.soap_service_name);
 		}
 
+		if(protocol==ProtocolType.DPWS) {
+			jsonObject.put("target_namespace", Constants.target_namespace);
+			jsonObject.put("service_name", Constants.dpws_service_name);
+		}
+		
 		// temporarily disabled
 		try (FileWriter file = new FileWriter(filename)) {
 			file.write(jsonObject.toJSONString());

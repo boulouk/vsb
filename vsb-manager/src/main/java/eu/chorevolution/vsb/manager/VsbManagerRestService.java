@@ -26,9 +26,6 @@ import eu.chorevolution.vsb.manager.VsbManager;
 
 public class VsbManagerRestService {
 
-  //  private BcGmSubcomponent endpointApi;
-  //  private BcGmSubcomponent clientApi;
-
   private Component component;
   private Server server;  
   private Boolean serverOnline = false;
@@ -37,8 +34,6 @@ public class VsbManagerRestService {
     this.server = new Server(Protocol.HTTP, port);
     this.component = new Component();
     this.component.getServers().add(server);
-    //    this.component.getDefaultHost().attach("/configure", SetConfiguration.class);
-    //    this.component.getDefaultHost().attach("/power/" + "{power}", ToggleBC.class);
     this.component.getDefaultHost().attach("/interface", InterfaceDescPost.class);
     this.component.getDefaultHost().attach("/{interface}/{protocol}", InterfaceDescGet.class);
     try {
@@ -51,9 +46,9 @@ public class VsbManagerRestService {
   public static class InterfaceDescGet extends ServerResource {
     @Override
     protected Representation get() throws ResourceException {
-      String inter = (String) this.getRequestAttributes().get("interface");
+      String interfacePath = (String) this.getRequestAttributes().get("interface");
       String protocol = (String) this.getRequestAttributes().get("protocol");
-      String decodedURL = java.net.URLDecoder.decode(inter);
+      String decodedURL = java.net.URLDecoder.decode(interfacePath);
       System.out.println(decodedURL + " " + protocol);
 
       ProtocolType busProtocol = null;
@@ -85,10 +80,11 @@ public class VsbManagerRestService {
       case "ZERO_MQ":
         busProtocol = ProtocolType.ZERO_MQ;
         break;
+      case "DPWS":
+          busProtocol = ProtocolType.DPWS;
+          break;
       }
       
-      System.out.println("fref");
- 
       VsbManager vsbm = new VsbManager();
       vsbm.generateWar(decodedURL, busProtocol);
       String returnMessage = "Request forwarded!";
@@ -142,11 +138,13 @@ public class VsbManagerRestService {
       case "ZERO_MQ":
         busProtocol = ProtocolType.ZERO_MQ;
         break;
+      case "DPWS":
+          busProtocol = ProtocolType.DPWS;
+          break;
       }
-      System.out.println("fref");
+
       VsbManager vsbm = new VsbManager();
       vsbm.generateWar(arguments[0], busProtocol);
-
 
       String returnMessage = "";
       returnMessage = "Received!";
@@ -154,74 +152,8 @@ public class VsbManagerRestService {
     }
   }
 
-  //	public static class ToggleBC extends ServerResource {
-  //	@Override
-  //	protected Representation get() throws ResourceException {
-  //		String power = (String) this.getRequestAttributes().get("power");
-  //		String returnMessage = "";
-  //		switch(power) {
-  //		case "on":
-  //			returnMessage = "Binding component turned on successfully!";
-  //			break;
-  //		case "off":
-  //			returnMessage = "Binding component turned off successfully!";
-  //			break;
-  //		}
-  //		return new StringRepresentation(returnMessage);
-  //	}
-  //}
-
   public static void main(String[] args) {
     VsbManagerRestService bcmanager = new VsbManagerRestService(1111);
   }
 
-  //	public static class ToggleBC extends ServerResource {
-  //		@Override
-  //		protected Representation get() throws ResourceException {
-  //			String power = (String) this.getRequestAttributes().get("power");
-  //			String returnMessage = "";
-  //			switch(power) {
-  //			case "on":
-  //				returnMessage = "Binding component turned on successfully!";
-  //				break;
-  //			case "off":
-  //				returnMessage = "Binding component turned off successfully!";
-  //				break;
-  //			}
-  //			return new StringRepresentation(returnMessage);
-  //		}
-  //	}
-
-  //	public static class SetConfiguration extends ServerResource {
-  //		@Override
-  //		protected Representation post(Representation entity) throws ResourceException {
-  //			String receivedText = null;
-  //			try {
-  //				receivedText = entity.getText();
-  //			} catch (IOException e1) {
-  //				e1.printStackTrace();
-  //			}
-  //			JSONParser parser = new JSONParser();
-  //			JSONObject jsonObject = null;
-  //
-  //			try {
-  //				jsonObject = (JSONObject) parser.parse(receivedText);
-  //			} catch (ParseException e) {
-  //				e.printStackTrace();
-  //			}
-  //
-  //			try (FileWriter file = new FileWriter("")) {
-
-  //				file.write(jsonObject.toJSONString());
-  //			} catch (IOException e) {
-  //				e.printStackTrace();
-  //			}
-  //
-  //			System.out.println("rec: " + receivedText);
-  //
-  //			String returnMessage = "";
-  //			returnMessage = "Configuration Complete!";
-  //			return new StringRepresentation(returnMessage);
-  //		}
-  //	}
 }
