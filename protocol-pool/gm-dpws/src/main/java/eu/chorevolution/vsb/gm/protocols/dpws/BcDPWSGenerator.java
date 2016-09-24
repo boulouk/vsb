@@ -16,6 +16,7 @@ import org.ws4d.java.service.InvocationException;
 import org.ws4d.java.service.parameter.ParameterValue;
 import org.ws4d.java.service.parameter.ParameterValueManagement;
 import org.ws4d.java.types.QName;
+import org.ws4d.java.types.URI;
 
 import com.sun.codemodel.JAnnotationUse;
 import com.sun.codemodel.JClass;
@@ -30,6 +31,7 @@ import com.sun.codemodel.JMod;
 import com.sun.codemodel.JVar;
 import com.sun.codemodel.writer.SingleStreamCodeWriter;
 
+import eu.chorevolution.vsb.gm.protocols.builders.ResponseBuilder;
 import eu.chorevolution.vsb.gm.protocols.generators.BcSubcomponentGenerator;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
 import eu.chorevolution.vsb.gmdl.utils.Data;
@@ -50,26 +52,62 @@ public class BcDPWSGenerator extends BcSubcomponentGenerator {
 		JCodeModel codeModel = new JCodeModel();
 
 		Collection<Operation> operations = this.componentDescription.getOperations();
+
+		this.buildServiceClass(codeModel, operations);
+		
 		for (Operation operation : operations) {
 			this.buildOperation(operation, codeModel);
 		}
 	}
 
+	private void buildServiceClass(JCodeModel codeModel, Collection<Operation> operations) {
+		JDefinedClass dpwsServiceClass = generateDefinedClassWithCustomNamespace(codeModel, "eu.chorevolution.vsb.gm.protocols.dpws", "DPWSService");
+		JClass defaultServiceClass = codeModel.ref(org.ws4d.java.service.DefaultService.class);
+		dpwsServiceClass._extends(defaultServiceClass);
+		this.addComment(dpwsServiceClass, this.classComment);
+		
+		JClass URIClass = codeModel.ref(org.ws4d.java.types.URI.class);
+		JFieldVar serviceIdVar = dpwsServiceClass.field(JMod.PRIVATE | JMod.STATIC | JMod.FINAL, URIClass, "DOCU_EXAMPLE_SERVICE_ID");
+		serviceIdVar.init(JExpr.direct("new URI(DPWSDevice.DOCU_NAMESPACE + \"/DocuExampleService\")"));
+		
+		JClass BcDPWSSubcomponentClass = codeModel.ref(BcDPWSSubcomponent.class);
+		JMethod constructor = dpwsServiceClass.constructor(JMod.PUBLIC);
+		JVar subcomponentRefParam = constructor.param(BcDPWSSubcomponentClass, "subcomponentRef");
+
+		constructor.body().invoke("super");
+		constructor.body().invoke("setServiceId").arg(serviceIdVar);
+		
+		for (Operation operation : operations) {
+			JClass opClass = codeModel.ref(operation.getOperationID());
+			JVar opVar = constructor.body().decl(opClass, operation.getOperationID());
+			constructor.body().assign(opVar, JExpr._new(opClass).arg(subcomponentRefParam));
+			constructor.body().invoke("addOperation").arg(opVar);
+		}
+	}
+
 	private void buildOperation(final Operation operation, final JCodeModel codeModel) {
 		String operationName = operation.getOperationID();
-		JDefinedClass dpwsOperationClass = generateDefinedClass(codeModel, operationName);
+		JDefinedClass dpwsOperationClass = generateDefinedClassWithCustomNamespace(codeModel, "eu.chorevolution.vsb.gm.protocols.dpws", operationName);
+
+		JClass ws4dOperationClass = codeModel.ref(org.ws4d.java.service.Operation.class);
+		dpwsOperationClass._extends(ws4dOperationClass);
 
 		this.addComment(dpwsOperationClass, this.classComment);
 
+		JClass BcDPWSSubcomponentClass = codeModel.ref(BcDPWSSubcomponent.class);
+		JFieldVar subcomponentRefVar = dpwsOperationClass.field(JMod.PRIVATE, BcDPWSSubcomponentClass, "subcomponentRef");
+
 		JMethod constructor = dpwsOperationClass.constructor(JMod.PUBLIC);
+		JVar subcomponentRefParam = constructor.param(BcDPWSSubcomponentClass, subcomponentRefVar.name() + "param");
 
 		constructor.body().directStatement("super(\""+operationName+"\", new QName(\"BasicServices\", DPWSDevice.DOCU_NAMESPACE));") ;
+		constructor.body().assign(subcomponentRefVar, subcomponentRefParam);
 
 		wrapOperationParams(operation, codeModel, constructor);
 
 		buildInvokeImpl(operation, codeModel, dpwsOperationClass);
-		
-		this.buildGeneratedClass(codeModel);
+
+		this.buildGeneratedClassInCustomLocation(codeModel, new File(".." + File.separator + "protocol-pool" + File.separator + "gm-dpws" + File.separator + "src" + File.separator + "main" + File.separator + "java"));
 	}
 
 	private void wrapOperationParams(final Operation operation,
@@ -80,7 +118,7 @@ public class BcDPWSGenerator extends BcSubcomponentGenerator {
 		JClass QNameClass = codeModel.ref(QName.class);
 		JClass SchemaUtilClass = codeModel.ref(SchemaUtil.class);
 
-		JVar complexInputVar = constructor.body().decl(ComplexTypeClass, "complexInputElem");
+		JVar complexInputVar = constructor.body().decl(ComplexTypeClass, "complexInput");
 
 		constructor.body().assign(complexInputVar, 
 				JExpr._new(ComplexTypeClass).arg(JExpr._new(QNameClass).arg("complexInput").
@@ -94,7 +132,12 @@ public class BcDPWSGenerator extends BcSubcomponentGenerator {
 			complexInputVar.invoke("addElement").arg(inputComponentVar);
 		}
 
-		constructor.body().invoke("setInput").arg(complexInputVar);
+		JVar complexInputElemVar = constructor.body().decl(ElementClass, "complexInputElem");
+		constructor.body().assign(complexInputElemVar, 
+				JExpr._new(ElementClass).arg(JExpr._new(QNameClass).arg("complexInputElem").
+						arg(DPWSDeviceClass.staticRef("DOCU_NAMESPACE"))).arg(complexInputVar));
+
+		constructor.body().invoke("setInput").arg(complexInputElemVar);
 
 		if (operation.getOperationType() != OperationType.ONE_WAY) {
 			JClass stringClass = codeModel.ref(String.class);
@@ -105,7 +148,7 @@ public class BcDPWSGenerator extends BcSubcomponentGenerator {
 			constructor.body().invoke("setOutput").arg(outputComponentVar);
 		}
 	}
-	
+
 	private void buildInvokeImpl(final Operation operation,
 			final JCodeModel codeModel, JDefinedClass dpwsOperationClass) {
 		JClass ParameterValueClass = codeModel.ref(ParameterValue.class);
@@ -125,7 +168,7 @@ public class BcDPWSGenerator extends BcSubcomponentGenerator {
 		dataList.init(JExpr._new(codeModel.ref(ArrayList.class).narrow(codeModel.ref(Data.class).narrow(codeModel.wildcard()))));
 
 		JClass StringClass = codeModel.ref(String.class);
-		
+
 		JInvocation dataCreation = null;
 		for (Data<?> data : operation.getGetDatas()) {
 			JVar inputComponentVar = null;
@@ -142,12 +185,106 @@ public class BcDPWSGenerator extends BcSubcomponentGenerator {
 			JInvocation addData2List = dataList.invoke("add").arg(dataCreation);
 			invokeImplMethod.body().add(addData2List);
 		}
+		
+		JInvocation gmInvocation = this.generateGmInvokation(operation, dpwsOperationClass, dataList);
+
+	    if (operation.getOperationType() == OperationType.ONE_WAY) {
+	    	invokeImplMethod.body().add(gmInvocation);
+	    } else {
+	      JClass stringClass = codeModel.ref(String.class);
+	      JVar serializedResponse = invokeImplMethod.body().decl(stringClass, "serialized" + operation.getPostData().getName());
+	      serializedResponse.init(gmInvocation);
+	      
+	      JVar resultVar = invokeImplMethod.body().decl(ParameterValueClass, "result");
+	      resultVar.init(JExpr.invoke("createOutputValue"));
+	      invokeImplMethod.body().add(ParameterValueManagementClass.staticInvoke("setString").arg(resultVar).arg("reply").arg(serializedResponse));
+
+	      invokeImplMethod.body()._return(resultVar);
+	    }
+	    
 	}
 
+	private JInvocation generateGmInvokation(Operation operation, JDefinedClass definedClass, JVar dataList) {
+		JInvocation apiInvocation = null;
+		switch (operation.getOperationType()) {
+		case ONE_WAY:
+			// TODO logs
+			apiInvocation = JExpr._this().ref(definedClass.fields().get("subcomponentRef")).invoke("mgetOneway").arg(operation.getScope().getUri()).arg(dataList);
+			break;
+		case TWO_WAY_SYNC:
+			apiInvocation = JExpr._this().ref(definedClass.fields().get("subcomponentRef")).invoke("mgetTwowaySync").arg(operation.getScope().getUri()).arg(dataList);
+			break;
+		case TWO_WAY_ASYNC:
+			apiInvocation = JExpr._this().ref(definedClass.fields().get("subcomponentRef")).invoke("mgetTwowayAsync").arg(operation.getScope().getUri()).arg(dataList);
+			break;
+		case STREAM:
+			throw new UnsupportedOperationException();
+		default:
+			throw new UnsupportedOperationException();
+		}
+		return apiInvocation;
+	}
+
+
+
+	private JDefinedClass generateDefinedClassWithDefaultNamespace(final JCodeModel codeModel, final String className) {
+		return generateDefinedClassWithCustomNamespace(codeModel, this.bcConfiguration.getTargetNamespace(), className);
+	}
+
+	private JDefinedClass generateDefinedClassWithCustomNamespace(final JCodeModel codeModel, final String namespace, final String className) {
+		JDefinedClass definedClass = null;
+		try {
+			definedClass = codeModel._class(namespace + "." + className);
+		} catch (JClassAlreadyExistsException e) {
+			e.printStackTrace();
+		}
+		return definedClass;
+	}
+
+	private JFieldVar generateAttribute(final JCodeModel codeModel, final JDefinedClass definedClass, final Class<?> attrClass,
+			final String attrName, final Boolean isFinal) {
+		return this.generateAttribute(codeModel, definedClass, codeModel.ref(attrClass), attrName, isFinal);
+	}
+
+	private JFieldVar generateAttribute(final JCodeModel codeModel, final JDefinedClass definedClass, final JClass attrClass,
+			final String attrName, final Boolean isFinal) {
+		JFieldVar attrField = definedClass.field(JMod.PRIVATE, attrClass, attrName);
+		attrField.mods().setFinal(isFinal);
+		return attrField;
+	}
+
+	private void addComment(final JDefinedClass definedClass, final String comment) {
+		definedClass.javadoc().add(comment);
+	}
+
+	private void buildGeneratedClassInDefaultLocation(final JCodeModel codeModel) {
+		buildGeneratedClassInCustomLocation(codeModel, new File(this.bcConfiguration.getGeneratedCodePath()));
+	}
+
+	private void buildGeneratedClassInCustomLocation(final JCodeModel codeModel, File file) {
+		// TESTING PURPOSE
+		// Write the generated class to the console output
+		if (debug) {
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			try {
+				codeModel.build(new SingleStreamCodeWriter(out));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			System.out.println(out);
+		}
+
+		try {
+			codeModel.build(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	protected void generatePojo(Data<?> definition) {
 		JCodeModel codeModel = new JCodeModel();
-		JDefinedClass definitionClass = this.generateDefinedClass(codeModel, definition.getClassName());
+		JDefinedClass definitionClass = this.generateDefinedClassWithDefaultNamespace(codeModel, definition.getClassName());
 		this.addComment(definitionClass, this.classComment);
 
 		definitionClass.annotate(javax.xml.bind.annotation.XmlAccessorType.class).param("value", javax.xml.bind.annotation.XmlAccessType.FIELD);
@@ -190,54 +327,9 @@ public class BcDPWSGenerator extends BcSubcomponentGenerator {
 			}
 		}
 
-		this.buildGeneratedClass(codeModel);
+		this.buildGeneratedClassInDefaultLocation(codeModel);
 
 	}
 
-	private JDefinedClass generateDefinedClass(final JCodeModel codeModel, final String className) {
-		JDefinedClass definedClass = null;
-		try {
-			definedClass = codeModel._class(this.bcConfiguration.getTargetNamespace() + "." + className);
-		} catch (JClassAlreadyExistsException e) {
-			e.printStackTrace();
-		}
-		return definedClass;
-	}
-
-	private JFieldVar generateAttribute(final JCodeModel codeModel, final JDefinedClass definedClass, final Class<?> attrClass,
-			final String attrName, final Boolean isFinal) {
-		return this.generateAttribute(codeModel, definedClass, codeModel.ref(attrClass), attrName, isFinal);
-	}
-
-	private JFieldVar generateAttribute(final JCodeModel codeModel, final JDefinedClass definedClass, final JClass attrClass,
-			final String attrName, final Boolean isFinal) {
-		JFieldVar attrField = definedClass.field(JMod.PRIVATE, attrClass, attrName);
-		attrField.mods().setFinal(isFinal);
-		return attrField;
-	}
-
-	private void addComment(final JDefinedClass definedClass, final String comment) {
-		definedClass.javadoc().add(comment);
-	}
-
-	private void buildGeneratedClass(final JCodeModel codeModel) {
-		// TESTING PURPOSE
-		// Write the generated class to the console output
-		if (debug) {
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			try {
-				codeModel.build(new SingleStreamCodeWriter(out));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			System.out.println(out);
-		}
-
-		try {
-			codeModel.build(new File("."));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 
 }

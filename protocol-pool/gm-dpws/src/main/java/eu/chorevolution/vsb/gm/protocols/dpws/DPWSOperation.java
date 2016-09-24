@@ -18,7 +18,7 @@ public class DPWSOperation extends Operation {
 	public final static String	REPLY	= "reply";
 
 
-	public DPWSOperation() {
+	public DPWSOperation(BcDPWSSubcomponent subcomponentRef) {
 		super("DocuExampleSimpleOperation", new QName("BasicServices", DPWSDevice.DOCU_NAMESPACE));
 
 		// create new Element called "name" (just a simple one in this case)

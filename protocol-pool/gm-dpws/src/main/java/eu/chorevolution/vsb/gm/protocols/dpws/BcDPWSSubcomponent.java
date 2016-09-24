@@ -34,9 +34,8 @@ public class BcDPWSSubcomponent extends BcGmSubcomponent {
 		case SERVER:
 			JMEDSFramework.start(null);
 			device = new DPWSDevice();
-			final DPWSService service = new DPWSService();
+			final DPWSService service = new DPWSService(this);
 			device.addService(service);
-
 			break;
 		case CLIENT:   
 			//      this.client = new Client(Protocol.HTTP);

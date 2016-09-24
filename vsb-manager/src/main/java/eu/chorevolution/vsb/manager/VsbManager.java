@@ -137,7 +137,7 @@ public class VsbManager {
 		warGenerator.addDependencyFiles(new File(".").getAbsolutePath() + File.separator + ".." + File.separator + "protocol-pool" + File.separator + "gm-coap" + File.separator + "pom.xml");
 		warGenerator.generate();
 
-		//    deleteGeneratedFiles();
+		    deleteGeneratedFiles();
 
 	}
 
@@ -641,9 +641,11 @@ public class VsbManager {
 				//list all the directory contents
 				String files[] = file.list();
 
-				for (String temp : files) {
+				for (String fileName : files) {
+					System.out.println(fileName);
+					if(fileName.equals("BindingComponent.java")) continue;
 					//construct the file structure
-					File fileDelete = new File(file, temp);
+					File fileDelete = new File(file, fileName);
 					//recursive delete
 					delete(fileDelete);
 				}
