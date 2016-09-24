@@ -27,23 +27,19 @@ import eu.chorevolution.vsb.gmdl.utils.Data.Context;
 public class BcDPWSSubcomponent extends BcGmSubcomponent {
 
 	private DPWSDevice device = null;
+	private DPWSClient client = null;
 
 	public BcDPWSSubcomponent(BcConfiguration bcConfiguration, GmServiceRepresentation serviceRepresentation) {
 		super(bcConfiguration);
 		switch (this.bcConfiguration.getSubcomponentRole()) {
 		case SERVER:
-			System.out.println("iloha 1");
 			JMEDSFramework.start(null);
-			System.out.println("iloha 1");
 			device = new DPWSDevice();
-			System.out.println("iloha 1");
 			final DPWSService service = new DPWSService(this);
-			System.out.println("iloha 1");
 			device.addService(service);
-			System.out.println("iloha 1");
 			break;
 		case CLIENT:   
-			//      this.client = new Client(Protocol.HTTP);
+			client = new DPWSClient();
 			break;
 		default:
 			break;
@@ -55,15 +51,12 @@ public class BcDPWSSubcomponent extends BcGmSubcomponent {
 		switch (this.bcConfiguration.getSubcomponentRole()) {
 		case SERVER:
 			try {
-				System.out.println("iloha 2");
 				device.start();
-				System.out.println("iloha 2");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			break;
 		case CLIENT:   
-			
 			break;
 		default:
 			break;
@@ -81,7 +74,6 @@ public class BcDPWSSubcomponent extends BcGmSubcomponent {
 			}
 			break;
 		case CLIENT:   
-			
 			break;
 		default:
 			break;
@@ -90,29 +82,7 @@ public class BcDPWSSubcomponent extends BcGmSubcomponent {
 
 	@Override
 	public void postOneway(final String destination, final String scope, final List<Data<?>> datas, final long lease) {
-		//    String json = null;
-		//    ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-		//    try {
-		//      json = ow.writeValueAsString(datas.get(0).getObject());
-		//    } catch (JsonProcessingException e) {
-		//      e.printStackTrace();
-		//    }
-		//    System.out.println("rec: " + json.toString());
-		//    //    Request request = new Request(Method.POST, destination + scope);
-		//    json = (String)datas.get(0).getObject();
-		//    String[] values = json.split(",");
-		//    JSONObject obj = new JSONObject();
-		//    if(values.length>1) {
-		//      obj.put("id", json.split(",")[0]);
-		//      obj.put("value", json.split(",")[1]);
-		//    }
-		//    System.out.println("rec: " + obj.toJSONString());
-		//    //    request.setEntity(json, new StringRepresentation((String)obj.toJSONString());
-		//
-		//    Request request = new Request(Method.POST, destination + scope, new StringRepresentation((String)obj.toJSONString()));
-
-//		Request request = RestRequestBuilder.buildRestGetRequest(destination, scope, datas);
-//		this.client.handle(request);
+		client.sendRequest(scope, datas);
 	}
 
 	@Override
@@ -127,14 +97,7 @@ public class BcDPWSSubcomponent extends BcGmSubcomponent {
 
 	@Override
 	public <T> T postTwowaySync(final String destination, final String scope, final List<Data<?>> datas, final long lease) {
-		System.out.println("Destination: " + destination);
-		System.out.println("Scope: " + scope);
-		System.out.println("Datas: " + datas);
-//		Request request = RestRequestBuilder.buildRestGetRequest(destination, scope, datas);
-//		Response response = this.client.handle(request);
-//		System.out.println(response.getEntityAsText());
-//		return (T) response.getEntityAsText();
-		return null;
+		return (T) client.sendRequest(scope, datas);
 	}
 
 	@Override
