@@ -107,7 +107,7 @@ public class VsbManager {
 		setConstants(interfaceDescriptionPath);
 
 		// temporarily disabled
-		generateBindingComponent(interfaceDescriptionPath, busProtocol);
+		 generateBindingComponent(interfaceDescriptionPath, busProtocol);
 
 		// TODO: instantiate the right generator based on the bcConfig
 		// could use JAVA Service Provider Interface (SPI) for a clean and clear implementation
@@ -135,9 +135,10 @@ public class VsbManager {
 		warGenerator.addDependencyFiles(new File(".").getAbsolutePath() + File.separator + "pom.xml");
 		warGenerator.addDependencyFiles(new File(".").getAbsolutePath() + File.separator + ".." + File.separator + "protocol-pool" + File.separator + "gm-soap" + File.separator + "pom.xml");
 		warGenerator.addDependencyFiles(new File(".").getAbsolutePath() + File.separator + ".." + File.separator + "protocol-pool" + File.separator + "gm-coap" + File.separator + "pom.xml");
+		warGenerator.addDependencyFiles(new File(".").getAbsolutePath() + File.separator + ".." + File.separator + "protocol-pool" + File.separator + "gm-dpws" + File.separator + "pom.xml");
 		warGenerator.generate();
 
-		    deleteGeneratedFiles();
+		 deleteGeneratedFiles();
 
 	}
 
@@ -611,7 +612,7 @@ public class VsbManager {
 			jsonObject.put("target_namespace", Constants.target_namespace);
 			jsonObject.put("service_name", Constants.dpws_service_name);
 		}
-		
+
 		// temporarily disabled
 		try (FileWriter file = new FileWriter(filename)) {
 			file.write(jsonObject.toJSONString());

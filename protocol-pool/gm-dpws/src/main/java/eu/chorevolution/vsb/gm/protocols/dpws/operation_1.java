@@ -33,8 +33,10 @@ public class operation_1
         complexInput = new ComplexType(new QName("complexInput", DPWSDevice.DOCU_NAMESPACE), ComplexType.CONTAINER_SEQUENCE);
         Element arg0Elem;
         arg0Elem = new Element(new QName("arg0", DPWSDevice.DOCU_NAMESPACE), SchemaUtil.TYPE_STRING);
+        complexInput.addElement(arg0Elem);
         Element arg1Elem;
         arg1Elem = new Element(new QName("arg1", DPWSDevice.DOCU_NAMESPACE), SchemaUtil.TYPE_STRING);
+        complexInput.addElement(arg1Elem);
         Element complexInputElem;
         complexInputElem = new Element(new QName("complexInputElem", DPWSDevice.DOCU_NAMESPACE), complexInput);
         setInput(complexInputElem);

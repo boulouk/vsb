@@ -32,10 +32,15 @@ public class BcDPWSSubcomponent extends BcGmSubcomponent {
 		super(bcConfiguration);
 		switch (this.bcConfiguration.getSubcomponentRole()) {
 		case SERVER:
+			System.out.println("iloha 1");
 			JMEDSFramework.start(null);
+			System.out.println("iloha 1");
 			device = new DPWSDevice();
+			System.out.println("iloha 1");
 			final DPWSService service = new DPWSService(this);
+			System.out.println("iloha 1");
 			device.addService(service);
+			System.out.println("iloha 1");
 			break;
 		case CLIENT:   
 			//      this.client = new Client(Protocol.HTTP);
@@ -50,7 +55,9 @@ public class BcDPWSSubcomponent extends BcGmSubcomponent {
 		switch (this.bcConfiguration.getSubcomponentRole()) {
 		case SERVER:
 			try {
+				System.out.println("iloha 2");
 				device.start();
+				System.out.println("iloha 2");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

@@ -28,7 +28,7 @@ public class BcManagerRestService implements Manageable {
 	private Server server;  
 	private Boolean serverOnline = false;
 
-	BindingComponent genFac = new BindingComponent();
+	BindingComponent bc = new BindingComponent();
 
 	public BcManagerRestService(final int port) {
 		this.server = new Server(Protocol.HTTP, port);
@@ -46,13 +46,13 @@ public class BcManagerRestService implements Manageable {
 
 	public void runBC() {
 		System.out.println("BCMgrRestSvc calling run!");
-		genFac.run();
+		bc.run();
 		System.out.println("BCMgrRestSvc finished run!");
 	}
 
 	public void pauseBC() {
 		System.out.println("BCMgrRestSvc calling pause!");
-		genFac.pause();
+		bc.pause();
 		System.out.println("BCMgrRestSvc finished calling pause!");
 	}
 

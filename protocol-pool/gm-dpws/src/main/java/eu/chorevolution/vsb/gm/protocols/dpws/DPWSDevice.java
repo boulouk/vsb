@@ -23,6 +23,7 @@ public class DPWSDevice extends DefaultDevice {
 		 */
 
 		// set PortType
+		System.out.println("mango 1");
 		this.setPortTypes(new QNameSet(new QName("DocuExampleDevice", DOCU_NAMESPACE)));
 		// add device name (name is language specific)
 		this.addFriendlyName("en-US", "DocuDevice");
@@ -33,7 +34,7 @@ public class DPWSDevice extends DefaultDevice {
 		this.addManufacturer("de-DE", "Test GmbH");
 
 		this.addModelName(LocalizedString.LANGUAGE_EN, "DocuModel");
-
+		System.out.println("mango 2");
 		// add binding (optional!)
 		/*
 		 * add discovery binding or change the ip (127.0.0.1) with an ip of a

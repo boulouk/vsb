@@ -129,7 +129,7 @@ public class BcDPWSGenerator extends BcSubcomponentGenerator {
 			constructor.body().assign(inputComponentVar, 
 					JExpr._new(ElementClass).arg(JExpr._new(QNameClass).arg(data.getName()).
 							arg(DPWSDeviceClass.staticRef("DOCU_NAMESPACE"))).arg(SchemaUtilClass.staticRef("TYPE_STRING")));
-			complexInputVar.invoke("addElement").arg(inputComponentVar);
+			constructor.body().add(complexInputVar.invoke("addElement").arg(inputComponentVar));
 		}
 
 		JVar complexInputElemVar = constructor.body().decl(ElementClass, "complexInputElem");
