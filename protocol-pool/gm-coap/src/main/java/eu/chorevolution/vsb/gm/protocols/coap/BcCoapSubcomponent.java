@@ -22,6 +22,7 @@ import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
 import eu.chorevolution.vsb.gmdl.utils.Data;
 import eu.chorevolution.vsb.gmdl.utils.GmServiceRepresentation;
 import eu.chorevolution.vsb.gmdl.utils.Data.Context;
+import eu.chorevolution.vsb.gmdl.utils.enums.OperationType;
 import eu.chorevolution.vsb.gmdl.utils.Operation;
 
 public class BcCoapSubcomponent extends BcGmSubcomponent {
@@ -29,7 +30,7 @@ public class BcCoapSubcomponent extends BcGmSubcomponent {
 	private CoapServer server;  
 	private CoapResource resource;
 	private GmServiceRepresentation serviceRepresentation;
-	
+
 	public BcCoapSubcomponent(BcConfiguration bcConfiguration, GmServiceRepresentation serviceRepresentation) {
 		super(bcConfiguration);
 		switch (this.bcConfiguration.getSubcomponentRole()) {
@@ -61,38 +62,45 @@ public class BcCoapSubcomponent extends BcGmSubcomponent {
 
 	CoapResource getQueryListenerResource() {
 		CoapResource resource = new CoapResource("listener") {
-
 			@Override
 			public void handlePOST(CoapExchange exchange) {
 				String receivedText = exchange.getRequestText();
 				System.err.println("receivedText: " + exchange.getRequestText());
 
-				for(Entry<String, Operation> en: serviceRepresentation.getInterfaces().get(0).getOperations().entrySet()) {
-					Operation op = en.getValue();
-					List<Data<?>> datas = new ArrayList<>();
-					
-					JSONParser parser = new JSONParser();
-				    JSONObject jsonObject = null;
+				JSONParser parser = new JSONParser();
+				JSONObject jsonObject = null;
 
-				    try {
-				      jsonObject = (JSONObject) parser.parse(receivedText);
-				    } catch (ParseException e) {
-				      e.printStackTrace();
-				    }
-					
-					for(Data<?> data: op.getGetDatas()) {
-						Data d = new Data<String>(data.getName(), "String", true, (String)jsonObject.get(data.getName()), data.getContext());
-						datas.add(d);
-						System.err.println("Added " + d);
+				try {
+					jsonObject = (JSONObject) parser.parse(receivedText);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+
+				String op_name = (String)jsonObject.get("op_name");
+
+				for(Entry<String, Operation> en: serviceRepresentation.getInterfaces().get(0).getOperations().entrySet()) {
+					if(en.getKey().equals(op_name)) {
+						Operation op = en.getValue();
+						List<Data<?>> datas = new ArrayList<>();
+
+						for(Data<?> data: op.getGetDatas()) {
+							Data d = new Data<String>(data.getName(), "String", true, (String)jsonObject.get(data.getName()), data.getContext());
+							datas.add(d);
+							System.err.println("Added " + d);
+						}
+						if(op.getOperationType() == OperationType.TWO_WAY_SYNC) {
+							String response = mgetTwowaySync(op.getScope().getUri(), datas);
+							exchange.accept();
+							exchange.respond(response);	
+						}
+						else if(op.getOperationType() == OperationType.ONE_WAY) {
+							mgetOneway(op.getScope().getUri(), datas);
+							exchange.accept();
+						}
 					}
-					String response = mgetTwowaySync(op.getScope().getUri(), datas);
-					exchange.accept();
-					exchange.respond(response);				
 				}
 			}
-
 		};
-
 		return resource;
 	}
 

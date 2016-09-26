@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import pl.ncdc.differentia.DifferentiaAssert;
 import eu.chorevolution.vsb.gm.protocols.generators.BcSubcomponentGenerator;
-import eu.chorevolution.vsb.gm.protocols.mqtt.BcSoapGenerator;
+import eu.chorevolution.vsb.gm.protocols.mqtt.BcMQTTGenerator;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
 import eu.chorevolution.vsb.gmdl.utils.Data;
 import eu.chorevolution.vsb.gmdl.utils.Data.Context;
@@ -64,7 +64,7 @@ public class BcSoapGeneratorTest {
     twoWayOperation.setPostData(postData);
     serviceDefinition.addOperation(twoWayOperation);
     
-    this.soapGenerator = new BcSoapGenerator(serviceDefinition, compConfServer).setDebug(true);
+    this.soapGenerator = new BcMQTTGenerator(serviceDefinition, compConfServer).setDebug(true);
   }
   
   @Test
