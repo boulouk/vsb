@@ -77,7 +77,7 @@ public class VsbManager {
 
 	public static void main(String[] args) {
 		VsbManager vsbm = new VsbManager();
-		vsbm.generateWar(BcManagerRestService.class.getClassLoader().getResource("DtsGoogle.gidl").toExternalForm().substring(5), ProtocolType.DPWS);
+		vsbm.generateWar(BcManagerRestService.class.getClassLoader().getResource("DtsGoogle1.gmdl").toExternalForm().substring(5), ProtocolType.SOAP);
 	}
 
 	private void setConstants(String interfaceDescriptionPath) {
@@ -138,7 +138,7 @@ public class VsbManager {
 		warGenerator.addDependencyFiles(new File(".").getAbsolutePath() + File.separator + ".." + File.separator + "protocol-pool" + File.separator + "gm-dpws" + File.separator + "pom.xml");
 		warGenerator.generate();
 
-		 deleteGeneratedFiles();
+//		 deleteGeneratedFiles();
 
 	}
 
@@ -160,8 +160,10 @@ public class VsbManager {
 		switch(interfaceDescFileExtension) {
 		case "gmdl":
 			gmServiceRepresentation = ServiceDescriptionParser.getRepresentationFromGMDL(interfaceDescription);
+			break;
 		case "gidl":
 			gmServiceRepresentation = ServiceDescriptionParser.getRepresentationFromGIDL(interfaceDescription);
+			break;
 		}
 
 		if(busProtocol == ProtocolType.DPWS) {
@@ -181,7 +183,7 @@ public class VsbManager {
 
 			BcSoapGenerator soapGenerator = (BcSoapGenerator) new BcSoapGenerator(gmServiceRepresentation, bcConfiguration).setDebug(true); 
 			// temporarily disabled
-			// soapGenerator.generatePOJOAndEndpoint();
+			 soapGenerator.generatePOJOAndEndpoint();
 
 			JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 
@@ -228,7 +230,7 @@ public class VsbManager {
 	public void copyInterfaceDescription(String interfaceDescription) {
 		try {
 			File input = new File(interfaceDescription);
-			File output = new File(Constants.webapp_src_bc + File.separator + "config" + File.separator + "serviceDescription.gidl");
+			File output = new File(Constants.webapp_src_bc + File.separator + "config" + File.separator + "serviceDescription.gxdl");
 			Scanner sc = new Scanner(input);
 			PrintWriter printer = new PrintWriter(output);
 			while(sc.hasNextLine()) {
@@ -355,7 +357,7 @@ public class VsbManager {
 
 		JVar interfaceDescriptionPathVar = null;
 		interfaceDescriptionPathVar = jBlock.decl(StringClass, "interfaceDescFilePath");
-		jBlock.assign(JExpr.ref(interfaceDescriptionPathVar.name()), JExpr._new(FileClass).arg(BcManagerRestServiceClass.dotclass().invoke("getClassLoader").invoke("getResource").arg("example.json").invoke("toExternalForm").invoke("substring").arg(intNineVar)).invoke("getParentFile").invoke("getParentFile").invoke("getParentFile").invoke("getParentFile").invoke("getAbsolutePath").plus(FileClass.staticRef("separator")).plus(JExpr._new(StringClass).arg("config")).plus(FileClass.staticRef("separator")).plus(JExpr._new(StringClass).arg("serviceDescription.gidl")) );
+		jBlock.assign(JExpr.ref(interfaceDescriptionPathVar.name()), JExpr._new(FileClass).arg(BcManagerRestServiceClass.dotclass().invoke("getClassLoader").invoke("getResource").arg("example.json").invoke("toExternalForm").invoke("substring").arg(intNineVar)).invoke("getParentFile").invoke("getParentFile").invoke("getParentFile").invoke("getParentFile").invoke("getAbsolutePath").plus(FileClass.staticRef("separator")).plus(JExpr._new(StringClass).arg("config")).plus(FileClass.staticRef("separator")).plus(JExpr._new(StringClass).arg("serviceDescription.gxdl")) );
 
 
 		JClass serviceDescriptionClass = jCodeModel.ref(ServiceDescriptionParser.class);
@@ -368,8 +370,10 @@ public class VsbManager {
 		switch(extension) {
 		case "gmdl":
 			getInterfaceRepresentation = serviceDescriptionClass.staticInvoke("getRepresentationFromGMDL").arg(interfaceDescriptionPathVar); 
+			break;
 		case "gidl":
-			getInterfaceRepresentation = serviceDescriptionClass.staticInvoke("getRepresentationFromGIDL").arg(interfaceDescriptionPathVar); 
+			getInterfaceRepresentation = serviceDescriptionClass.staticInvoke("getRepresentationFromGIDL").arg(interfaceDescriptionPathVar);
+			break;
 		}
 
 		//    jBlock.add(getInterfaceRepresentation);

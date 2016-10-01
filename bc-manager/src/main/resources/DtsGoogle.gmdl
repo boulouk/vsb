@@ -1,0 +1,151 @@
+{
+	"host_address": "https://maps.googleapis.com",
+	"protocol": "REST",
+	"interfaces": [{
+			"role": "provider",
+			"operations": [
+				"operation_1", "operation_2"
+			]
+		},
+		{
+			"role": "consumer",
+			"operations": [
+				"operation_1", "operation_2"
+			]
+		}
+	],
+	"operations": [{
+			"operation_name": "operation_1",
+			"operation_type": "two_way",
+			"role": "server",
+			"scope": {
+				"verb": "GET",
+				"name": "routeRequest",
+				"uri": "/maps/api/directions/json?origin={origin}&destination={destination}&key={key}"
+			},
+			"get_data": [{
+				"data_name": "origin",
+				"data_type": "String",
+				"context": "path"
+			}, {
+				"data_name": "destination",
+				"data_type": "String",
+				"context": "path"
+			}],
+			"post_data": [{
+				"data_name": "route",
+				"data_type": "object",
+				"context": "body",
+				"$ref": "RootClass"
+			}]
+		},
+		{
+			"operation_name": "operation_2",
+			"operation_type": "one_way",
+			"role": "server",
+			"scope": {
+				"verb": "GET",
+				"name": "routeRequest",
+				"uri": "/maps/api/directions/json?origin={origin}&destination={destination}&key={key}"
+			},
+			"get_data": [{
+				"data_name": "origin",
+				"data_type": "String",
+				"context": "path"
+			}, {
+				"data_name": "destination",
+				"data_type": "String",
+				"context": "path"
+			}],
+			"post_data": [{
+				"data_name": "route",
+				"data_type": "object",
+				"context": "body",
+				"$ref": "RootClass"
+			}]
+		}
+
+	],
+	"definitions": [{
+		"definition_name": "RootClass",
+		"definition_type": "object",
+		"required": [
+			"geocoded_waypoints",
+			"routes",
+			"status"
+		],
+		"properties": [{
+			"property_name": "geocoded_waypoints",
+			"property_type": "object",
+			"$ref": "GeocodedWayPoints"
+		}, {
+			"property_name": "routes",
+			"property_type": "object",
+			"$ref": "Routes"
+		}, {
+			"property_name": "status",
+			"property_type": "String"
+		}]
+	}, {
+		"definition_name": "GeocodedWayPoints",
+		"definition_type": "object",
+		"required": [
+			"geocoder_status",
+			"place_id",
+			"types"
+		],
+		"properties": [{
+			"property_name": "geocoder_status",
+			"property_type": "String"
+
+		}, {
+			"property_name": "place_id",
+			"property_type": "String",
+			"$ref": "Routes"
+		}, {
+			"property_name": "types",
+			"property_type": "String"
+		}]
+	}, {
+		"definition_name": "Routes",
+		"definition_type": "object",
+		"required": [
+			"bounds",
+			"copyrights",
+			"legs",
+			"overview_polyline",
+			"summary",
+			"warnings",
+			"waypoint_order"
+		],
+		"properties": [{
+				"property_name": "bounds",
+				"property_type": "object",
+				"$ref": "Bounds"
+			}, {
+				"property_name": "copyrights",
+				"property_type": "String"
+
+			}, {
+				"property_name": "legs",
+				"property_type": "String"
+
+			}
+
+		]
+	}, {
+		"definition_name": "Bounds",
+		"definition_type": "object",
+		"required": [
+			"northeast",
+			"southwest"
+		],
+		"properties": [{
+			"property_name": "northeast",
+			"property_type": "String"
+		}, {
+			"property_name": "southwest",
+			"property_type": "String"
+		}]
+	}]
+}

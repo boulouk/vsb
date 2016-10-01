@@ -43,8 +43,9 @@ public class BcSoapSubcomponent extends BcGmSubcomponent {
         e1.printStackTrace();
       }
       try {
-        this.endpoint = Endpoint.publish(this.bcConfiguration.getSubcomponentAddress(), bc.getDeclaredConstructor(BcGmSubcomponent.class).newInstance(this));
-        System.err.println("SOAP endpoint published on " + this.bcConfiguration.getSubcomponentAddress());
+    	  String endpointAddress = this.bcConfiguration.getSubcomponentAddress()+":"+this.bcConfiguration.getSubcomponentPort()+"/"+this.bcConfiguration.getServiceName();
+        this.endpoint = Endpoint.publish(endpointAddress, bc.getDeclaredConstructor(BcGmSubcomponent.class).newInstance(this));
+        System.err.println("SOAP endpoint published on " + endpointAddress);
       } catch (InstantiationException e) {
         e.printStackTrace();
       } catch (IllegalAccessException e) {
