@@ -22,11 +22,8 @@ public class GeocodedWayPoints {
     private String place_id;
     @XmlElement(name = "types", required = true)
     private List<String> types;
-<<<<<<< HEAD
     @XmlElement(name = "partial_match", required = true)
     private boolean partial_match;
-=======
->>>>>>> 8b7251d91190be7e03e46e78e91f7147bbfc5464
 
     public String getgeocoder_status() {
         return geocoder_status;
@@ -52,7 +49,6 @@ public class GeocodedWayPoints {
         this.types = types;
     }
 
-<<<<<<< HEAD
     public boolean getpartial_match() {
         return partial_match;
     }
@@ -61,6 +57,4 @@ public class GeocodedWayPoints {
         this.partial_match = partial_match;
     }
 
-=======
->>>>>>> 8b7251d91190be7e03e46e78e91f7147bbfc5464
 }
