@@ -64,7 +64,10 @@
 		"required": [
 			"geocoder_status",
 			"place_id",
+<<<<<<< HEAD
 			"partial_match",
+=======
+>>>>>>> 8b7251d91190be7e03e46e78e91f7147bbfc5464
 			"types"
 		],
 		"properties": [{

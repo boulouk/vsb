@@ -20,7 +20,10 @@
             <xs:complexType name="GeocodedWayPoints">
                 <xs:sequence>
                     <xs:element minOccurs="0" name="geocoder_status" nillable="true" type="xs:string"/>
+<<<<<<< HEAD
                     <xs:element minOccurs="0" name="partial_match" type="xs:boolean"/>
+=======
+>>>>>>> 8b7251d91190be7e03e46e78e91f7147bbfc5464
                     <xs:element minOccurs="0" name="place_id" nillable="true" type="xs:string"/>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="types" nillable="true" type="xs:string"/>
                 </xs:sequence>
