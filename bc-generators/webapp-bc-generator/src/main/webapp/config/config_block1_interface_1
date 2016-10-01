@@ -1,1 +1,1 @@
-{"subcomponent_port":"","subcomponent_address":"","service_name":"BCDPWSSubcomponentEndpoint","service_address":"","target_namespace":"eu.chorevolution.vsb.bindingcomponent.generated","service_port":""}
+{"subcomponent_port":"","subcomponent_address":"","service_name":"BCSoapSubcomponentEndpoint","service_address":"","target_namespace":"eu.chorevolution.vsb.bindingcomponent.generated","service_port":""}

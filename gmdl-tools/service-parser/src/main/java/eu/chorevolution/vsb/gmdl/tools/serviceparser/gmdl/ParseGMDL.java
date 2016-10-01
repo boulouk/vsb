@@ -142,7 +142,7 @@ public class ParseGMDL {
             boolean req = false;
             if(requiredProperties.contains(propertyName)) 
               req = true;
-
+            System.out.println($ref);
             Data<?> data = new Data(definitonMap.get($ref));
             data.setName(propertyName);
             if(req)

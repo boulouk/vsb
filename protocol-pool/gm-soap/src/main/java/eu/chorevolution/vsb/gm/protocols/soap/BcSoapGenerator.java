@@ -150,6 +150,9 @@ public class BcSoapGenerator extends BcSubcomponentGenerator {
 
   private JFieldVar generateAttribute(final JCodeModel codeModel, final JDefinedClass definedClass, final JClass attrClass,
       final String attrName, final Boolean isFinal) {
+	  if(attrName.equals("points")) {
+		  System.out.println("gotcha");;
+	  }
     JFieldVar attrField = definedClass.field(JMod.PRIVATE, attrClass, attrName);
     attrField.mods().setFinal(isFinal);
     return attrField;
