@@ -1,0 +1,29 @@
+{
+  "host_address": "http://localhost:1111",
+  "protocol": "REST",
+  "interfaces": [{
+      "role": "provider",
+      "operations": [
+        "operation_1"
+      ]
+    }
+  ],
+  "operations": [{
+      "operation_id": "operation_1",
+      "operation_type": "one_way",
+      "role": "server",
+      "scope": {
+        "verb": "GET",
+        "name": "sensors",
+        "uri": "/sensors/{id}"
+      },
+      "get_data": [{
+        "data_name": "id",
+        "data_type": "integer",
+        "context": "path"
+      }],
+      "post_data": []
+    }
+  ],
+  "definitions": []
+}

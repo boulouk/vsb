@@ -36,7 +36,7 @@ public class RestServer {
 
 	public void mget(String scope) {
 		this.component.getDefaultHost().attach("/"+scope, RestServerResource.class);
-		this.component.getDefaultHost().attach("/power/" + "{power}", RestServerResource.class);
+		this.component.getDefaultHost().attach("/sensors/" + "{id}", RestServerResource.class);
 	}
 
 	public static class RestServerResource extends ServerResource {
@@ -55,9 +55,9 @@ public class RestServer {
 
 		@Override
 		protected Representation get() throws ResourceException {
-			String power = (String) this.getRequestAttributes().get("power");
-			System.out.println(power);
-			return new StringRepresentation("bon!");
+			String id = (String) this.getRequest().getAttributes().get("id");
+			System.out.println("Id: " + id);
+			return null;
 		}
 	}
 

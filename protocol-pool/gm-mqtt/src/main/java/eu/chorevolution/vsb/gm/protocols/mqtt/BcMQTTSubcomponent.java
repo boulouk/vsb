@@ -41,7 +41,7 @@ public class BcMQTTSubcomponent extends BcGmSubcomponent {
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-			broker.setDataDirectory("target3");
+			broker.setDataDirectory("target4");
 			try {
 				serverSubscriber = new MqttClient("tcp://"+this.bcConfiguration.getSubcomponentAddress()+":"+this.bcConfiguration.getSubcomponentPort(), "serverSubscriber");
 			} catch (MqttException e1) {
