@@ -158,11 +158,11 @@ public class BcRestSubcomponent extends BcGmSubcomponent {
 		printermsg = (request.toString());
 		System.out.println(request.toString());
 		Response response = this.client.handle(request);
-//		try {
-//			Thread.sleep(1000);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	    printermsg = (response.getEntityAsText());
 		System.out.println(response.getEntityAsText());
 		return (T) response.getEntityAsText();

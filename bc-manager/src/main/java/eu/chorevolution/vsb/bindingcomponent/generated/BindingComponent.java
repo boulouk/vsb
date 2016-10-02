@@ -3,9 +3,9 @@ package eu.chorevolution.vsb.bindingcomponent.generated;
 
 import java.io.File;
 import eu.chorevolution.vsb.bc.manager.BcManagerRestService;
+import eu.chorevolution.vsb.gm.protocols.mqtt.BcMQTTSubcomponent;
 import eu.chorevolution.vsb.gm.protocols.primitives.BcGmSubcomponent;
 import eu.chorevolution.vsb.gm.protocols.rest.BcRestSubcomponent;
-import eu.chorevolution.vsb.gm.protocols.soap.BcSoapSubcomponent;
 import eu.chorevolution.vsb.gmdl.tools.serviceparser.ServiceDescriptionParser;
 import eu.chorevolution.vsb.gmdl.utils.BcConfiguration;
 import eu.chorevolution.vsb.gmdl.utils.GmServiceRepresentation;
@@ -45,7 +45,7 @@ public class BindingComponent {
             bcConfiguration2 .setSubcomponentRole(busRole);
             bcConfiguration1 .parseFromJSON(gmServiceRepresentation, (((((new File(BcManagerRestService.class.getClassLoader().getResource("example.json").toExternalForm().substring(intNine)).getParentFile().getParentFile().getParentFile().getParentFile().getAbsolutePath()+ File.separator)+ new String("config"))+ File.separator)+ new String("config_block1_interface_"))+ String.valueOf((i + intOne))));
             bcConfiguration2 .parseFromJSON(gmServiceRepresentation, (((((new File(BcManagerRestService.class.getClassLoader().getResource("example.json").toExternalForm().substring(intNine)).getParentFile().getParentFile().getParentFile().getParentFile().getAbsolutePath()+ File.separator)+ new String("config"))+ File.separator)+ new String("config_block2_interface_"))+ String.valueOf((i + intOne))));
-            subcomponent[i][0] = new BcSoapSubcomponent(bcConfiguration1, gmServiceRepresentation);
+            subcomponent[i][0] = new BcMQTTSubcomponent(bcConfiguration1, gmServiceRepresentation);
             subcomponent[i][1] = new BcRestSubcomponent(bcConfiguration2, gmServiceRepresentation);
             BcGmSubcomponent block1Component = subcomponent[i][0];
             BcGmSubcomponent block2Component = subcomponent[i][1];

@@ -53,7 +53,7 @@ public class mqttPublisher {
     try {
       long sentTimestamp = System.nanoTime();
       message = message; 
-      this.client.publish(topic, message.getBytes(), 0, true);
+      this.client.publish(topic, message.getBytes(), 2, false);
 
     } catch (MqttException e) {
       e.printStackTrace();

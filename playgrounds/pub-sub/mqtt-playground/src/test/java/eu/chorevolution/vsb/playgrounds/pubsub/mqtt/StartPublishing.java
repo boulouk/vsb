@@ -17,10 +17,15 @@ import org.junit.Test;
 import eu.chorevolution.vsb.playgrounds.pubsub.mqtt.mqttPublisher;
 
 public class StartPublishing {
-  @Test
-  public void startPublishing() {
-    mqttPublisher pub = null;
-    pub = new mqttPublisher("localhost",1883, "publisher");
-    pub.publish("topic_name", "message");
-  }
+	@Test
+	public void startPublishing() {
+		mqttPublisher pub = null;
+		pub = new mqttPublisher("localhost",1882, "publisher");
+		pub.publish("operation_1", "{\"origin\":\"17.4781737,78.2975116,15.51z\",\"destination\":\"17.470432,78.3102378,15z\",\"key\": \"AIzaSyBhfNR1PHo8EsuxjLr3EO-sNnfoUDh4ilw\"}");
+	}
+	public static void main(String[] args) {
+		mqttPublisher pub = null;
+		pub = new mqttPublisher("localhost",1883, "publisher4");
+		pub.publish("operation_1", "{\"origin\":\"17.4781737,78.2975116,15.51z\",\"destination\":\"17.470432,78.3102378,15z\",\"key\": \"AIzaSyBhfNR1PHo8EsuxjLr3EO-sNnfoUDh4ilw\"}");
+	}
 }

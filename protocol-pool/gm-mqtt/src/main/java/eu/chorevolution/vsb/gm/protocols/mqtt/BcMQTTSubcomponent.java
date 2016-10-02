@@ -25,10 +25,11 @@ import eu.chorevolution.vsb.gmdl.utils.enums.OperationType;
 public class BcMQTTSubcomponent extends BcGmSubcomponent {
 
 	BrokerService broker = null;
-	MqttClient serverClient = null;
+	MqttClient serverSubscriber = null;
+	MqttClient serverPublisher = null;
 	private MqttClient client = null;
 	GmServiceRepresentation serviceRepresentation = null;
-	
+
 	public BcMQTTSubcomponent(BcConfiguration bcConfiguration, GmServiceRepresentation serviceRepresentation) {
 		super(bcConfiguration);
 		this.serviceRepresentation = serviceRepresentation;
@@ -40,14 +41,18 @@ public class BcMQTTSubcomponent extends BcGmSubcomponent {
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-			broker.setDataDirectory("target");
+			broker.setDataDirectory("target3");
 			try {
-				serverClient = new MqttClient("tcp://"+this.bcConfiguration.getSubcomponentAddress()+":"+this.bcConfiguration.getSubcomponentPort(), "serverSubscriber");
+				serverSubscriber = new MqttClient("tcp://"+this.bcConfiguration.getSubcomponentAddress()+":"+this.bcConfiguration.getSubcomponentPort(), "serverSubscriber");
 			} catch (MqttException e1) {
 				e1.printStackTrace();
 			}
-			serverClient.setCallback(new ServerSubscriberCallback());
-			
+			serverSubscriber.setCallback(new ServerSubscriberCallback());
+			try {
+				serverPublisher = new MqttClient("tcp://"+this.bcConfiguration.getSubcomponentAddress()+":"+this.bcConfiguration.getSubcomponentPort(), "serverPublisher");
+			} catch (MqttException e1) {
+				e1.printStackTrace();
+			}
 			break;
 		case CLIENT:
 			try {
@@ -72,24 +77,42 @@ public class BcMQTTSubcomponent extends BcGmSubcomponent {
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-			Runtime.getRuntime().addShutdownHook(new Thread(){
-				@Override
-				public void run() {
-					try {
-						broker.stop();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
+			//			Runtime.getRuntime().addShutdownHook(new Thread(){
+			//				@Override
+			//				public void run() {
+			//					try {
+			//						broker.stop();
+			//					} catch (Exception e) {
+			//						e.printStackTrace();
+			//					}
+			//				}
+			//			});
 
 			try {
 				MqttConnectOptions options = new MqttConnectOptions();
 				options.setCleanSession(false);
-				serverClient.connect(options);
+				serverSubscriber.connect(options);
 			} catch (MqttException e) {
 				e.printStackTrace();
 			}
+
+			try {
+				MqttConnectOptions options = new MqttConnectOptions();
+				options.setCleanSession(false);
+				serverPublisher.connect(options);
+			} catch (MqttException e) {
+				e.printStackTrace();
+			}
+
+			for(Entry<String, Operation> en: serviceRepresentation.getInterfaces().get(0).getOperations().entrySet()) {
+				try {
+					serverSubscriber.subscribe((String) en.getKey());
+				} catch (MqttException e) {
+					e.printStackTrace();
+				}
+				System.out.println("Server subscriber subscribed to " + (String) en.getKey());
+			}
+
 			break;
 		case CLIENT:
 			MqttConnectOptions options = new MqttConnectOptions();
@@ -110,7 +133,10 @@ public class BcMQTTSubcomponent extends BcGmSubcomponent {
 		switch (this.bcConfiguration.getSubcomponentRole()) {
 		case SERVER:  
 			try {
-				serverClient.close();
+				serverSubscriber.disconnect();
+				serverSubscriber.close();
+				serverPublisher.disconnect();
+				serverPublisher.close();
 				broker.stop();
 			} catch (Exception e1) {
 				e1.printStackTrace();
@@ -182,14 +208,15 @@ public class BcMQTTSubcomponent extends BcGmSubcomponent {
 		// TODO Auto-generated method stub
 	}
 
-	private final class ServerSubscriberCallback implements MqttCallback {
-		public ServerSubscriberCallback() {
+	private final class SubscriberCallback implements MqttCallback {
+		public SubscriberCallback() {
 			super();
 		}
 
 		@Override
 		public void messageArrived(String topic, MqttMessage msg) throws Exception {
-			mgetOneway(topic, msg);
+			System.out.println(topic + " " + msg.toString());
+			//			mgetOneway(topic, msg);
 		}
 
 		@Override
@@ -202,16 +229,16 @@ public class BcMQTTSubcomponent extends BcGmSubcomponent {
 		}
 	}
 
-	private final class SubscriberCallback implements MqttCallback {
+	private final class ServerSubscriberCallback implements MqttCallback {
 
-		public SubscriberCallback() {
+		public ServerSubscriberCallback() {
 			super();
 		}
 
 		@Override
 		public void messageArrived(String topic, MqttMessage msg) throws Exception {
 			String receivedText = msg.toString();
-
+			System.out.println(receivedText);
 			JSONParser parser = new JSONParser();
 			JSONObject jsonObject = null;
 
@@ -233,7 +260,7 @@ public class BcMQTTSubcomponent extends BcGmSubcomponent {
 					}
 					if(op.getOperationType() == OperationType.TWO_WAY_SYNC) {
 						String response = mgetTwowaySync(op.getScope().getUri(), datas);
-						serverClient.publish(topic+"Reply", response.getBytes(), 0, true);
+						serverPublisher.publish(topic+"Reply", response.getBytes(), 2, false);
 					}
 					else if(op.getOperationType() == OperationType.ONE_WAY) {
 						mgetOneway(op.getScope().getUri(), datas);

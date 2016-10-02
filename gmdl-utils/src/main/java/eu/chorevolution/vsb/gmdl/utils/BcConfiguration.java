@@ -5,6 +5,7 @@ import java.io.FileReader;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import eu.chorevolution.vsb.gmdl.utils.enums.ProtocolType;
 import eu.chorevolution.vsb.gmdl.utils.enums.RoleType;
 
 public class BcConfiguration {
@@ -100,13 +101,18 @@ public class BcConfiguration {
         jsonObject = ((JSONObject) parser.parse(fileReader));
     } catch (Exception _x) {
     }
+
+    System.out.println(jsonObject.toString());
     
-    setTargetNamespace((String) jsonObject.get("target_namespace"));
-    System.out.println(jsonObject);
-    setServiceName((String) jsonObject.get("service_name"));
+    if(jsonObject.get("target_namespace") != null)
+    	setTargetNamespace((String) jsonObject.get("target_namespace"));
+    if(jsonObject.get("service_name") != null)
+    	setServiceName((String) jsonObject.get("service_name"));
+    
     setSubcomponentAddress((String) jsonObject.get("subcomponent_address"));
     
     String subcomponentPort = (String) jsonObject.get("subcomponent_port");
+    
     int subcomponentPortInt = 0;
     if(subcomponentPort!=null && !subcomponentPort.equals("")) {
     	subcomponentPortInt = Integer.parseInt(subcomponentPort);
@@ -116,13 +122,13 @@ public class BcConfiguration {
     
     setServiceAddress(gmServiceRep.getHostAddress());
     
-    String servicePort = (String) jsonObject.get("service_port");
-    int servicePortInt = 0;
-    if(servicePort!=null && !servicePort.equals("")) {
-    	servicePortInt = Integer.parseInt(servicePort);
-    }
+//    String servicePort = (String) jsonObject.get("service_port");
+//    int servicePortInt = 0;
+//    if(servicePort!=null && !servicePort.equals("")) {
+//    	servicePortInt = Integer.parseInt(servicePort);
+//    }
     
-    setServicePort(servicePortInt);
+//    setServicePort(servicePortInt);
     
     System.out.println("Done parsing config file");
   }

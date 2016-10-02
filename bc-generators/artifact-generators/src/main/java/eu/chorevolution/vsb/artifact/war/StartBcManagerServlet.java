@@ -46,7 +46,7 @@ public class StartBcManagerServlet extends HttpServlet {
 			response.getWriter().println("BC stopped!");
 		} 
 		else if(op.equals("startbcm")) {
-			server = new BcManagerRestService(2233);
+			server = new BcManagerRestService(2235);
 			response.getWriter().println("-> BC Manager started!");
 		}
 		else if(op.equals("stopbcm")) {

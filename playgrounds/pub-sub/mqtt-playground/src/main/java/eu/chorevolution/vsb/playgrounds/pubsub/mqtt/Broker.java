@@ -34,12 +34,22 @@ public class Broker {
     } catch (Exception e1) {
       e1.printStackTrace();
     }
-    broker.setDataDirectory("target");
+    broker.setDataDirectory("target2");
     try {
       broker.start();
     } catch (Exception e1) {
       e1.printStackTrace();
     }
+    Runtime.getRuntime().addShutdownHook(new Thread(){
+		@Override
+		public void run() {
+			try {
+				broker.stop();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	});
   }
   
   public void stop() {

@@ -23,9 +23,9 @@ public class StartSubscriber {
   @Test
   public void startSubscriber() {
     Subscriber sub= null;
-    sub = new Subscriber("localhost",1883, "subscriber");
+    sub = new Subscriber("localhost",1883, "subscriber2");
     try {
-      sub.create("topic_name");
+      sub.create("operation_1Reply");
     } catch (JMSException e) {
       e.printStackTrace();
     }
@@ -46,5 +46,31 @@ public class StartSubscriber {
       }
     }
   }
+  
+  public static void main(String[] args) {
+	  Subscriber sub= null;
+	    sub = new Subscriber("localhost",1883, "sub3");
+	    try {
+	      sub.create("operation_1Reply");
+	    } catch (JMSException e) {
+	      e.printStackTrace();
+	    }
+
+	    while(true) {
+	      synchronized (sub.msgQueue) {
+	        if(sub.msgQueue.size()>0) {
+	          Message msg = sub.msgQueue.poll();
+	          System.out.println(msg.getMsg());
+	        } 
+	        else {
+	          try {
+	            sub.msgQueue.wait();
+	          } catch (InterruptedException e) {
+	            e.printStackTrace();
+	          }
+	        }
+	      }
+	    }
+}
 
 }
