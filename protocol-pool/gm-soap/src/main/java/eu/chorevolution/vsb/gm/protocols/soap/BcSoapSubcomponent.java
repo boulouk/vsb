@@ -1,6 +1,7 @@
 package eu.chorevolution.vsb.gm.protocols.soap;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 

@@ -2,6 +2,7 @@ package eu.chorevolution.vsb.gm.protocols.coap;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,8 @@ public class BcCoapSubcomponent extends BcGmSubcomponent {
 	private CoapResource resource;
 	private GmServiceRepresentation serviceRepresentation;
 
-	public BcCoapSubcomponent(BcConfiguration bcConfiguration, GmServiceRepresentation serviceRepresentation) {
+	public BcCoapSubcomponent(BcConfiguration bcConfiguration, 
+			GmServiceRepresentation serviceRepresentation) {
 		super(bcConfiguration);
 		switch (this.bcConfiguration.getSubcomponentRole()) {
 		case SERVER:

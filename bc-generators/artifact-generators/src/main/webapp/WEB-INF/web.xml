@@ -20,7 +20,7 @@
 
 	<servlet>
 		<servlet-name>RestServlet</servlet-name>
-		<servlet-class>eu.chorevolution.vsb.bc.war.RestServlet</servlet-class>
+		<servlet-class>eu.chorevolution.vsb.artifact.war.RestServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>RestServlet</servlet-name>

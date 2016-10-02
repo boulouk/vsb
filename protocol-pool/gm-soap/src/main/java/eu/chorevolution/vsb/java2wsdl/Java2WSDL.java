@@ -47,7 +47,7 @@ public class Java2WSDL {
         "-sn", "BindingComponent", 
         "-tn", "generated.bindingcomponent.vsb.chorevolution.eu", 
         "-cn", "eu.chorevolution.vsb.bindingcomponent.generated.BindingComponent", 
-        "-l", "http://localhost:8888/BindingComponent", 
+        "-l", "http://localhost:8073/BindingComponent", 
         "-ptn", "BindingComponent",
         "-st", "document",
         "-u", "literal",
@@ -87,6 +87,7 @@ public class Java2WSDL {
     String generatedCodePath = Constants.generatedCodePath;
     String target_namespace = Constants.target_namespace;
     String service_name = Constants.soap_service_name;
+//    String subcomponentAddress = Constants.soap_service_name;
 
 
     String[] arguments = {"-o", generatedCodePath, 
@@ -98,7 +99,7 @@ public class Java2WSDL {
 
         "-cp", new File("src" + File.separator + "main" + File.separator + "java").getAbsolutePath(),//"../../../../.",//"/home/siddhartha/Downloads/chor" + "/evolution-service-bus/vsb-manager/src/main/java/.",
             "-cn",target_namespace + "." +  service_name, //
-            "-l", "http://localhost:8888/" + service_name, 
+            "-l", "http://localhost:8073/" + service_name, 
             "-ptn", service_name,
             "-p2n", "[all, eu.chorevolution.vsb.bindingcomponent.generated]",
             "-st", "document",

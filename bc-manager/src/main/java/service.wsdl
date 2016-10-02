@@ -151,7 +151,7 @@
     </wsdl:binding>
     <wsdl:service name="BCSoapSubcomponentEndpoint">
         <wsdl:port name="BCSoapSubcomponentEndpointHttpSoap11Endpoint" binding="ns:BCSoapSubcomponentEndpointPortBinding">
-            <soap:address location="http://localhost:8888/BCSoapSubcomponentEndpoint"/>
+            <soap:address location="http://localhost:8073/BCSoapSubcomponentEndpoint"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

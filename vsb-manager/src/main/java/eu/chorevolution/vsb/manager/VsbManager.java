@@ -129,6 +129,7 @@ public class VsbManager {
 		warGenerator.addPackage(eu.chorevolution.vsb.gm.protocols.dpws.BcDPWSGenerator.class.getPackage());
 		warGenerator.addPackage(eu.chorevolution.vsb.bc.manager.BcManagerRestService.class.getPackage());
 		warGenerator.addPackage(eu.chorevolution.vsb.webappbcgenerator.StartBcManagerServlet.class.getPackage());
+		warGenerator.addPackage(eu.chorevolution.vsb.artifact.war.RestServlet.class.getPackage());
 		warGenerator.addPackage(eu.chorevolution.vsb.artifact.generators.WarGenerator.class.getPackage());
 		warGenerator.addPackage(eu.chorevolution.vsb.gm.protocols.Manageable.class.getPackage());
 		System.out.println(new File(".").getAbsolutePath());
@@ -303,7 +304,7 @@ public class VsbManager {
 		JFieldVar GmServiceRepresentationVar = jc.field(JMod.NONE, GmServiceRepresentationClass, "gmServiceRepresentation", JExpr._null());
 
 		JMethod jmCreate = jc.method(JMod.PUBLIC, void.class, "run");
-
+		
 		/* Adding method body */
 		JBlock jBlock = jmCreate.body();
 

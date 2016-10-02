@@ -1,6 +1,7 @@
 package eu.chorevolution.vsb.gm.protocols.rest;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +39,12 @@ public class BcRestSubcomponent extends BcGmSubcomponent {
 	private Server server;  
 	private Component component;
 
-	public BcRestSubcomponent(BcConfiguration bcConfiguration, GmServiceRepresentation serviceRepresentation) {
+	private Component printerComponent;
+	private Server printerServer; 
+	private static String printermsg = "empty";
+
+	public BcRestSubcomponent(BcConfiguration bcConfiguration, 
+			GmServiceRepresentation serviceRepresentation) {
 		super(bcConfiguration);
 		switch (this.bcConfiguration.getSubcomponentRole()) {
 		case SERVER:
@@ -48,6 +54,10 @@ public class BcRestSubcomponent extends BcGmSubcomponent {
 			break;
 		case CLIENT:   
 			this.client = new Client(Protocol.HTTP);
+			this.printerServer = new Server(Protocol.HTTP, 8585);
+			this.printerComponent = new Component();
+			this.printerComponent.getServers().add(printerServer);
+			
 			break;
 		default:
 			break;
@@ -69,9 +79,11 @@ public class BcRestSubcomponent extends BcGmSubcomponent {
 		case CLIENT:   
 			try {
 				this.client.start();
+				this.printerComponent.start();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
+			this.printerComponent.getDefaultHost().attach("/getmessage", PrinterRestServerResource.class);
 			break;
 		default:
 			break;
@@ -91,6 +103,7 @@ public class BcRestSubcomponent extends BcGmSubcomponent {
 		case CLIENT:   
 			try {
 				this.client.stop();
+				this.printerComponent.stop();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -142,7 +155,15 @@ public class BcRestSubcomponent extends BcGmSubcomponent {
 		System.out.println("Scope: " + scope);
 		System.out.println("Datas: " + datas);
 		Request request = RestRequestBuilder.buildRestGetRequest(destination, scope, datas);
+		printermsg = (request.toString());
+		System.out.println(request.toString());
 		Response response = this.client.handle(request);
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+	    printermsg = (response.getEntityAsText());
 		System.out.println(response.getEntityAsText());
 		return (T) response.getEntityAsText();
 	}
@@ -175,6 +196,19 @@ public class BcRestSubcomponent extends BcGmSubcomponent {
 	@Override
 	public void postBackTwowayAsync(final String source, final String scope, final Data<?> data, final long lease, final Object exchange) {
 		// TODO Auto-generated method stub
+	}
+
+	public static class PrinterRestServerResource extends ServerResource {
+		@Override
+		protected Representation post(Representation entity) throws ResourceException {
+			return new StringRepresentation("empty");
+		}
+
+		@Override
+		protected Representation get() throws ResourceException {
+			return new StringRepresentation(BcRestSubcomponent.printermsg);
+		}
+
 	}
 
 	public static class RestServerResource extends ServerResource {

@@ -2,6 +2,8 @@
 package eu.chorevolution.vsb.bindingcomponent.copy2.generated;
 
 import java.io.File;
+import java.io.PrintWriter;
+
 import eu.chorevolution.vsb.bc.manager.BcManagerRestService;
 import eu.chorevolution.vsb.gm.protocols.coap.BcCoapSubcomponent;
 import eu.chorevolution.vsb.gm.protocols.primitives.BcGmSubcomponent;
@@ -17,7 +19,7 @@ public class BindingComponent {
     BcGmSubcomponent[][] subcomponent;
     GmServiceRepresentation gmServiceRepresentation = null;
 
-    public void run() {
+    public void run(PrintWriter writer) {
         java.lang.Integer intFive;
         intFive = Integer.parseInt("5");
         java.lang.Integer intOne;

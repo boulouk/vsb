@@ -1,6 +1,8 @@
 
 package eu.chorevolution.vsb.bindingcomponent.copy.generated;
 
+import java.io.PrintWriter;
+
 import eu.chorevolution.vsb.bc.manager.BcManagerRestService;
 import eu.chorevolution.vsb.gm.protocols.primitives.BcGmSubcomponent;
 import eu.chorevolution.vsb.gm.protocols.rest.BcRestSubcomponent;
@@ -14,7 +16,7 @@ import eu.chorevolution.vsb.gmdl.utils.enums.RoleType;
 public class GeneratedFactory {
 
 
-    public static void run() {
+    public static void run(PrintWriter writer) {
         java.lang.Integer intOne;
         intOne = Integer.parseInt("1");
         GmServiceRepresentation gmServiceRepresentation = null;

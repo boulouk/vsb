@@ -2,6 +2,7 @@ package eu.chorevolution.vsb.artifact.war;
 
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +14,7 @@ import eu.chorevolution.vsb.bc.manager.BcManagerRestService;
 public class StartBcManagerServlet extends HttpServlet {
 
 	BcManagerRestService server = null;
-
+	
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
 	 * methods.
@@ -28,6 +29,7 @@ public class StartBcManagerServlet extends HttpServlet {
 	 *           if an I/O error occurs
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		response.setContentType("text/html;charset=UTF-8");
 
 		String op = request.getParameter("op");

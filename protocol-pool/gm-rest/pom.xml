@@ -19,6 +19,7 @@
 	</repositories>
 
 	<dependencies>
+	  
 		<!-- RestLet -->
 		<dependency>
 			<groupId>org.restlet.jse</groupId>
@@ -49,6 +50,7 @@
 		</dependency>
 		<!-- <dependency> <groupId>org.restlet</groupId> <artifactId>org.restlet.ext.json</artifactId> 
 			<version>1.0.11</version> </dependency> -->
+			
 	</dependencies>
 	<groupId>eu.chorevolution.vsb</groupId>
 </project>

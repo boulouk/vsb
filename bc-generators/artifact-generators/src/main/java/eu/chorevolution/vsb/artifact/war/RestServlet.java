@@ -22,6 +22,7 @@ import org.restlet.representation.Representation;
  */
 public class RestServlet extends HttpServlet {
 	private Client client = null;
+	private String previousMsg = "";
 
 	public Client getClient() {
 		if (client == null) {
@@ -57,13 +58,15 @@ public class RestServlet extends HttpServlet {
 					Representation result = response1.getEntity();
 					String message = result.getText();
 					if (!message.equals("empty")) {
-						System.err.println("message: " + message);
-						out.print(StringUtils.abbreviate(message, 480));
+						if(!message.equals(previousMsg)) {
+							System.err.println("message: " + message);
+							out.print(StringUtils.abbreviate(message, 480));
+							previousMsg = message;
+						}
 					}
 				}
 			} else
 				out.print("Wrong parameter!");
-
 		}
 	}
 

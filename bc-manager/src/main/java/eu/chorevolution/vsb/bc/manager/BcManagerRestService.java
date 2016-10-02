@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class BcManagerRestService implements Manageable {
 	private Component component;
 	private Server server;  
 	private Boolean serverOnline = false;
-
+	
 	BindingComponent bc = new BindingComponent();
 
 	public BcManagerRestService(final int port) {
