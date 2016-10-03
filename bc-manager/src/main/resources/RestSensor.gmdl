@@ -19,7 +19,7 @@
       },
       "get_data": [{
         "data_name": "id",
-        "data_type": "integer",
+        "data_type": "String",
         "context": "path"
       }],
       "post_data": []

@@ -74,8 +74,9 @@ public class Subscriber {
 
     @Override
     public void messageArrived(String topic, MqttMessage msg) throws Exception {
-      
+      System.out.println("sending " + topic + ":" + msg.toString());
       synchronized(msgQueue) {
+    	  System.out.println("added message to queue");
         msgQueue.add(new Message(topic, msg.toString()));
         msgQueue.notify();
       }

@@ -172,8 +172,10 @@ public class ParseGMDL {
         switch(operation_type) {
         case "two_way":
           type = OperationType.TWO_WAY_SYNC;
+          break;
         case "one_way":
             type = OperationType.ONE_WAY;
+            break;
         }
 
         //        String role = (String) operation.get("role");  
