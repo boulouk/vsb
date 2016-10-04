@@ -69,7 +69,7 @@ public class WarGenerator {
     }
 
     ByteArrayOutputStream bos = new ByteArrayOutputStream();
-    new ZipExporterImpl(archive).exportTo(new ByteArrayOutputStream());
+    new ZipExporterImpl(archive).exportTo(bos);
     
     new ZipExporterImpl(archive).exportTo(new File(archive.getName()), true);
     
