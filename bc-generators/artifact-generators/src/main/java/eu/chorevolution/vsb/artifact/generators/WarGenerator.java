@@ -5,6 +5,7 @@
  */
 package eu.chorevolution.vsb.artifact.generators;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class WarGenerator {
     archive.addAsLibraries(files);
   }
 
-  public void generate() {
+  public byte[] generate() {
     String WEBAPP_SRC_BC = Constants.webapp_src_bc;
     String WEBAPP_SRC_ARTIFACT = Constants.webapp_src_artifact;
     archive.setWebXML(new File(WEBAPP_SRC_ARTIFACT, "WEB-INF" + File.separator + "web.xml"));
@@ -67,7 +68,12 @@ public class WarGenerator {
       archive.addAsWebResource(f, "assets" + File.separator + "js" + File.separator + f.getName());
     }
 
+    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+    new ZipExporterImpl(archive).exportTo(new ByteArrayOutputStream());
+    
     new ZipExporterImpl(archive).exportTo(new File(archive.getName()), true);
+    
+    return bos.toByteArray();
   }
 
 }

@@ -77,7 +77,8 @@ public class VsbManager {
 
 	public static void main(String[] args) {
 		VsbManager vsbm = new VsbManager();
-		vsbm.generateWar(BcManagerRestService.class.getClassLoader().getResource("RestSensor.gmdl").toExternalForm().substring(5), ProtocolType.MQTT);
+		byte[] warByteArray = vsbm.generateWar(BcManagerRestService.class.getClassLoader().getResource("RestSensor.gmdl").toExternalForm().substring(5), ProtocolType.MQTT);
+		// do something with the array
 	}
 
 	private void setConstants(String interfaceDescriptionPath) {
@@ -102,7 +103,7 @@ public class VsbManager {
 	}
 
 
-	public void generateWar(String interfaceDescriptionPath, ProtocolType busProtocol) {
+	public byte[] generateWar(String interfaceDescriptionPath, ProtocolType busProtocol) {
 
 		setConstants(interfaceDescriptionPath);
 
@@ -137,7 +138,7 @@ public class VsbManager {
 		warGenerator.addDependencyFiles(new File(".").getAbsolutePath() + File.separator + ".." + File.separator + "protocol-pool" + File.separator + "gm-soap" + File.separator + "pom.xml");
 		warGenerator.addDependencyFiles(new File(".").getAbsolutePath() + File.separator + ".." + File.separator + "protocol-pool" + File.separator + "gm-coap" + File.separator + "pom.xml");
 		warGenerator.addDependencyFiles(new File(".").getAbsolutePath() + File.separator + ".." + File.separator + "protocol-pool" + File.separator + "gm-dpws" + File.separator + "pom.xml");
-		warGenerator.generate();
+		return warGenerator.generate();
 
 //		 deleteGeneratedFiles();
 
