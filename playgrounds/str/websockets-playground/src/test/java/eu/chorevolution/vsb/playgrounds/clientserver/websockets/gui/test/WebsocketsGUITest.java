@@ -6,8 +6,12 @@ import eu.chorevolution.vsb.playgrounds.clientserver.websockets.gui.WebsocketsGU
 
 
 public class WebsocketsGUITest {
-  @Test
-  public void websocketsGUITest() {
-    new WebsocketsGUI().setVisible(true);
-  }
+	@Test
+	public void websocketsGUITest() {
+		new WebsocketsGUI().setVisible(true);
+	}
+
+	public static void main(String[] args) {
+		new WebsocketsGUI().setVisible(true);
+	}
 }

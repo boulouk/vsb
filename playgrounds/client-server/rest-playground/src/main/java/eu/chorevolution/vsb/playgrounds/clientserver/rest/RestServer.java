@@ -1,6 +1,8 @@
 package eu.chorevolution.vsb.playgrounds.clientserver.rest;
 
 import java.io.IOException;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.restlet.Component;
 import org.restlet.Server;
@@ -10,15 +12,12 @@ import org.restlet.representation.StringRepresentation;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
-/**
- * @author Georgios Bouloukakis (boulouk@gmail.com)
- *
- */
 public class RestServer {
 
 	private Component component;
 	private Server server;  
 	private Boolean serverOnline = false;
+	public static Queue<String> msgQueue = new ConcurrentLinkedQueue<String>();
 
 	public void startServer(final int port) {
 		if (!this.serverOnline) {
@@ -31,12 +30,29 @@ public class RestServer {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
+			this.serverOnline = true;
 		}
 	}
 
+	public void stopServer() {
+		if(this.serverOnline) {
+			try {
+				component.stop();
+				server.stop();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public void mget(String scope) {
 		this.component.getDefaultHost().attach("/"+scope, RestServerResource.class);
 		this.component.getDefaultHost().attach("/sensors/" + "{id}", RestServerResource.class);
+	}
+	
+	public void addScope(String scope) {
+		this.component.getDefaultHost().attach(scope, RestServerResource.class);
 	}
 
 	public static class RestServerResource extends ServerResource {
@@ -57,6 +73,13 @@ public class RestServer {
 		protected Representation get() throws ResourceException {
 			String id = (String) this.getRequest().getAttributes().get("id");
 			System.out.println("Id: " + id);
+			
+			synchronized(msgQueue) {
+		    	  System.out.println("added message to queue");
+		        msgQueue.add(new String("Id: " + id));
+		        msgQueue.notify();
+		      }
+			
 			return null;
 		}
 	}

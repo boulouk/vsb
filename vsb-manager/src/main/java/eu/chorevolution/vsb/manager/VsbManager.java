@@ -77,7 +77,7 @@ public class VsbManager {
 
 	public static void main(String[] args) {
 		VsbManager vsbm = new VsbManager();
-		vsbm.generateWar(BcManagerRestService.class.getClassLoader().getResource("DtsGoogle.gmdl").toExternalForm().substring(5), ProtocolType.MQTT);
+		vsbm.generateWar(BcManagerRestService.class.getClassLoader().getResource("RestSensor.gmdl").toExternalForm().substring(5), ProtocolType.MQTT);
 	}
 
 	private void setConstants(String interfaceDescriptionPath) {
