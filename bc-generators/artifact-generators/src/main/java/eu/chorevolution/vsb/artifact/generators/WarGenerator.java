@@ -49,23 +49,23 @@ public class WarGenerator {
     archive.addAsWebResource(new File(WEBAPP_SRC_ARTIFACT, "index.jsp"));
 
     for (File f : new File(WEBAPP_SRC_BC + File.separator + "config").listFiles()) {
-      archive.addAsWebResource(f, "config" + File.separator + f.getName());
+      archive.addAsWebResource(f, "config" + "/" + f.getName());
     }
     
     for (File f : new File(WEBAPP_SRC_ARTIFACT + File.separator + "assets" + File.separator + "css").listFiles()) {
-      archive.addAsWebResource(f, "assets" + File.separator + "css" + File.separator + f.getName());
+      archive.addAsWebResource(f, "assets" + "/" + "css" + "/" + f.getName());
     }
 
     for (File f : new File(WEBAPP_SRC_ARTIFACT + File.separator + "assets" + File.separator + "fonts").listFiles()) {
-      archive.addAsWebResource(f, "assets" + File.separator + "fonts" + File.separator + f.getName());
+      archive.addAsWebResource(f, "assets" + "/" + "fonts" + "/" + f.getName());
     }
 
     for (File f : new File(WEBAPP_SRC_ARTIFACT + File.separator + "assets" + File.separator + "img").listFiles()) {
-      archive.addAsWebResource(f, "assets" + File.separator + "img" + File.separator + f.getName());
+      archive.addAsWebResource(f, "assets" + "/" + "img" + "/" + f.getName());
     }
 
     for (File f : new File(WEBAPP_SRC_ARTIFACT + File.separator + "assets" + File.separator + "js").listFiles()) {
-      archive.addAsWebResource(f, "assets" + File.separator + "js" + File.separator + f.getName());
+      archive.addAsWebResource(f, "assets" + "/" + "js" + "/" + f.getName());
     }
 
     ByteArrayOutputStream bos = new ByteArrayOutputStream();
