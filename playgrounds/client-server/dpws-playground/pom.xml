@@ -15,6 +15,13 @@
 			<name>petalsLinkChoreos</name>
 			<url>http://maven.petalslink.com/repo/</url>
 		</repository>
+		<repository>
+      <id>thirdparty</id>
+      <name>thirdparty</name>
+      <url>https://github.com/sidutta/chorevolution-repository/tree/master/thirdparty/</url>
+      <releases><enabled>true</enabled></releases>
+      <snapshots><enabled>false</enabled></snapshots>
+    </repository>
 	</repositories>
 
 	<groupId>eu.chorevolution.vsb</groupId>
@@ -37,5 +44,10 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+      <groupId>org.dpws.custom</groupId>
+      <artifactId>dpws.security.full</artifactId>
+      <version>1.0.0.1</version>
+    </dependency>
 	</dependencies>
 </project>
