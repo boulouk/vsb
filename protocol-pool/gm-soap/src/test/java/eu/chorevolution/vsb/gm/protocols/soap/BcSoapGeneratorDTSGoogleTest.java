@@ -160,7 +160,7 @@ public class BcSoapGeneratorDTSGoogleTest {
 //		scope1.setUri("/mes/get_metadata_in_area?collection=weather&{period}");
 		scope1.setUri("/maps/api/directions/json?origin={origin}&destination={destination}&key={key}");
 
-		Operation twoWayOperation1 = new Operation("operation_1", scope1, OperationType.TWO_WAY_SYNC);
+		Operation twoWayOperation1 = new Operation("operation_1", OperationType.TWO_WAY_SYNC, null, scope1);
 		twoWayOperation1.addGetData(origin);
 		twoWayOperation1.addGetData(destination);
 		twoWayOperation1.addGetData(key);

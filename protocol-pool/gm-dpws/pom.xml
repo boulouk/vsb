@@ -21,7 +21,7 @@
     <repository>
       <id>thirdparty</id>
       <name>thirdparty</name>
-      <url>https://github.com/sidutta/chorevolution-repository/tree/master/thirdparty/</url>
+      <url>https://mimove-apps.paris.inria.fr/</url>
       <releases><enabled>true</enabled></releases>
       <snapshots><enabled>false</enabled></snapshots>
     </repository>

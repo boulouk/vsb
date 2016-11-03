@@ -73,7 +73,6 @@ public class SendRequest extends DefaultClient {
 		} catch (InvocationException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public void deviceFound(DeviceReference devRef, SearchParameter search, String comManId) {
