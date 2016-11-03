@@ -40,7 +40,12 @@ public class StartClient implements Runnable {
 			if(localFlag == true) {
 				localFlag = false;
 				try {
-					Runtime.getRuntime ().exec ("ifconfig lo0 up");
+					if(System.getProperty("os.name").startsWith("Windows")) {
+						Runtime.getRuntime ().exec ("ifconfig lo0 up");
+					}
+					else {
+						Runtime.getRuntime ().exec ("ipconfig lo0 up");
+					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -53,7 +58,12 @@ public class StartClient implements Runnable {
 			else {
 				localFlag = true;
 				try {
-					Runtime.getRuntime ().exec ("ifconfig lo0 down");
+					if(System.getProperty("os.name").startsWith("Windows")) {
+						Runtime.getRuntime ().exec ("ifconfig lo0 down");
+					}
+					else {
+						Runtime.getRuntime ().exec ("ipconfig lo0 down");
+					}
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -82,9 +92,9 @@ public class StartClient implements Runnable {
 				System.out.println(recvdMsg + " " + (System.nanoTime() - Long.valueOf(msgParts[2])));
 			}
 		}
-		
+
 	}
-	
+
 	public static void main(String[] args) {
 		// create a client
 		WsClient client = null;
