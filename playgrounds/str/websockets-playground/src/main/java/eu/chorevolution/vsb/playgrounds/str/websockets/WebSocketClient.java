@@ -29,16 +29,25 @@ public class WebSocketClient {
 
 		@Override
 		public void onMessage(String message) {
-//			message += " at " + System.nanoTime();
-//			System.out.println("Client receives : " + message);
+			//			message += " at " + System.nanoTime();
+			//			System.out.println("Client receives : " + message);
 			Long recvdTime = System.nanoTime();
 			String msgParts[] = message.split(" ");
-			StartExperiment.endTimeMap.put(Long.valueOf(msgParts[1]), recvdTime);
+			if(StartExperiment.DEBUG) {
+				synchronized (StartExperiment.endTimeMap) {
+					StartExperiment.endTimeMap.put(Long.valueOf(msgParts[1]), recvdTime);					
+				}
+			}
+			else {
+				StartExperiment.endTimeMap.put(Long.valueOf(msgParts[1]), recvdTime);
+			}
 			StartExperiment.messagesReceived++;
-			try {
-				msgQueue.put(message);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			if(StartExperiment.DEBUG) {
+				try {
+					msgQueue.put(message);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 

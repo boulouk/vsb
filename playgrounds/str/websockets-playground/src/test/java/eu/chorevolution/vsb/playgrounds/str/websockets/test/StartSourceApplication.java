@@ -12,6 +12,7 @@ public class StartSourceApplication implements Runnable {
 
 	private WsServer wsServer = null;
 	public static Long counter = 0L; 
+	public static Exp waitDuration = new Exp(Parameters.msgPostParam);
 	
 	public StartSourceApplication(WsServer wsServer) {
 		this.wsServer = wsServer;
@@ -19,20 +20,25 @@ public class StartSourceApplication implements Runnable {
 
 	void sendMsg() {
 		String msg = "Msg " + counter;
-		StartExperiment.startTimeMap.put(counter, System.nanoTime());
+		if(StartExperiment.DEBUG) {
+			synchronized (StartExperiment.startTimeMap) {
+				StartExperiment.startTimeMap.put(counter, System.nanoTime());				
+			}
+		}
+		else {
+			StartExperiment.startTimeMap.put(counter, System.nanoTime());
+		}
 		wsServer.send(msg);
 		counter++;
 	}
 
 	public void run() {
 
-		Exp waitDuration = new Exp(Parameters.tGet);
-		
 		while (StartExperiment.experimentRunning) {
 				sendMsg();
 				try {
-//					Thread.sleep((long)waitDuration.next());
-					Thread.sleep(1000);
+					Thread.sleep((long)waitDuration.next() * 1000);
+//					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

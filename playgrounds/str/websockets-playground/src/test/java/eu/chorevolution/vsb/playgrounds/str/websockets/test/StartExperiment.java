@@ -16,7 +16,8 @@ public class StartExperiment {
 	public static HashMap<Long, Long> startTimeMap = new HashMap<Long, Long>();
 	public static HashMap<Long, Long> endTimeMap = new HashMap<Long, Long>();
 	public static Long messagesReceived = 0L;
-
+	public static boolean DEBUG = true;
+	
 	public static void main(String[] args) throws Exception {
 
 		// just to ensure initialization so that no time wasted in first msg sent
@@ -47,24 +48,31 @@ public class StartExperiment {
 				} catch (InterruptedException ex) {
 					Logger.getLogger(StartExperiment.class.getName()).log(Level.SEVERE, null, ex);
 				}
+				
+				System.out.println("Packets Sent: " + StartSourceApplication.counter);
+				System.out.println("Packets Received: " + StartExperiment.messagesReceived);
+				System.out.println("Packet Loss: " + (StartSourceApplication.counter - StartExperiment.messagesReceived));
+
+				Long dur = 0L;
+
+				if(StartExperiment.endTimeMap.containsKey(0L))
+					StartExperiment.endTimeMap.remove(0L);
+				
+				for(java.util.Map.Entry<Long, Long> e: StartExperiment.endTimeMap.entrySet()) {
+					dur += (e.getValue() - StartExperiment.startTimeMap.get(e.getKey()));
+				}
+
+				System.out.println("Average time: " + dur.doubleValue()/StartExperiment.endTimeMap.size());
+
+				System.out.println("on duration: " + StartClient.onParameter.average());
+				System.out.println("off duration: " + StartClient.offParameter.average());
+				System.out.println("msgs: " + StartSourceApplication.waitDuration.average());
+				
 			}
 		}, Parameters.experimentDuration);
 
-		System.out.println("Packets Sent: " + StartSourceApplication.counter);
-		System.out.println("Packets Received: " + StartExperiment.messagesReceived);
-		System.out.println("Packet Loss: " + (StartSourceApplication.counter - StartExperiment.messagesReceived));
-
-		Long dur = 0L;
-
-		if(StartExperiment.endTimeMap.containsKey(0L))
-			StartExperiment.endTimeMap.remove(0L);
 		
-		for(java.util.Map.Entry<Long, Long> e: StartExperiment.endTimeMap.entrySet()) {
-			dur += (e.getValue() - StartExperiment.startTimeMap.get(e.getKey()));
-		}
-
-		System.out.println("Average time: " + dur.doubleValue()/StartExperiment.endTimeMap.size());
-
+		
 	}
 
 }

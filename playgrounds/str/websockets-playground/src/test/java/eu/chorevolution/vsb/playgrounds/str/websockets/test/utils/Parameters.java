@@ -6,9 +6,9 @@ package eu.chorevolution.vsb.playgrounds.str.websockets.test.utils;
 
 public class Parameters {
     
-    public static double tPost = 15;
-    public static double tGet = 0.05;
-    public static double timeout = 0.05;
+    public static double msgPostParam = 01.5;
+    public static double onParam = 0.05;
+    public static double offParam = 0.05;
 
     
 //    6 hours
@@ -18,7 +18,7 @@ public class Parameters {
     //1,5 hour
 //    static long duration = 5400000;
 //    1 hour
-    public static long experimentDuration = 3600000;
+    public static long experimentDuration = 1800000;
 //    30 min
 //    static long duration = 1800000;
 //    5 min

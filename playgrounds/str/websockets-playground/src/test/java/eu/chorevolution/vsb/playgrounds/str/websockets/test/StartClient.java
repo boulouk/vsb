@@ -14,6 +14,8 @@ import eu.chorevolution.vsb.playgrounds.str.websockets.test.utils.ToggleByExpDis
 public class StartClient implements Runnable {
 
 	private WsClient client = null;
+	public static Exp onParameter = new Exp(Parameters.onParam);
+	public static Exp offParameter = new Exp(Parameters.offParam);
 
 	public StartClient() {
 		try {
@@ -29,13 +31,13 @@ public class StartClient implements Runnable {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		new Thread(new MessageReader()).start();
+		if(StartExperiment.DEBUG) { 
+			new Thread(new MessageReader()).start();
+		}
 	}
 
 	public void run() {
 		boolean localFlag = true;
-		Exp onParameter = new Exp(Parameters.tGet);
-		Exp offParameter = new Exp(Parameters.timeout);
 		while (StartExperiment.experimentRunning) {
 			if(localFlag == true) {
 				System.out.println("UP!!");
@@ -54,9 +56,10 @@ public class StartClient implements Runnable {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				System.out.println("here");
+				long param = (long) onParameter.next();
+				System.out.println("here " + param);
 				try {
-					Thread.sleep(((long) 10) * 1000);
+					Thread.sleep(param * 1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -77,9 +80,10 @@ public class StartClient implements Runnable {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				System.out.println("here");
+				long param = (long) offParameter.next();
+				System.out.println("here " + param);
 				try {
-					Thread.sleep(((long) 10) * 1000);
+					Thread.sleep(param * 1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -101,7 +105,19 @@ public class StartClient implements Runnable {
 				}
 				String[] msgParts = recvdMsg.split(" ");
 				Long msgNum = Long.valueOf(msgParts[1]);
-				System.out.println("Msg " + msgNum + " --> " + (StartExperiment.endTimeMap.get(msgNum) - StartExperiment.startTimeMap.get(msgNum)));
+				assert(msgNum != null);
+				Long endTime;
+				Long startTime;
+				
+					synchronized (StartExperiment.endTimeMap) {
+						endTime = StartExperiment.endTimeMap.get(msgNum);	
+					}
+					
+					synchronized (StartExperiment.startTimeMap) {
+						startTime = StartExperiment.startTimeMap.get(msgNum);	
+					}
+				
+				System.out.println("Msg " + msgNum + " --> " + (endTime - startTime));
 //				System.out.println(recvdMsg + " " + Long.valueOf(msgParts[4]) + " " + (Long.valueOf(msgParts[4]) - Long.valueOf(msgParts[2])));
 			}
 		}
