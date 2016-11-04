@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package eu.chorevolution.vsb.playgrounds.clientserver.websockets.utils;
+package eu.chorevolution.vsb.playgrounds.str.websockets.test.utils;
 import java.util.ArrayList;
 import java.util.List;
 

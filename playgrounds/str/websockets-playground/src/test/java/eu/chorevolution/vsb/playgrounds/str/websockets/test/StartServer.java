@@ -1,11 +1,11 @@
-package eu.chorevolution.vsb.playgrounds.clientserver.websockets.test;
+package eu.chorevolution.vsb.playgrounds.str.websockets.test;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
 import org.junit.Test;
 
-import eu.chorevolution.vsb.playgrounds.clientserver.websockets.WsServer;
+import eu.chorevolution.vsb.playgrounds.str.websockets.WsServer;
 
 
 public class StartServer {

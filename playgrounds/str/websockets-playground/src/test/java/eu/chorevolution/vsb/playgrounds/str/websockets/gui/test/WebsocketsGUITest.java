@@ -1,3 +1,4 @@
+package eu.chorevolution.vsb.playgrounds.str.websockets.gui.test;
 //package eu.chorevolution.vsb.playgrounds.clientserver.websockets.gui.test;
 //
 //import org.junit.Test;

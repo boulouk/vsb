@@ -1,4 +1,4 @@
-package eu.chorevolution.vsb.playgrounds.clientserver.websockets;
+package eu.chorevolution.vsb.playgrounds.str.websockets;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -9,8 +9,10 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import org.java_websocket.handshake.ServerHandshake;
 
+import eu.chorevolution.vsb.playgrounds.str.websockets.test.StartExperiment;
+
 public class WebSocketClient {
-	
+
 	public static class WsClient extends org.java_websocket.client.WebSocketClient {
 
 		public BlockingQueue<String> msgQueue;
@@ -27,7 +29,12 @@ public class WebSocketClient {
 
 		@Override
 		public void onMessage(String message) {
-			//			System.out.println("Client receives : " + message);
+//			message += " at " + System.nanoTime();
+//			System.out.println("Client receives : " + message);
+			Long recvdTime = System.nanoTime();
+			String msgParts[] = message.split(" ");
+			StartExperiment.endTimeMap.put(Long.valueOf(msgParts[1]), recvdTime);
+			StartExperiment.messagesReceived++;
 			try {
 				msgQueue.put(message);
 			} catch (InterruptedException e) {
@@ -44,7 +51,7 @@ public class WebSocketClient {
 		public void onError(Exception ex) {
 			System.err.println("an error occured " + ex.getStackTrace() + " " + ex.getMessage());
 		}
-	
+
 	}
 
 }

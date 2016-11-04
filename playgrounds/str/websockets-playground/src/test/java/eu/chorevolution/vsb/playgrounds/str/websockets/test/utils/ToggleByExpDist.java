@@ -1,9 +1,9 @@
-package eu.chorevolution.vsb.playgrounds.clientserver.websockets.utils;
+package eu.chorevolution.vsb.playgrounds.str.websockets.test.utils;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import eu.chorevolution.vsb.playgrounds.clientserver.websockets.test.StartExperiment;
+import eu.chorevolution.vsb.playgrounds.str.websockets.test.StartExperiment;
 
 public class ToggleByExpDist implements Runnable {
 

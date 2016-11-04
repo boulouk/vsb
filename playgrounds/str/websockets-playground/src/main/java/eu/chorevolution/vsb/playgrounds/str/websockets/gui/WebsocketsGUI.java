@@ -1,3 +1,4 @@
+package eu.chorevolution.vsb.playgrounds.str.websockets.gui;
 //package eu.chorevolution.vsb.playgrounds.clientserver.websockets.gui;
 //
 //import java.awt.Color;
