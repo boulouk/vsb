@@ -1,73 +1,73 @@
 Using command-line argument -home /Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/
-2016-11-06 17:17:32,020 DEBUG - JWebSocketConfig: Console-Mode: Logs successfully configured by '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/conf/log4j.xml'.
-2016-11-06 17:17:32,082 DEBUG - JWebSocketFactory: Loading bootstrap '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/conf/Resources/bootstrap.xml'...
-2016-11-06 17:17:32,399 DEBUG - JWebSocketFactory: BeanDefinitionParsingException on loading bootstrap.: Configuration problem: Bean class [com.mongodb.MongoClient] not found
+2016-11-06 17:49:47,382 DEBUG - JWebSocketConfig: Console-Mode: Logs successfully configured by '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/conf/log4j.xml'.
+2016-11-06 17:49:47,416 DEBUG - JWebSocketFactory: Loading bootstrap '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/conf/Resources/bootstrap.xml'...
+2016-11-06 17:49:47,592 DEBUG - JWebSocketFactory: BeanDefinitionParsingException on loading bootstrap.: Configuration problem: Bean class [com.mongodb.MongoClient] not found
 Offending resource: file [/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/conf/Resources/bootstrap.xml]
 Bean 'mongodbConnection0'; nested exception is java.lang.ClassNotFoundException: com.mongodb.MongoClient
-2016-11-06 17:17:32,400 DEBUG - JWebSocketLoader: Initializing: Using config file '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/conf/jWebSocket.xml'...
-2016-11-06 17:17:32,400 DEBUG - JWebSocketLoader: Loading configuration from file '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/conf/jWebSocket.xml...
-2016-11-06 17:17:32,445 INFO  - JWebSocketLoader: Configuration successfully loaded from '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/conf/jWebSocket.xml'.
-2016-11-06 17:17:32,474 DEBUG - AbstractJWebSocketInitializer: Logging settings: reload: 20000
-2016-11-06 17:17:32,475 DEBUG - AbstractJWebSocketInitializer: Starting jWebSocket Server Sub System...
-2016-11-06 17:17:32,475 DEBUG - JWebSocketFactory: Starting jWebSocket Server Sub System...
-2016-11-06 17:17:32,475 DEBUG - JWebSocketXmlConfigInitializer: Adding external library 'MySQLJDBCDriver' from '${JWEBSOCKET_HOME}libs/mysql-connector-java-5.1.16.jar'...
-2016-11-06 17:17:32,478 INFO  - JWebSocketXmlConfigInitializer: External library 'MySQLJDBCDriver' from '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/libs/mysql-connector-java-5.1.16.jar' successfully added.
-2016-11-06 17:17:32,478 DEBUG - JWebSocketXmlConfigInitializer: Adding external library 'DerbyDriver' from '${JWEBSOCKET_HOME}libs/derby-10.10.1.1.jar'...
-2016-11-06 17:17:32,479 INFO  - JWebSocketXmlConfigInitializer: External library 'DerbyDriver' from '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/libs/derby-10.10.1.1.jar' successfully added.
-2016-11-06 17:17:32,479 DEBUG - JWebSocketXmlConfigInitializer: Adding external library 'xbean-spring-common' from '${JWEBSOCKET_HOME}libs/xbean-spring-common-2.8.jar'...
-2016-11-06 17:17:32,480 INFO  - JWebSocketXmlConfigInitializer: External library 'xbean-spring-common' from '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/libs/xbean-spring-common-2.8.jar' successfully added.
-2016-11-06 17:17:32,480 DEBUG - JWebSocketXmlConfigInitializer: Adding external library 'xbean-spring-v2' from '${JWEBSOCKET_HOME}libs/xbean-spring-v2-2.8.jar'...
-2016-11-06 17:17:32,481 INFO  - JWebSocketXmlConfigInitializer: External library 'xbean-spring-v2' from '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/libs/xbean-spring-v2-2.8.jar' successfully added.
-2016-11-06 17:17:32,481 DEBUG - JWebSocketXmlConfigInitializer: Adding external library 'xbean-spring-v2c' from '${JWEBSOCKET_HOME}libs/xbean-spring-v2c-2.8.jar'...
-2016-11-06 17:17:32,482 INFO  - JWebSocketXmlConfigInitializer: External library 'xbean-spring-v2c' from '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/libs/xbean-spring-v2c-2.8.jar' successfully added.
-2016-11-06 17:17:32,482 DEBUG - AbstractJWebSocketInitializer: Instantiating engine...
-2016-11-06 17:17:32,487 DEBUG - AbstractJWebSocketInitializer: Engine 'org.jwebsocket.tcp.TCPEngine' loaded from classpath.
-2016-11-06 17:17:32,487 DEBUG - JWebSocketXmlConfigInitializer: Engine 'tcp0' successfully instantiated.
-2016-11-06 17:17:32,488 DEBUG - JWebSocketFactory: Initializing servers...
-2016-11-06 17:17:32,497 DEBUG - AbstractJWebSocketInitializer: Server 'org.jwebsocket.server.TokenServer' loaded from classpath.
-2016-11-06 17:17:32,507 DEBUG - JWebSocketXmlConfigInitializer: Server 'ts0' successfully instantiated.
-2016-11-06 17:17:32,530 DEBUG - AbstractJWebSocketInitializer: Plug-in 'FIXME.this.should.not.be.required' not yet in classpath.
-2016-11-06 17:17:32,530 DEBUG - JWebSocketXmlConfigInitializer: Plug-in 'FIXME.this.should.not.be.required' trying to load from file...
-2016-11-06 17:17:32,530 WARN  - JWebSocketConfig: FIXME not found at /Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/libs/FIXME.
-2016-11-06 17:17:32,531 DEBUG - JWebSocketFactory: Initializing plugins...
-2016-11-06 17:17:32,536 INFO  - JWebSocketFactory: 0 plugin(s) initialized for server 'ts0'.
-2016-11-06 17:17:32,538 DEBUG - AbstractJWebSocketInitializer: Filter 'FIXME.this.should.not.be.required' not yet in classpath.
-2016-11-06 17:17:32,538 WARN  - JWebSocketConfig: FIXME not found at /Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/libs/FIXME.
-2016-11-06 17:17:32,538 DEBUG - JWebSocketFactory: Initializing filters...
-2016-11-06 17:17:32,539 INFO  - JWebSocketFactory: 0 filter(s) initialized for server 'ts0'.
-2016-11-06 17:17:32,539 DEBUG - JWebSocketFactory: Starting engine(s) 'tcp0'...
-2016-11-06 17:17:32,552 DEBUG - TCPEngine: Starting TCP engine 'tcp0' at port 8787 with default timeout infinite...
-2016-11-06 17:17:32,573 INFO  - TCPEngine: TCP engine 'tcp0' started' at port 8787 with default timeout infinite...
-2016-11-06 17:17:32,573 DEBUG - TokenServer: Processing engine 'tcp0' started...
-2016-11-06 17:17:32,574 DEBUG - BasePlugInChain: Notifying plug-ins of server 'ts0' that engine 'tcp0' started...
-2016-11-06 17:17:32,573 DEBUG - TCPEngine: Trying to initiate SSL on port 9797...
-2016-11-06 17:17:32,577 DEBUG - TCPEngine: Using keystore ${JWEBSOCKET_HOME}conf/jWebSocket.ks...
-2016-11-06 17:17:32,577 DEBUG - TCPEngine: Starting SSL engine 'tcp0' at port 9797, with default timeout infinite...
-2016-11-06 17:17:32,997 INFO  - TCPEngine: SSL engine 'tcp0' started' at port 9797 with default timeout infinite.
-2016-11-06 17:17:32,997 DEBUG - JWebSocketFactory: Starting servers...
-2016-11-06 17:17:32,998 INFO  - TokenServer: Token server 'ts0' started.
-2016-11-06 17:17:32,998 INFO  - JWebSocketFactory: jWebSocket server startup complete
+2016-11-06 17:49:47,593 DEBUG - JWebSocketLoader: Initializing: Using config file '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/conf/jWebSocket.xml'...
+2016-11-06 17:49:47,593 DEBUG - JWebSocketLoader: Loading configuration from file '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/conf/jWebSocket.xml...
+2016-11-06 17:49:47,621 INFO  - JWebSocketLoader: Configuration successfully loaded from '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/conf/jWebSocket.xml'.
+2016-11-06 17:49:47,641 DEBUG - AbstractJWebSocketInitializer: Logging settings: reload: 20000
+2016-11-06 17:49:47,642 DEBUG - AbstractJWebSocketInitializer: Starting jWebSocket Server Sub System...
+2016-11-06 17:49:47,642 DEBUG - JWebSocketFactory: Starting jWebSocket Server Sub System...
+2016-11-06 17:49:47,642 DEBUG - JWebSocketXmlConfigInitializer: Adding external library 'MySQLJDBCDriver' from '${JWEBSOCKET_HOME}libs/mysql-connector-java-5.1.16.jar'...
+2016-11-06 17:49:47,644 INFO  - JWebSocketXmlConfigInitializer: External library 'MySQLJDBCDriver' from '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/libs/mysql-connector-java-5.1.16.jar' successfully added.
+2016-11-06 17:49:47,645 DEBUG - JWebSocketXmlConfigInitializer: Adding external library 'DerbyDriver' from '${JWEBSOCKET_HOME}libs/derby-10.10.1.1.jar'...
+2016-11-06 17:49:47,645 INFO  - JWebSocketXmlConfigInitializer: External library 'DerbyDriver' from '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/libs/derby-10.10.1.1.jar' successfully added.
+2016-11-06 17:49:47,646 DEBUG - JWebSocketXmlConfigInitializer: Adding external library 'xbean-spring-common' from '${JWEBSOCKET_HOME}libs/xbean-spring-common-2.8.jar'...
+2016-11-06 17:49:47,647 INFO  - JWebSocketXmlConfigInitializer: External library 'xbean-spring-common' from '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/libs/xbean-spring-common-2.8.jar' successfully added.
+2016-11-06 17:49:47,647 DEBUG - JWebSocketXmlConfigInitializer: Adding external library 'xbean-spring-v2' from '${JWEBSOCKET_HOME}libs/xbean-spring-v2-2.8.jar'...
+2016-11-06 17:49:47,648 INFO  - JWebSocketXmlConfigInitializer: External library 'xbean-spring-v2' from '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/libs/xbean-spring-v2-2.8.jar' successfully added.
+2016-11-06 17:49:47,649 DEBUG - JWebSocketXmlConfigInitializer: Adding external library 'xbean-spring-v2c' from '${JWEBSOCKET_HOME}libs/xbean-spring-v2c-2.8.jar'...
+2016-11-06 17:49:47,649 INFO  - JWebSocketXmlConfigInitializer: External library 'xbean-spring-v2c' from '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/libs/xbean-spring-v2c-2.8.jar' successfully added.
+2016-11-06 17:49:47,650 DEBUG - AbstractJWebSocketInitializer: Instantiating engine...
+2016-11-06 17:49:47,653 DEBUG - AbstractJWebSocketInitializer: Engine 'org.jwebsocket.tcp.TCPEngine' loaded from classpath.
+2016-11-06 17:49:47,653 DEBUG - JWebSocketXmlConfigInitializer: Engine 'tcp0' successfully instantiated.
+2016-11-06 17:49:47,654 DEBUG - JWebSocketFactory: Initializing servers...
+2016-11-06 17:49:47,657 DEBUG - AbstractJWebSocketInitializer: Server 'org.jwebsocket.server.TokenServer' loaded from classpath.
+2016-11-06 17:49:47,660 DEBUG - JWebSocketXmlConfigInitializer: Server 'ts0' successfully instantiated.
+2016-11-06 17:49:47,668 DEBUG - AbstractJWebSocketInitializer: Plug-in 'FIXME.this.should.not.be.required' not yet in classpath.
+2016-11-06 17:49:47,669 DEBUG - JWebSocketXmlConfigInitializer: Plug-in 'FIXME.this.should.not.be.required' trying to load from file...
+2016-11-06 17:49:47,669 WARN  - JWebSocketConfig: FIXME not found at /Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/libs/FIXME.
+2016-11-06 17:49:47,669 DEBUG - JWebSocketFactory: Initializing plugins...
+2016-11-06 17:49:47,671 INFO  - JWebSocketFactory: 0 plugin(s) initialized for server 'ts0'.
+2016-11-06 17:49:47,671 DEBUG - AbstractJWebSocketInitializer: Filter 'FIXME.this.should.not.be.required' not yet in classpath.
+2016-11-06 17:49:47,672 WARN  - JWebSocketConfig: FIXME not found at /Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/libs/FIXME.
+2016-11-06 17:49:47,672 DEBUG - JWebSocketFactory: Initializing filters...
+2016-11-06 17:49:47,672 INFO  - JWebSocketFactory: 0 filter(s) initialized for server 'ts0'.
+2016-11-06 17:49:47,672 DEBUG - JWebSocketFactory: Starting engine(s) 'tcp0'...
+2016-11-06 17:49:47,676 DEBUG - TCPEngine: Starting TCP engine 'tcp0' at port 8787 with default timeout infinite...
+2016-11-06 17:49:47,687 INFO  - TCPEngine: TCP engine 'tcp0' started' at port 8787 with default timeout infinite...
+2016-11-06 17:49:47,687 DEBUG - TokenServer: Processing engine 'tcp0' started...
+2016-11-06 17:49:47,687 DEBUG - TCPEngine: Trying to initiate SSL on port 9797...
+2016-11-06 17:49:47,688 DEBUG - BasePlugInChain: Notifying plug-ins of server 'ts0' that engine 'tcp0' started...
+2016-11-06 17:49:47,688 DEBUG - TCPEngine: Using keystore ${JWEBSOCKET_HOME}conf/jWebSocket.ks...
+2016-11-06 17:49:47,688 DEBUG - TCPEngine: Starting SSL engine 'tcp0' at port 9797, with default timeout infinite...
+2016-11-06 17:49:47,916 INFO  - TCPEngine: SSL engine 'tcp0' started' at port 9797 with default timeout infinite.
+2016-11-06 17:49:47,917 DEBUG - JWebSocketFactory: Starting servers...
+2016-11-06 17:49:47,917 INFO  - TokenServer: Token server 'ts0' started.
+2016-11-06 17:49:47,917 INFO  - JWebSocketFactory: jWebSocket server startup complete
 server started!!
-2016-11-06 17:17:33,035 DEBUG - TCPEngine$EngineListener: Client trying to connect on port #51394...
-2016-11-06 17:17:33,041 DEBUG - TCPConnector: Starting TCP connector on port 51394 with timeout infinite
-2016-11-06 17:17:33,043 INFO  - TCPConnector: Started TCP connector on port 51394 with timeout infinite
-2016-11-06 17:17:33,044 DEBUG - TCPConnector: Parsing handshake request: GET / HTTP/1.1\nHost: localhost:8787\nUpgrade: websocket\nConnection: Upgrade\nSec-WebSocket-Version: 8\nSec-WebSocket-Origin: http://localhost:8787\nSec-WebSocket-Protocol: org.jwebsocket.json\nSec-WebSocket-Key: Nngp30KYq7zbSAOXuR1W4w==\n\n
-2016-11-06 17:17:33,047 DEBUG - EngineUtils: Client uses websocket protocol version #8/draft #8 for communication.
-2016-11-06 17:17:33,049 DEBUG - TCPConnector: Flushing handshake response: HTTP/1.1 101 Switching Protocols\nUpgrade: websocket\nConnection: Upgrade\nSec-WebSocket-Accept: M5QY9qT2jfv1ksM4ID4dl1InYfs=\nSec-WebSocket-Protocol: org.jwebsocket.json\nSec-WebSocket-Origin: http://localhost:8787\nSec-WebSocket-Location: ws://localhost:8787/\nSet-Cookie: JWSSESSIONID=2c068571ec9bb754b424165e0a842e86; HttpOnly\n\n
-2016-11-06 17:17:33,049 DEBUG - TCPConnector: Handshake flushed.
-2016-11-06 17:17:33,050 DEBUG - TCPConnector$ClientProcessor: TCP client accepted on port 51394 with timeout infinite (TCPNoDelay was: false)...
-2016-11-06 17:17:33,050 DEBUG - TCPConnector$ClientProcessor: Starting TCP connector...
-2016-11-06 17:17:33,050 DEBUG - TCPEngine: Detected new connector at port 51394.
-2016-11-06 17:17:33,050 DEBUG - TokenServer: Processing connector '01.51394.0' started...
-2016-11-06 17:17:33,050 DEBUG - BasePlugInChain: Notifying plug-ins that connector '01.51394.0' started...
+2016-11-06 17:49:47,934 DEBUG - TCPEngine$EngineListener: Client trying to connect on port #49332...
+2016-11-06 17:49:47,938 DEBUG - TCPConnector: Starting TCP connector on port 49332 with timeout infinite
+2016-11-06 17:49:47,940 INFO  - TCPConnector: Started TCP connector on port 49332 with timeout infinite
+2016-11-06 17:49:47,941 DEBUG - TCPConnector: Parsing handshake request: GET / HTTP/1.1\nHost: localhost:8787\nUpgrade: websocket\nConnection: Upgrade\nSec-WebSocket-Version: 8\nSec-WebSocket-Origin: http://localhost:8787\nSec-WebSocket-Protocol: org.jwebsocket.json\nSec-WebSocket-Key: vTlMub9fnamWRYnUhUgFMA==\n\n
+2016-11-06 17:49:47,943 DEBUG - EngineUtils: Client uses websocket protocol version #8/draft #8 for communication.
+2016-11-06 17:49:47,944 DEBUG - TCPConnector: Flushing handshake response: HTTP/1.1 101 Switching Protocols\nUpgrade: websocket\nConnection: Upgrade\nSec-WebSocket-Accept: dkHWH3JVIJkrE40kDzsqagQdidY=\nSec-WebSocket-Protocol: org.jwebsocket.json\nSec-WebSocket-Origin: http://localhost:8787\nSec-WebSocket-Location: ws://localhost:8787/\nSet-Cookie: JWSSESSIONID=cfd9f2063de0a07023479b3f8cf1008a; HttpOnly\n\n
+2016-11-06 17:49:47,945 DEBUG - TCPConnector: Handshake flushed.
+2016-11-06 17:49:47,945 DEBUG - TCPConnector$ClientProcessor: TCP client accepted on port 49332 with timeout infinite (TCPNoDelay was: false)...
+2016-11-06 17:49:47,945 DEBUG - TCPConnector$ClientProcessor: Starting TCP connector...
+2016-11-06 17:49:47,945 DEBUG - TCPEngine: Detected new connector at port 49332.
+2016-11-06 17:49:47,946 DEBUG - TokenServer: Processing connector '01.49332.0' started...
+2016-11-06 17:49:47,946 DEBUG - BasePlugInChain: Notifying plug-ins that connector '01.49332.0' started...
 Server Connection opened
 r=1
 r=1
 *******processOpened*******
 client connected!!r=2
+r=3
+r=4
 
-r=3
-r=4
 r=5
 r=6
 r=7
@@ -76,11 +76,11 @@ r=14
 r=15
 r=16
 r=17
-2016-11-06 17:17:33,354 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:51394 (01.51394.0)...
-2016-11-06 17:17:33,354 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:48,278 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:48,278 DEBUG - TokenServer: Processing packet as token...
 UP!!
-here 67
-2016-11-06 17:17:33,382 DEBUG - TokenServer: Processing token '{ns=org.jwebsocket.plugins.system, type=login, username=guest, password=guest, utid=1}' from '01.51394.0 (127.0.0.1:51394)'...
+here 71
+2016-11-06 17:49:48,318 DEBUG - TokenServer: Processing token '{ns=org.jwebsocket.plugins.system, type=login, username=guest, password=guest, utid=1}' from '01.49332.0 (127.0.0.1:49332)'...
 r=1
 r=2
 r=3
@@ -93,8 +93,27 @@ r=14
 r=15
 r=16
 r=17
-revd apple
+2016-11-06 17:49:48,320 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:48,321 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:48,327 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
 r=1
+r=2
+r=3
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+Msg 0 --> 49214150
+r=15
+r=16
+r=17
+2016-11-06 17:49:48,329 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:48,329 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:48,330 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+Msg 1 --> 47170594
 r=2
 r=3
 r=4
@@ -106,8 +125,27 @@ r=14
 r=15
 r=16
 r=17
-revd apple
+2016-11-06 17:49:49,289 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:49,289 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:49,292 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
 r=1
+r=2
+r=3
+r=4
+Msg 2 --> 3930549
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:49,292 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:49,293 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:49,293 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+Msg 3 --> 5117558
 r=2
 r=3
 r=4
@@ -119,8 +157,27 @@ r=14
 r=15
 r=16
 r=17
-revd apple
+2016-11-06 17:49:50,294 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:50,294 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:50,294 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
 r=1
+r=2
+r=3
+r=4
+r=5
+r=6
+Msg 4 --> 1307981
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:50,295 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:50,295 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:50,295 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+Msg 5 --> 2453214
 r=2
 r=3
 r=4
@@ -132,8 +189,27 @@ r=14
 r=15
 r=16
 r=17
-revd apple
+2016-11-06 17:49:50,296 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:50,296 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:50,296 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
 r=1
+r=2
+r=3
+r=4
+r=5
+r=6
+Msg 6 --> 3367091
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:50,297 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:50,297 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:50,297 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+Msg 7 --> 4086079
 r=2
 r=3
 r=4
@@ -145,8 +221,11 @@ r=14
 r=15
 r=16
 r=17
-revd apple
+2016-11-06 17:49:50,298 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:50,298 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:50,298 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
 r=1
+Msg 8 --> 4960503
 r=2
 r=3
 r=4
@@ -158,10 +237,11 @@ r=14
 r=15
 r=16
 r=17
-revd apple
+2016-11-06 17:49:50,299 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:50,299 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:50,299 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
 r=1
-DOWN!! 2468625456471
-here 110
+Msg 9 --> 5792202
 r=2
 r=3
 r=4
@@ -173,11 +253,513 @@ r=14
 r=15
 r=16
 r=17
-revd apple
+2016-11-06 17:49:51,296 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:51,296 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:51,297 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
 r=1
-2016-11-06 17:18:34,757 ERROR - TCPConnector$ClientProcessor: SocketException reading hybi (01.51394.0): Operation timed out
-2016-11-06 17:18:34,759 DEBUG - TCPEngine: Detected stopped connector at port 51394.
-2016-11-06 17:18:34,759 DEBUG - TokenServer: Processing connector '01.51394.0' stopped...
-2016-11-06 17:18:34,760 DEBUG - BasePlugInChain: Notifying plug-ins that connector '01.51394.0' stopped (SERVER)...
-Server Connection closed
-2016-11-06 17:18:34,760 INFO  - TCPConnector$ClientProcessor: Stopped TCP connector (SERVER) on port 51394.
+r=2
+Msg 10 --> 1471892
+r=3
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:51,297 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:51,297 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:51,297 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+Msg 11 --> 2218928
+r=2
+r=3
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:52,301 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:52,302 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:52,302 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+r=2
+r=3
+r=4
+r=5
+r=6
+Msg 12 --> 1561218
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:52,303 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:52,303 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:52,303 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+r=2
+r=3
+r=4
+r=5
+r=6
+Msg 13 --> 2813533
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:52,304 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:52,305 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:52,305 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+r=2
+r=3
+r=4
+r=5
+r=6
+Msg 14 --> 4249448
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:52,306 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:52,306 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:52,306 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+r=2
+r=3
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+Msg 15 --> 5246077
+r=15
+r=16
+r=17
+2016-11-06 17:49:52,307 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:52,307 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:52,307 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+Msg 16 --> 6400530
+r=2
+r=3
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:52,308 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:52,308 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:52,309 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+Msg 17 --> 7800208
+r=2
+r=3
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:52,309 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:52,309 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:52,310 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+r=2
+r=3
+r=4
+Msg 18 --> 8640773
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:52,310 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:52,310 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:52,311 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+r=2
+Msg 19 --> 9570102
+r=3
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:52,311 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:52,311 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:52,312 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+r=2
+r=3
+r=4
+Msg 20 --> 10493364
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:52,312 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:52,312 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:52,313 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+r=2
+r=3
+r=4
+Msg 21 --> 11371806
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:52,313 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:52,313 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:52,314 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+r=2
+r=3
+r=4
+Msg 22 --> 12329253
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:52,314 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:52,314 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:52,315 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+r=2
+Msg 23 --> 13146916
+r=3
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:52,315 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:52,315 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:52,315 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+r=2
+Msg 24 --> 13732071
+r=3
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:52,316 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:52,316 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:52,316 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+r=2
+r=3
+r=4
+r=5
+r=6
+Msg 25 --> 14297293
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:52,316 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:52,316 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:52,316 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+r=2
+r=3
+r=4
+r=5
+r=6
+Msg 26 --> 14855081
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:52,317 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:52,317 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:52,317 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+Msg 27 --> 15375989
+r=2
+r=3
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:52,317 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:52,317 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:52,318 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+Msg 28 --> 15919062
+r=2
+r=3
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:52,318 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:52,318 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:52,318 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+r=2
+r=3
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+Msg 29 --> 16466374
+r=15
+r=16
+r=17
+2016-11-06 17:49:52,318 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:52,319 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:52,319 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+r=2
+r=3
+r=4
+r=5
+r=6
+Msg 30 --> 16993686
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:52,319 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:52,319 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:52,319 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+r=2
+r=3
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+Msg 31 --> 17479868
+r=17
+2016-11-06 17:49:52,320 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:52,320 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:52,320 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+Msg 32 --> 18019267
+r=2
+r=3
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:52,320 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:52,320 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:52,320 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+r=2
+r=3
+Msg 33 --> 18524083
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:52,321 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:52,321 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:52,321 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+Msg 34 --> 19114614
+r=2
+r=3
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:53,308 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:53,308 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:53,308 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+r=2
+r=3
+r=4
+r=5
+Msg 35 --> 1339316
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:53,309 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:53,309 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:53,309 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+r=2
+r=3
+Msg 36 --> 1889880
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:53,310 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:53,310 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:53,310 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+Msg 37 --> 2823332
+DOWN!! 439362230706
+here 111
+r=2
+r=3
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:55,312 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:55,312 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:55,312 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+r=2
+r=3
+r=4
+r=5
+r=6
+Msg 38 --> 1095562
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:49:55,313 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:49332 (01.49332.0)...
+2016-11-06 17:49:55,313 DEBUG - TokenServer: Processing packet as token...
+2016-11-06 17:49:55,313 DEBUG - TokenServer: Processing token '{}' from '01.49332.0 (127.0.0.1:49332)'...
+r=1
+Msg 39 --> 2140382
+494178117787
+
+java.net.SocketException: Operation timed out
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.read(SocketInputStream.java:150)
+	at java.net.SocketInputStream.read(SocketInputStream.java:121)
+	at java.net.SocketInputStream.read(SocketInputStream.java:203)
+	at org.jwebsocket.kit.WebSocketProtocolAbstraction.protocolToRawPacket(WebSocketProtocolAbstraction.java:220)
+	at org.jwebsocket.client.java.BaseWebSocketClient$WebSocketReceiver.processHybi(BaseWebSocketClient.java:1003)
+	at org.jwebsocket.client.java.BaseWebSocketClient$WebSocketReceiver.run(BaseWebSocketClient.java:915)
+Exception in thread "jWebSocket-Client 17" java.lang.NullPointerException
+	at org.jwebsocket.client.java.BaseWebSocketClient$WebSocketReceiver.processHybi(BaseWebSocketClient.java:1033)
+	at org.jwebsocket.client.java.BaseWebSocketClient$WebSocketReceiver.run(BaseWebSocketClient.java:915)
+Nov 06, 2016 5:50:50 PM eu.chorevolution.vsb.playgrounds.str.websockets.WebSocketClient2 send
+SEVERE: null
+org.jwebsocket.kit.WebSocketException: Error while sending socket data: 
+	at org.jwebsocket.client.java.BaseWebSocketClient.sendInternal(BaseWebSocketClient.java:448)
+	at org.jwebsocket.client.java.BaseWebSocketClient.sendInTransaction(BaseWebSocketClient.java:378)
+	at org.jwebsocket.client.java.BaseWebSocketClient.send(BaseWebSocketClient.java:387)
+	at eu.chorevolution.vsb.playgrounds.str.websockets.WebSocketClient2.send(WebSocketClient2.java:46)
+	at eu.chorevolution.vsb.playgrounds.str.websockets.test2.StartSourceApplication.sendMsg(StartSourceApplication.java:32)
+	at eu.chorevolution.vsb.playgrounds.str.websockets.test2.StartSourceApplication.run(StartSourceApplication.java:39)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.net.SocketException: Broken pipe
+	at java.net.SocketOutputStream.socketWrite0(Native Method)
+	at java.net.SocketOutputStream.socketWrite(SocketOutputStream.java:109)
+	at java.net.SocketOutputStream.write(SocketOutputStream.java:141)
+	at org.jwebsocket.client.java.BaseWebSocketClient.sendInternal(BaseWebSocketClient.java:443)
+	... 6 more
+
+Exception in thread "Thread-8" java.lang.NullPointerException
+	at org.jwebsocket.client.java.BaseWebSocketClient.terminateReceiverThread(BaseWebSocketClient.java:453)
+	at org.jwebsocket.client.java.BaseWebSocketClient.sendInternal(BaseWebSocketClient.java:447)
+	at org.jwebsocket.client.java.BaseWebSocketClient.sendInTransaction(BaseWebSocketClient.java:378)
+	at org.jwebsocket.client.java.BaseWebSocketClient.send(BaseWebSocketClient.java:387)
+	at eu.chorevolution.vsb.playgrounds.str.websockets.WebSocketClient2.send(WebSocketClient2.java:46)
+	at eu.chorevolution.vsb.playgrounds.str.websockets.test2.StartSourceApplication.sendMsg(StartSourceApplication.java:32)
+	at eu.chorevolution.vsb.playgrounds.str.websockets.test2.StartSourceApplication.run(StartSourceApplication.java:39)
+	at java.lang.Thread.run(Thread.java:745)
