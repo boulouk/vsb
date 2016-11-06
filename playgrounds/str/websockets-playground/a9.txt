@@ -1,0 +1,30 @@
+2016-11-05 23:47:29,291 DEBUG - TokenServer: Processing token '{}' from '01.60183.0 (127.0.0.1:60183)'...
+r=1
+Msg 20 --> 6570710
+java.net.SocketException: Operation timed out
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.read(SocketInputStream.java:150)
+	at java.net.SocketInputStream.read(SocketInputStream.java:121)
+	at java.net.SocketInputStream.read(SocketInputStream.java:203)
+	at org.jwebsocket.kit.WebSocketProtocolAbstraction.protocolToRawPacket(WebSocketProtocolAbstraction.java:220)
+	at org.jwebsocket.client.java.BaseWebSocketClient$WebSocketReceiver.processHybi(BaseWebSocketClient.java:1000)
+	at org.jwebsocket.client.java.BaseWebSocketClient$WebSocketReceiver.run(BaseWebSocketClient.java:912)
+Exception in thread "jWebSocket-Client 18" java.lang.NullPointerException
+	at org.jwebsocket.client.java.BaseWebSocketClient$WebSocketReceiver.processHybi(BaseWebSocketClient.java:1027)
+	at org.jwebsocket.client.java.BaseWebSocketClient$WebSocketReceiver.run(BaseWebSocketClient.java:912)
+Nov 05, 2016 11:48:25 PM eu.chorevolution.vsb.playgrounds.str.websockets.WebSocketClient2 send
+SEVERE: null
+org.jwebsocket.kit.WebSocketException: Error while sending socket data: 
+	at org.jwebsocket.client.java.BaseWebSocketClient.sendInternal(BaseWebSocketClient.java:445)
+	at org.jwebsocket.client.java.BaseWebSocketClient.sendInTransaction(BaseWebSocketClient.java:375)
+	at org.jwebsocket.client.java.BaseWebSocketClient.send(BaseWebSocketClient.java:384)
+	at eu.chorevolution.vsb.playgrounds.str.websockets.WebSocketClient2.send(WebSocketClient2.java:46)
+	at eu.chorevolution.vsb.playgrounds.str.websockets.test2.StartSourceApplication.sendMsg(StartSourceApplication.java:32)
+	at eu.chorevolution.vsb.playgrounds.str.websockets.test2.StartSourceApplication.run(StartSourceApplication.java:39)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: java.net.SocketException: Broken pipe
+	at java.net.SocketOutputStream.socketWrite0(Native Method)
+	at java.net.SocketOutputStream.socketWrite(SocketOutputStream.java:109)
+	at java.net.SocketOutputStream.write(SocketOutputStream.java:141)
+	at org.jwebsocket.client.java.BaseWebSocketClient.sendInternal(BaseWebSocketClient.java:440)
+	... 6 more

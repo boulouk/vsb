@@ -8,6 +8,10 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 
+import eu.chorevolution.vsb.playgrounds.str.websockets.test.StartClient;
+import eu.chorevolution.vsb.playgrounds.str.websockets.test.StartExperiment;
+import eu.chorevolution.vsb.playgrounds.str.websockets.test.StartSourceApplication;
+
 public class WsServer extends org.java_websocket.server.WebSocketServer {
 
 	public WebSocket connection;
@@ -37,7 +41,26 @@ public class WsServer extends org.java_websocket.server.WebSocketServer {
 
 	@Override
 	public void onError(WebSocket conn, Exception ex) {
-		System.err.println("an error occured");
+		System.err.println("an error occured " + ex.getStackTrace() + " " + ex.getMessage());
+		System.err.println();
+		System.err.println("Packets Sent: " + StartSourceApplication.counter);
+		System.err.println("Packets Received: " + StartExperiment.messagesReceived);
+		System.err.println("Packet Loss: " + (StartSourceApplication.counter - StartExperiment.messagesReceived));
+
+		Long dur = 0L;
+
+		if(StartExperiment.endTimeMap.containsKey(0L))
+			StartExperiment.endTimeMap.remove(0L);
+		
+		for(java.util.Map.Entry<Long, Long> e: StartExperiment.endTimeMap.entrySet()) {
+			dur += (e.getValue() - StartExperiment.startTimeMap.get(e.getKey()));
+		}
+
+		System.err.println("Average time: " + dur.doubleValue()/StartExperiment.endTimeMap.size());
+
+		System.err.println("on duration: " + StartClient.onParameter.average());
+		System.err.println("off duration: " + StartClient.offParameter.average());
+		System.err.println("msgs: " + StartSourceApplication.waitDuration.average());
 	}
 
 	public void send(String msg) {

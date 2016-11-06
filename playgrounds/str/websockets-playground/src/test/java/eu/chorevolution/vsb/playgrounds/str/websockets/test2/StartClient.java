@@ -1,38 +1,35 @@
-package eu.chorevolution.vsb.playgrounds.str.websockets.test;
+package eu.chorevolution.vsb.playgrounds.str.websockets.test2;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
 import eu.chorevolution.vsb.playgrounds.str.websockets.WebSocketClient.WsClient;
+import eu.chorevolution.vsb.playgrounds.str.websockets.WebSocketClient2;
 import eu.chorevolution.vsb.playgrounds.str.websockets.test.utils.Exp;
 import eu.chorevolution.vsb.playgrounds.str.websockets.test.utils.Parameters;
 import eu.chorevolution.vsb.playgrounds.str.websockets.test.utils.RangeExp;
 
 public class StartClient implements Runnable {
 
-	private WsClient client = null;
+	public WebSocketClient2 client2 = null;
 	public static RangeExp onParameter = new RangeExp(Parameters.onParam);
-	public static Exp offParameter = new Exp(Parameters.offParam);
+	public static RangeExp offParameter = new RangeExp(Parameters.offParam);
 
 	public StartClient() {
-		try {
-			client = new WsClient(new URI("http://127.0.0.1:8090"));
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
+			client2 = new WebSocketClient2();
 	}
 
-	public void connect() {
-		try {
-			client.connectBlocking();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		if(StartExperiment.DEBUG) { 
-			new Thread(new MessageReader()).start();
-		}
-	}
+//	public void connect() {
+//		try {
+//			client.connectBlocking();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+//		if(StartExperiment.DEBUG) { 
+//			new Thread(new MessageReader()).start();
+//		}
+//	}
 
 	public void run() {
 		boolean localFlag = true;
@@ -57,13 +54,13 @@ public class StartClient implements Runnable {
 				long param = (long) onParameter.next();
 				System.err.println("here " + param);
 				try {
-					Thread.sleep(param * 1000);
+					Thread.sleep(7 * 1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
 			else {
-				System.err.println("DOWN!!");
+				System.err.println("DOWN!! " + System.nanoTime());
 				localFlag = true;
 				try {
 					if(System.getProperty("os.name").startsWith("Windows")) {
@@ -90,37 +87,7 @@ public class StartClient implements Runnable {
 
 	}
 
-	class MessageReader implements Runnable {
 
-		@Override
-		public void run() {
-			String recvdMsg = null;
-			while(StartExperiment.experimentRunning) {
-				try {
-					recvdMsg = client.msgQueue.take();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				String[] msgParts = recvdMsg.split(" ");
-				Long msgNum = Long.valueOf(msgParts[1]);
-				assert(msgNum != null);
-				Long endTime;
-				Long startTime;
-				
-					synchronized (StartExperiment.endTimeMap) {
-						endTime = StartExperiment.endTimeMap.get(msgNum);	
-					}
-					
-					synchronized (StartExperiment.startTimeMap) {
-						startTime = StartExperiment.startTimeMap.get(msgNum);	
-					}
-				
-				System.out.println("Msg " + msgNum + " --> " + (endTime - startTime));
-//				System.out.println(recvdMsg + " " + Long.valueOf(msgParts[4]) + " " + (Long.valueOf(msgParts[4]) - Long.valueOf(msgParts[2])));
-			}
-		}
-
-	}
 
 	public static void main(String[] args) {
 		// create a client

@@ -1,534 +1,183 @@
-server is started on 0.0.0.0/0.0.0.0:8090
-Server opens a stream
-Client opens a stream
+Using command-line argument -home /Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/
+2016-11-06 17:17:32,020 DEBUG - JWebSocketConfig: Console-Mode: Logs successfully configured by '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/conf/log4j.xml'.
+2016-11-06 17:17:32,082 DEBUG - JWebSocketFactory: Loading bootstrap '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/conf/Resources/bootstrap.xml'...
+2016-11-06 17:17:32,399 DEBUG - JWebSocketFactory: BeanDefinitionParsingException on loading bootstrap.: Configuration problem: Bean class [com.mongodb.MongoClient] not found
+Offending resource: file [/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/conf/Resources/bootstrap.xml]
+Bean 'mongodbConnection0'; nested exception is java.lang.ClassNotFoundException: com.mongodb.MongoClient
+2016-11-06 17:17:32,400 DEBUG - JWebSocketLoader: Initializing: Using config file '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/conf/jWebSocket.xml'...
+2016-11-06 17:17:32,400 DEBUG - JWebSocketLoader: Loading configuration from file '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/conf/jWebSocket.xml...
+2016-11-06 17:17:32,445 INFO  - JWebSocketLoader: Configuration successfully loaded from '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/conf/jWebSocket.xml'.
+2016-11-06 17:17:32,474 DEBUG - AbstractJWebSocketInitializer: Logging settings: reload: 20000
+2016-11-06 17:17:32,475 DEBUG - AbstractJWebSocketInitializer: Starting jWebSocket Server Sub System...
+2016-11-06 17:17:32,475 DEBUG - JWebSocketFactory: Starting jWebSocket Server Sub System...
+2016-11-06 17:17:32,475 DEBUG - JWebSocketXmlConfigInitializer: Adding external library 'MySQLJDBCDriver' from '${JWEBSOCKET_HOME}libs/mysql-connector-java-5.1.16.jar'...
+2016-11-06 17:17:32,478 INFO  - JWebSocketXmlConfigInitializer: External library 'MySQLJDBCDriver' from '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/libs/mysql-connector-java-5.1.16.jar' successfully added.
+2016-11-06 17:17:32,478 DEBUG - JWebSocketXmlConfigInitializer: Adding external library 'DerbyDriver' from '${JWEBSOCKET_HOME}libs/derby-10.10.1.1.jar'...
+2016-11-06 17:17:32,479 INFO  - JWebSocketXmlConfigInitializer: External library 'DerbyDriver' from '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/libs/derby-10.10.1.1.jar' successfully added.
+2016-11-06 17:17:32,479 DEBUG - JWebSocketXmlConfigInitializer: Adding external library 'xbean-spring-common' from '${JWEBSOCKET_HOME}libs/xbean-spring-common-2.8.jar'...
+2016-11-06 17:17:32,480 INFO  - JWebSocketXmlConfigInitializer: External library 'xbean-spring-common' from '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/libs/xbean-spring-common-2.8.jar' successfully added.
+2016-11-06 17:17:32,480 DEBUG - JWebSocketXmlConfigInitializer: Adding external library 'xbean-spring-v2' from '${JWEBSOCKET_HOME}libs/xbean-spring-v2-2.8.jar'...
+2016-11-06 17:17:32,481 INFO  - JWebSocketXmlConfigInitializer: External library 'xbean-spring-v2' from '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/libs/xbean-spring-v2-2.8.jar' successfully added.
+2016-11-06 17:17:32,481 DEBUG - JWebSocketXmlConfigInitializer: Adding external library 'xbean-spring-v2c' from '${JWEBSOCKET_HOME}libs/xbean-spring-v2c-2.8.jar'...
+2016-11-06 17:17:32,482 INFO  - JWebSocketXmlConfigInitializer: External library 'xbean-spring-v2c' from '/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/libs/xbean-spring-v2c-2.8.jar' successfully added.
+2016-11-06 17:17:32,482 DEBUG - AbstractJWebSocketInitializer: Instantiating engine...
+2016-11-06 17:17:32,487 DEBUG - AbstractJWebSocketInitializer: Engine 'org.jwebsocket.tcp.TCPEngine' loaded from classpath.
+2016-11-06 17:17:32,487 DEBUG - JWebSocketXmlConfigInitializer: Engine 'tcp0' successfully instantiated.
+2016-11-06 17:17:32,488 DEBUG - JWebSocketFactory: Initializing servers...
+2016-11-06 17:17:32,497 DEBUG - AbstractJWebSocketInitializer: Server 'org.jwebsocket.server.TokenServer' loaded from classpath.
+2016-11-06 17:17:32,507 DEBUG - JWebSocketXmlConfigInitializer: Server 'ts0' successfully instantiated.
+2016-11-06 17:17:32,530 DEBUG - AbstractJWebSocketInitializer: Plug-in 'FIXME.this.should.not.be.required' not yet in classpath.
+2016-11-06 17:17:32,530 DEBUG - JWebSocketXmlConfigInitializer: Plug-in 'FIXME.this.should.not.be.required' trying to load from file...
+2016-11-06 17:17:32,530 WARN  - JWebSocketConfig: FIXME not found at /Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/libs/FIXME.
+2016-11-06 17:17:32,531 DEBUG - JWebSocketFactory: Initializing plugins...
+2016-11-06 17:17:32,536 INFO  - JWebSocketFactory: 0 plugin(s) initialized for server 'ts0'.
+2016-11-06 17:17:32,538 DEBUG - AbstractJWebSocketInitializer: Filter 'FIXME.this.should.not.be.required' not yet in classpath.
+2016-11-06 17:17:32,538 WARN  - JWebSocketConfig: FIXME not found at /Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/libs/FIXME.
+2016-11-06 17:17:32,538 DEBUG - JWebSocketFactory: Initializing filters...
+2016-11-06 17:17:32,539 INFO  - JWebSocketFactory: 0 filter(s) initialized for server 'ts0'.
+2016-11-06 17:17:32,539 DEBUG - JWebSocketFactory: Starting engine(s) 'tcp0'...
+2016-11-06 17:17:32,552 DEBUG - TCPEngine: Starting TCP engine 'tcp0' at port 8787 with default timeout infinite...
+2016-11-06 17:17:32,573 INFO  - TCPEngine: TCP engine 'tcp0' started' at port 8787 with default timeout infinite...
+2016-11-06 17:17:32,573 DEBUG - TokenServer: Processing engine 'tcp0' started...
+2016-11-06 17:17:32,574 DEBUG - BasePlugInChain: Notifying plug-ins of server 'ts0' that engine 'tcp0' started...
+2016-11-06 17:17:32,573 DEBUG - TCPEngine: Trying to initiate SSL on port 9797...
+2016-11-06 17:17:32,577 DEBUG - TCPEngine: Using keystore ${JWEBSOCKET_HOME}conf/jWebSocket.ks...
+2016-11-06 17:17:32,577 DEBUG - TCPEngine: Starting SSL engine 'tcp0' at port 9797, with default timeout infinite...
+2016-11-06 17:17:32,997 INFO  - TCPEngine: SSL engine 'tcp0' started' at port 9797 with default timeout infinite.
+2016-11-06 17:17:32,997 DEBUG - JWebSocketFactory: Starting servers...
+2016-11-06 17:17:32,998 INFO  - TokenServer: Token server 'ts0' started.
+2016-11-06 17:17:32,998 INFO  - JWebSocketFactory: jWebSocket server startup complete
+server started!!
+2016-11-06 17:17:33,035 DEBUG - TCPEngine$EngineListener: Client trying to connect on port #51394...
+2016-11-06 17:17:33,041 DEBUG - TCPConnector: Starting TCP connector on port 51394 with timeout infinite
+2016-11-06 17:17:33,043 INFO  - TCPConnector: Started TCP connector on port 51394 with timeout infinite
+2016-11-06 17:17:33,044 DEBUG - TCPConnector: Parsing handshake request: GET / HTTP/1.1\nHost: localhost:8787\nUpgrade: websocket\nConnection: Upgrade\nSec-WebSocket-Version: 8\nSec-WebSocket-Origin: http://localhost:8787\nSec-WebSocket-Protocol: org.jwebsocket.json\nSec-WebSocket-Key: Nngp30KYq7zbSAOXuR1W4w==\n\n
+2016-11-06 17:17:33,047 DEBUG - EngineUtils: Client uses websocket protocol version #8/draft #8 for communication.
+2016-11-06 17:17:33,049 DEBUG - TCPConnector: Flushing handshake response: HTTP/1.1 101 Switching Protocols\nUpgrade: websocket\nConnection: Upgrade\nSec-WebSocket-Accept: M5QY9qT2jfv1ksM4ID4dl1InYfs=\nSec-WebSocket-Protocol: org.jwebsocket.json\nSec-WebSocket-Origin: http://localhost:8787\nSec-WebSocket-Location: ws://localhost:8787/\nSet-Cookie: JWSSESSIONID=2c068571ec9bb754b424165e0a842e86; HttpOnly\n\n
+2016-11-06 17:17:33,049 DEBUG - TCPConnector: Handshake flushed.
+2016-11-06 17:17:33,050 DEBUG - TCPConnector$ClientProcessor: TCP client accepted on port 51394 with timeout infinite (TCPNoDelay was: false)...
+2016-11-06 17:17:33,050 DEBUG - TCPConnector$ClientProcessor: Starting TCP connector...
+2016-11-06 17:17:33,050 DEBUG - TCPEngine: Detected new connector at port 51394.
+2016-11-06 17:17:33,050 DEBUG - TokenServer: Processing connector '01.51394.0' started...
+2016-11-06 17:17:33,050 DEBUG - BasePlugInChain: Notifying plug-ins that connector '01.51394.0' started...
+Server Connection opened
+r=1
+r=1
+*******processOpened*******
+client connected!!r=2
+
+r=3
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+2016-11-06 17:17:33,354 DEBUG - TCPConnector$ClientProcessor: Processing 'text' frame from /127.0.0.1:51394 (01.51394.0)...
+2016-11-06 17:17:33,354 DEBUG - TokenServer: Processing packet as token...
 UP!!
-Msg 0 --> 2638991
-here 30
-Msg 1 --> 429163
-Msg 2 --> 379568
-Msg 3 --> 496347
-Msg 4 --> 354387
-Msg 5 --> 220018
-Msg 6 --> 267445
-Msg 7 --> 296070
-Msg 8 --> 293638
-Msg 9 --> 271921
-Msg 10 --> 279605
-Msg 11 --> 244134
-Msg 12 --> 515880
-Msg 13 --> 342114
-Msg 14 --> 386406
-Msg 15 --> 382506
-Msg 16 --> 337316
-Msg 17 --> 354158
-Msg 18 --> 423394
-Msg 19 --> 412887
-Msg 20 --> 403900
-Msg 21 --> 409058
-Msg 22 --> 399419
-Msg 23 --> 491461
-Msg 24 --> 515587
-Msg 25 --> 475654
-Msg 26 --> 503361
-Msg 27 --> 550555
-Msg 28 --> 486783
-Msg 29 --> 458736
-Msg 30 --> 537560
-Msg 31 --> 551776
-Msg 32 --> 554712
-Msg 33 --> 579433
-Msg 34 --> 563316
-Msg 35 --> 585484
-Msg 36 --> 520024
-Msg 37 --> 378723
-Msg 38 --> 536470
-Msg 39 --> 436556
-Msg 40 --> 443948
-Msg 41 --> 394122
-Msg 42 --> 383503
-Msg 43 --> 332394
-Msg 44 --> 444387
-Msg 45 --> 453292
-Msg 46 --> 367686
-Msg 47 --> 304534
-Msg 48 --> 514448
-Msg 49 --> 395373
-Msg 50 --> 421829
-Msg 51 --> 389549
-Msg 52 --> 367538
-Msg 53 --> 505830
-Msg 54 --> 495574
-Msg 55 --> 411473
-Msg 56 --> 382258
-Msg 57 --> 291849
-Msg 58 --> 257315
-Msg 59 --> 562450
-Msg 60 --> 410077
-Msg 61 --> 249534
-Msg 62 --> 350878
-Msg 63 --> 361076
-Msg 64 --> 400317
-Msg 65 --> 392392
-Msg 66 --> 405661
-Msg 67 --> 432072
-Msg 68 --> 459678
-Msg 69 --> 499190
-Msg 70 --> 480604
-Msg 71 --> 479455
-Msg 72 --> 486447
-Msg 73 --> 445190
-Msg 74 --> 466357
-Msg 75 --> 426152
-Msg 76 --> 458955
-Msg 77 --> 489157
-Msg 78 --> 552563
-Msg 79 --> 535126
-Msg 80 --> 447613
-Msg 81 --> 405831
-Msg 82 --> 341620
-Msg 83 --> 313967
-Msg 84 --> 308925
-Msg 85 --> 403342
-Msg 86 --> 398176
-Msg 87 --> 260479
-Msg 88 --> 437508
-Msg 89 --> 361013
-Msg 90 --> 494204
-Msg 91 --> 345375
-Msg 92 --> 311067
-DOWN!!
-here 17
-Msg 93 --> 525484
-Msg 94 --> 444208
-UP!!
-here 42
-Msg 95 --> 20787123031
-Msg 96 --> 19784044066
-Msg 97 --> 19783867048
-Msg 98 --> 19783834703
-Msg 99 --> 17778728453
-Msg 100 --> 17778581816
-Msg 101 --> 16774479909
-Msg 102 --> 15771286212
-Msg 103 --> 15771145940
-Msg 104 --> 15771129997
-Msg 105 --> 15771123936
-Msg 106 --> 14768185695
-Msg 107 --> 13764990519
-Msg 108 --> 13764810611
-Msg 109 --> 12764240625
-Msg 110 --> 12764078064
-Msg 111 --> 12764007543
-Msg 112 --> 12763993724
-Msg 113 --> 12763914269
-Msg 114 --> 11759382995
-Msg 115 --> 9754228610
-Msg 116 --> 9754076261
-Msg 117 --> 9754017862
-Msg 118 --> 9754004933
-Msg 119 --> 9753916985
-Msg 120 --> 9753811667
-Msg 121 --> 9753787917
-Msg 122 --> 9753870586
-Msg 123 --> 9753892079
-Msg 124 --> 9753879381
-Msg 125 --> 9753888206
-Msg 126 --> 9753912749
-Msg 127 --> 9753939136
-Msg 128 --> 9753922025
-Msg 129 --> 9753938050
-Msg 130 --> 8749762108
-Msg 131 --> 8749555110
-Msg 132 --> 8749523383
-Msg 133 --> 8749512492
-Msg 134 --> 7746672275
-Msg 135 --> 7746471957
-Msg 136 --> 7746431964
-Msg 137 --> 6743577952
-Msg 138 --> 6743434070
-Msg 139 --> 5738945133
-Msg 140 --> 5738753688
-Msg 141 --> 4737350399
-Msg 142 --> 4737286963
-Msg 143 --> 4737282675
-Msg 144 --> 4737304298
-Msg 145 --> 4737333742
-Msg 146 --> 4737347921
-Msg 147 --> 4737381794
-Msg 148 --> 3735912376
-Msg 149 --> 3735785709
-Msg 150 --> 3735762343
-Msg 151 --> 2731131581
-Msg 152 --> 2731019442
-Msg 153 --> 2730930942
-Msg 154 --> 1726156570
-Msg 155 --> 1725804052
-Msg 156 --> 721430212
-Msg 157 --> 721365467
-Msg 158 --> 721337155
-Msg 159 --> 721348118
-Msg 160 --> 460542
-Msg 161 --> 508848
-Msg 162 --> 512947
-Msg 163 --> 505523
-Msg 164 --> 476813
-Msg 165 --> 446163
-Msg 166 --> 448775
-Msg 167 --> 461023
-Msg 168 --> 403494
-Msg 169 --> 401166
-Msg 170 --> 429460
-Msg 171 --> 372706
-Msg 172 --> 352207
-Msg 173 --> 447152
-Msg 174 --> 465240
-Msg 175 --> 453670
-Msg 176 --> 441855
-Msg 177 --> 467069
-Msg 178 --> 459503
-Msg 179 --> 557003
-Msg 180 --> 550513
-Msg 181 --> 561972
-Msg 182 --> 556347
-Msg 183 --> 618575
-Msg 184 --> 601063
-Msg 185 --> 691614
-Msg 186 --> 2435349
-Msg 187 --> 2491562
-Msg 188 --> 2456097
-Msg 189 --> 2428752
-Msg 190 --> 435746
-Msg 191 --> 455478
-Msg 192 --> 344172
-Msg 193 --> 356402
-Msg 194 --> 491349
-Msg 195 --> 421184
-Msg 196 --> 375754
-Msg 197 --> 341227
-Msg 198 --> 413795
-Msg 199 --> 450186
-Msg 200 --> 457086
-Msg 201 --> 457452
-Msg 202 --> 416158
-Msg 203 --> 377971
-Msg 204 --> 539133
-Msg 205 --> 446617
-Msg 206 --> 352752
-Msg 207 --> 279926
-Msg 208 --> 366615
-Msg 209 --> 326127
-Msg 210 --> 405363
-Msg 211 --> 374069
-Msg 212 --> 311677
-Msg 213 --> 376278
-Msg 214 --> 368655
-Msg 215 --> 382204
-Msg 216 --> 360719
-Msg 217 --> 348472
-Msg 218 --> 333069
-Msg 219 --> 341009
-Msg 220 --> 315424
-Msg 221 --> 403263
-Msg 222 --> 452660
-Msg 223 --> 448609
-Msg 224 --> 449025
-Msg 225 --> 429164
-Msg 226 --> 474701
-Msg 227 --> 474557
-Msg 228 --> 605816
-Msg 229 --> 624291
-Msg 230 --> 645925
-Msg 231 --> 650151
-Msg 232 --> 504175
-Msg 233 --> 402844
-Msg 234 --> 413719
-Msg 235 --> 425474
-Msg 236 --> 333682
-Msg 237 --> 327186
-Msg 238 --> 539584
-Msg 239 --> 535325
-Msg 240 --> 517255
-Msg 241 --> 510121
-Msg 242 --> 411567
-Msg 243 --> 229797
-Msg 244 --> 223456
-Msg 245 --> 184244
-Msg 246 --> 184369
-Msg 247 --> 594564
-Msg 248 --> 402653
-Msg 249 --> 404891
-Msg 250 --> 321840
-Msg 251 --> 366861
-Msg 252 --> 314710
-Msg 253 --> 382473
-Msg 254 --> 357656
-Msg 255 --> 388635
-Msg 256 --> 354618
-Msg 257 --> 239613
-Msg 258 --> 305534
-Msg 259 --> 286683
-Msg 260 --> 252643
-Msg 261 --> 1632413
-Msg 262 --> 284925
-Msg 263 --> 433372
-Msg 264 --> 418151
-Msg 265 --> 370218
-Msg 266 --> 357908
-Msg 267 --> 475790
-Msg 268 --> 382236
-Msg 269 --> 441591
-Msg 270 --> 501953
-Msg 271 --> 379564
-Msg 272 --> 406428
-Msg 273 --> 397023
-Msg 274 --> 385801
-Msg 275 --> 350678
-Msg 276 --> 319114
-Msg 277 --> 598910
-Msg 278 --> 398718
-Msg 279 --> 395852
-Msg 280 --> 395290
-Msg 281 --> 347601
-Msg 282 --> 410869
-Msg 283 --> 389317
-Msg 284 --> 351751
-Msg 285 --> 345922
-Msg 286 --> 519318
-Msg 287 --> 447045
-Msg 288 --> 331958
-Msg 289 --> 287697
-Msg 290 --> 216504
-Msg 291 --> 393057
-Msg 292 --> 340859
-Msg 293 --> 292351
-Msg 294 --> 464402
-Msg 295 --> 303983
-Msg 296 --> 484526
-Msg 297 --> 364736
-Msg 298 --> 435460
-Msg 299 --> 404328
-Msg 300 --> 389618
-Msg 301 --> 378666
-Msg 302 --> 369674
-Msg 303 --> 428491
-Msg 304 --> 336549
-Msg 305 --> 343606
-DOWN!!
-here 15
-UP!!
-here 81
-Msg 306 --> 20735297739
-Msg 307 --> 18730172360
-Msg 308 --> 18729973327
-Msg 309 --> 17726571926
-Msg 310 --> 15721394304
-Msg 311 --> 14716890635
-Msg 312 --> 14716669663
-Msg 313 --> 14716611319
-Msg 314 --> 14716581789
-Msg 315 --> 14716563944
-Msg 316 --> 14716516881
-Msg 317 --> 10716020134
-Msg 318 --> 10715867591
-Msg 319 --> 10715834098
-Msg 320 --> 10715826008
-Msg 321 --> 10715714905
-Msg 322 --> 10715644190
-Msg 323 --> 10715626148
-Msg 324 --> 10715621674
-Msg 325 --> 10715624822
-Msg 326 --> 10715544449
-Msg 327 --> 10715491195
-Msg 328 --> 10715458968
-Msg 329 --> 9714909792
-Msg 330 --> 7711301489
-Msg 331 --> 6708073975
-Msg 332 --> 6707932697
-Msg 333 --> 5704755569
-Msg 334 --> 5704615287
-Msg 335 --> 5704555030
-Msg 336 --> 5704529499
-Msg 337 --> 5704521454
-Msg 338 --> 5704517266
-Msg 339 --> 5704493231
-Msg 340 --> 5704483038
-Msg 341 --> 5704469477
-Msg 342 --> 5704468014
-Msg 343 --> 5704467458
-Msg 344 --> 5704461974
-Msg 345 --> 5704456889
-Msg 346 --> 5704455986
-Msg 347 --> 5704447963
-Msg 348 --> 4702307352
-Msg 349 --> 4702169523
-Msg 350 --> 4702118155
-Msg 351 --> 4702026723
-Msg 352 --> 4701941144
-Msg 353 --> 4701898575
-Msg 354 --> 4701861650
-Msg 355 --> 4701853523
-Msg 356 --> 3698708550
-Msg 357 --> 2695444200
-Msg 358 --> 2695229028
-Msg 359 --> 2695173091
-Msg 360 --> 2694974753
-Msg 361 --> 2694939896
-Msg 362 --> 2694928705
-Msg 363 --> 2694922403
-Msg 364 --> 1693579342
-Msg 365 --> 326390
-Msg 366 --> 320061
-Msg 367 --> 316924
-Msg 368 --> 600569
-Msg 369 --> 552612
-Msg 370 --> 485186
-Msg 371 --> 499703
-Msg 372 --> 501769
-Msg 373 --> 521396
-Msg 374 --> 484828
-Msg 375 --> 454729
-Msg 376 --> 422257
-Msg 377 --> 430402
-Msg 378 --> 427637
-Msg 379 --> 398872
-Msg 380 --> 416551
-Msg 381 --> 560493
-Msg 382 --> 371550
-Msg 383 --> 376882
-Msg 384 --> 153599
-Msg 385 --> 535897
-Msg 386 --> 422588
-Msg 387 --> 457231
-Msg 388 --> 475089
-Msg 389 --> 451436
-Msg 390 --> 432065
-Msg 391 --> 394692
-Msg 392 --> 453591
-Msg 393 --> 356990
-Msg 394 --> 286231
-Msg 395 --> 208831
-Msg 396 --> 171242
-Msg 397 --> 491087
-Msg 398 --> 431721
-Msg 399 --> 373844
-Msg 400 --> 279761
-Msg 401 --> 339221
-Msg 402 --> 426400
-Msg 403 --> 337210
-Msg 404 --> 335627
-Msg 405 --> 311432
-Msg 406 --> 497193
-Msg 407 --> 595765
-Msg 408 --> 449920
-Msg 409 --> 338642
-Msg 410 --> 287981
-Msg 411 --> 503322
-Msg 412 --> 430680
-Msg 413 --> 365836
-Msg 414 --> 335506
-Msg 415 --> 292710
-Msg 416 --> 326498
-Msg 417 --> 322302
-Msg 418 --> 320933
-Msg 419 --> 435059
-Msg 420 --> 362735
-Msg 421 --> 317309
-Msg 422 --> 278208
-Msg 423 --> 270179
-Msg 424 --> 443433
-Msg 425 --> 349673
-Msg 426 --> 257615
-Msg 427 --> 220266
-Msg 428 --> 235359
-Msg 429 --> 221479
-Msg 430 --> 384487
-Msg 431 --> 355026
-Msg 432 --> 347018
-Msg 433 --> 353206
-Msg 434 --> 411818
-Msg 435 --> 441584
-Msg 436 --> 476978
-Msg 437 --> 485327
-Msg 438 --> 494716
-Msg 439 --> 485905
-Msg 440 --> 485225
-Msg 441 --> 484461
-Msg 442 --> 543659
-Msg 443 --> 547532
-Msg 444 --> 540339
-Msg 445 --> 469237
-Msg 446 --> 296931
-Msg 447 --> 314183
-Msg 448 --> 318716
-Msg 449 --> 195794
-Msg 450 --> 178965
-Msg 451 --> 172534
-Msg 452 --> 157302
-Msg 453 --> 161259
-Msg 454 --> 172154
-Msg 455 --> 515911
-Msg 456 --> 328903
-Msg 457 --> 487615
-Msg 458 --> 356838
-Msg 459 --> 304847
-Msg 460 --> 282748
-Msg 461 --> 321866
-Msg 462 --> 301912
-Msg 463 --> 390869
-Msg 464 --> 278433
-Msg 465 --> 252858
-Msg 466 --> 258067
-Msg 467 --> 224707
-Msg 468 --> 184367
-Msg 469 --> 257321
-Msg 470 --> 212030
-Msg 471 --> 430250
-Msg 472 --> 458028
-Msg 473 --> 361402
-Msg 474 --> 333184
-Msg 475 --> 315514
-Msg 476 --> 265346
-Msg 477 --> 241314
-Msg 478 --> 172458
-Msg 479 --> 471916
-Msg 480 --> 348998
-Msg 481 --> 309316
-Msg 482 --> 291626
-Msg 483 --> 258437
-Msg 484 --> 202737
-Msg 485 --> 169602
-Msg 486 --> 133146
-Msg 487 --> 123823
-Msg 488 --> 141141
-Msg 489 --> 232764
-Msg 490 --> 266240
-Msg 491 --> 288695
-Msg 492 --> 313384
-Msg 493 --> 284313
-Msg 494 --> 276699
-Msg 495 --> 285506
-Msg 496 --> 240623
-Msg 497 --> 220136
-Msg 498 --> 417905
-Msg 499 --> 435542
-Msg 500 --> 395023
-Msg 501 --> 376658
-Msg 502 --> 266437
-Msg 503 --> 242077
-Msg 504 --> 230755
-Msg 505 --> 194597
-Msg 506 --> 219242
-Msg 507 --> 241550
-Msg 508 --> 277965
-Msg 509 --> 592790
-Msg 510 --> 669029
-Msg 511 --> 702609
-Msg 512 --> 497932
-Msg 513 --> 489948
-Msg 514 --> 482296
-Msg 515 --> 486531
-Msg 516 --> 487615
-Msg 517 --> 484044
-Msg 518 --> 475161
-Msg 519 --> 448143
-Msg 520 --> 442914
+here 67
+2016-11-06 17:17:33,382 DEBUG - TokenServer: Processing token '{ns=org.jwebsocket.plugins.system, type=login, username=guest, password=guest, utid=1}' from '01.51394.0 (127.0.0.1:51394)'...
+r=1
+r=2
+r=3
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+revd apple
+r=1
+r=2
+r=3
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+revd apple
+r=1
+r=2
+r=3
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+revd apple
+r=1
+r=2
+r=3
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+revd apple
+r=1
+r=2
+r=3
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+revd apple
+r=1
+r=2
+r=3
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+revd apple
+r=1
+DOWN!! 2468625456471
+here 110
+r=2
+r=3
+r=4
+r=5
+r=6
+r=7
+r=12
+r=14
+r=15
+r=16
+r=17
+revd apple
+r=1
+2016-11-06 17:18:34,757 ERROR - TCPConnector$ClientProcessor: SocketException reading hybi (01.51394.0): Operation timed out
+2016-11-06 17:18:34,759 DEBUG - TCPEngine: Detected stopped connector at port 51394.
+2016-11-06 17:18:34,759 DEBUG - TokenServer: Processing connector '01.51394.0' stopped...
+2016-11-06 17:18:34,760 DEBUG - BasePlugInChain: Notifying plug-ins that connector '01.51394.0' stopped (SERVER)...
+Server Connection closed
+2016-11-06 17:18:34,760 INFO  - TCPConnector$ClientProcessor: Stopped TCP connector (SERVER) on port 51394.

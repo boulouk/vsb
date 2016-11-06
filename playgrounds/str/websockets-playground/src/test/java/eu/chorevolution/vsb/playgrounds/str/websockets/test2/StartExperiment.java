@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package eu.chorevolution.vsb.playgrounds.str.websockets.test;
+package eu.chorevolution.vsb.playgrounds.str.websockets.test2;
 
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -25,18 +25,20 @@ public class StartExperiment {
 		StartExperiment.startTimeMap.put(-1L, -1L);
 		StartExperiment.endTimeMap.put(-1L, -1L);
 
-		StartServer server = new StartServer();
-		server.start();
+		StartServer server = new StartServer(StartExperiment.endTimeMap);
 
+		System.err.println("server started!!");
+//		Thread.sleep(20000);
+		
 		StartClient client = new StartClient();
-		client.connect();
 
-		Thread.sleep(1000);
+		System.err.println("client connected!!");
+//		Thread.sleep(20000);
 		
 		experimentStartTime = System.nanoTime();
 
-		StartSourceApplication source = new StartSourceApplication(server.server);
-		new Thread((Runnable)source).start();
+		StartSourceApplication source = new StartSourceApplication(client.client2);
+//		new Thread((Runnable)source).start();
 
 
 		new Thread((Runnable)client).start();
@@ -73,9 +75,6 @@ public class StartExperiment {
 				
 			}
 		}, Parameters.experimentDuration);
-
-		
-		
 	}
 
 }

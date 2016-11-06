@@ -1,0 +1,142 @@
+server is started on 0.0.0.0/0.0.0.0:8090
+Server opens a stream
+Client opens a stream
+UP!!
+Msg 0 --> 2666930
+Msg 1 --> 287432
+Msg 2 --> 270344
+Msg 3 --> 465279
+Msg 4 --> 223549
+Msg 5 --> 204712
+Msg 6 --> 200769
+Msg 7 --> 361307
+here 32
+Msg 8 --> 470332
+Msg 9 --> 480387
+Msg 10 --> 395592
+Msg 11 --> 352366
+Msg 12 --> 422809
+Msg 13 --> 316390
+Msg 14 --> 308030
+Msg 15 --> 247413
+Msg 16 --> 297394
+Msg 17 --> 509836
+Msg 18 --> 442345
+Msg 19 --> 359369
+Msg 20 --> 312582
+Msg 21 --> 353780
+Msg 22 --> 331848
+Msg 23 --> 332110
+Msg 24 --> 342151
+Msg 25 --> 329177
+Msg 26 --> 296509
+Msg 27 --> 530881
+Msg 28 --> 452689
+Msg 29 --> 431411
+Msg 30 --> 356918
+Msg 31 --> 294751
+Msg 32 --> 271386
+Msg 33 --> 223318
+Msg 34 --> 227440
+Msg 35 --> 299854
+Msg 36 --> 278286
+Msg 37 --> 377129
+Msg 38 --> 387240
+Msg 39 --> 371986
+Msg 40 --> 380260
+Msg 41 --> 457823
+Msg 42 --> 485440
+Msg 43 --> 473289
+Msg 44 --> 482153
+Msg 45 --> 483009
+Msg 46 --> 488026
+Msg 47 --> 559328
+Msg 48 --> 518471
+Msg 49 --> 520347
+Msg 50 --> 387835
+Msg 51 --> 323486
+Msg 52 --> 498344
+Msg 53 --> 407645
+Msg 54 --> 371796
+Msg 55 --> 435707
+Msg 56 --> 605209
+Msg 57 --> 453033
+Msg 58 --> 535948
+Msg 59 --> 529056
+Msg 60 --> 398613
+Msg 61 --> 286602
+Msg 62 --> 259478
+Msg 63 --> 251390
+Msg 64 --> 307755
+Msg 65 --> 370701
+Msg 66 --> 340392
+Msg 67 --> 415380
+Msg 68 --> 393298
+Msg 69 --> 361878
+Msg 70 --> 348402
+Msg 71 --> 321357
+Msg 72 --> 332430
+Msg 73 --> 336125
+Msg 74 --> 504777
+Msg 75 --> 457715
+Msg 76 --> 289156
+Msg 77 --> 306944
+Msg 78 --> 223453
+Msg 79 --> 316503
+Msg 80 --> 270123
+Msg 81 --> 206084
+Msg 82 --> 326058
+Msg 83 --> 261251
+Msg 84 --> 381882
+Msg 85 --> 354508
+Msg 86 --> 325637
+Msg 87 --> 325737
+Msg 88 --> 317849
+Msg 89 --> 322812
+Msg 90 --> 284627
+Msg 91 --> 270956
+Msg 92 --> 584425
+Msg 93 --> 570126
+Msg 94 --> 476285
+Msg 95 --> 460472
+Msg 96 --> 432926
+Msg 97 --> 356928
+Msg 98 --> 328697
+Msg 99 --> 321992
+Msg 100 --> 325979
+Msg 101 --> 479901
+Msg 102 --> 467377
+Msg 103 --> 544492
+Msg 104 --> 513485
+Msg 105 --> 453688
+Msg 106 --> 434847
+DOWN!!
+here 42
+Msg 107 --> 294813
+Msg 108 --> 279695
+UP!!
+here 2
+DOWN!!
+here 0
+UP!!
+here 5
+DOWN!!
+here 71
+Packets Sent: 307
+Packets Received: 109
+an error occured [Ljava.lang.StackTraceElement;@351bdcb7 Operation timed out
+Packet Loss: 198
+Average time: 372562.4495412844
+on duration: 10.205881534232997
+off duration: 28.506664898483173
+msgs: 0.6531053979723568
+close a stream
+Exception in thread "Thread-12" org.java_websocket.exceptions.WebsocketNotConnectedException
+	at org.java_websocket.WebSocketImpl.send(WebSocketImpl.java:566)
+	at org.java_websocket.WebSocketImpl.send(WebSocketImpl.java:543)
+	at eu.chorevolution.vsb.playgrounds.str.websockets.WsServer.send(WsServer.java:67)
+	at eu.chorevolution.vsb.playgrounds.str.websockets.test.StartSourceApplication.sendMsg(StartSourceApplication.java:31)
+	at eu.chorevolution.vsb.playgrounds.str.websockets.test.StartSourceApplication.run(StartSourceApplication.java:38)
+	at java.lang.Thread.run(Thread.java:745)
+UP!!
+here 20

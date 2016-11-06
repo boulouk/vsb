@@ -1,0 +1,68 @@
+server is started on 0.0.0.0/0.0.0.0:8090
+Server opens a stream
+Client opens a stream
+UP!!
+Msg 0 --> 2889801
+Msg 1 --> 719262
+Msg 2 --> 693048
+Msg 3 --> 690530
+Msg 4 --> 691596
+Msg 5 --> 654774
+here 11
+Msg 6 --> 386508
+Msg 7 --> 382421
+Msg 8 --> 397708
+Msg 9 --> 367895
+Msg 10 --> 331753
+Msg 11 --> 459321
+Msg 12 --> 490652
+Msg 13 --> 447148
+Msg 14 --> 436648
+Msg 15 --> 423163
+Msg 16 --> 396841
+Msg 17 --> 350411
+Msg 18 --> 547030
+Msg 19 --> 610864
+Msg 20 --> 581013
+Msg 21 --> 551439
+Msg 22 --> 444324
+Msg 23 --> 441025
+Msg 24 --> 446526
+Msg 25 --> 397654
+Msg 26 --> 600282
+Msg 27 --> 542909
+Msg 28 --> 505031
+Msg 29 --> 538989
+Msg 30 --> 473201
+Msg 31 --> 436992
+Msg 32 --> 428349
+Msg 33 --> 389250
+Msg 34 --> 562185
+Msg 35 --> 493726
+Msg 36 --> 385695
+Msg 37 --> 386487
+Msg 38 --> 413534
+DOWN!!
+here 52
+Msg 39 --> 400891
+Msg 40 --> 253007
+UP!!
+here 7
+Packets Sent: 172
+Packets Received: 41an error occured [Ljava.lang.StackTraceElement;@59a48385 Operation timed out
+
+Packet Loss: 131
+Average time: 467075.1707317073
+on duration: 6.110908922939056
+off duration: 26.245079340040085
+msgs: 0.7881695864316265
+close a stream
+Exception in thread "Thread-12" org.java_websocket.exceptions.WebsocketNotConnectedException
+	at org.java_websocket.WebSocketImpl.send(WebSocketImpl.java:566)
+	at org.java_websocket.WebSocketImpl.send(WebSocketImpl.java:543)
+	at eu.chorevolution.vsb.playgrounds.str.websockets.WsServer.send(WsServer.java:67)
+	at eu.chorevolution.vsb.playgrounds.str.websockets.test.StartSourceApplication.sendMsg(StartSourceApplication.java:31)
+	at eu.chorevolution.vsb.playgrounds.str.websockets.test.StartSourceApplication.run(StartSourceApplication.java:38)
+	at java.lang.Thread.run(Thread.java:745)
+DOWN!!
+here 8

@@ -27,7 +27,11 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>websockets-playground</module>
-
+		<module>jWebSocketClientAPI</module>
+		<module>jWebSocketCommon</module>
+		<module>jWebSocketJavaSEClient</module>
+        <module>jWebSocketServerAPI</module>
+        <module>jWebSocketServer</module>
 	</modules>
 
 </project>
