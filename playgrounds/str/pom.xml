@@ -30,8 +30,8 @@
 		<module>jWebSocketClientAPI</module>
 		<module>jWebSocketCommon</module>
 		<module>jWebSocketJavaSEClient</module>
-        <module>jWebSocketServerAPI</module>
-        <module>jWebSocketServer</module>
+		<module>jWebSocketServerAPI</module>
+		<module>jWebSocketServer</module>
 	</modules>
 
 </project>
