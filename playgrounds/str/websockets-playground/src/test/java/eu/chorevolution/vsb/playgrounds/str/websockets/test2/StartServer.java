@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import eu.chorevolution.vsb.playgrounds.str.websockets.WsServer;
 import eu.chorevolution.vsb.playgrounds.str.websockets.WsServer2;
+import eu.chorevolution.vsb.playgrounds.str.websockets.test2.StartExperiment;
 
 
 public class StartServer {

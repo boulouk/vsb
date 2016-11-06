@@ -38,7 +38,7 @@ public class StartExperiment {
 		experimentStartTime = System.nanoTime();
 
 		StartSourceApplication source = new StartSourceApplication(client.client2);
-//		new Thread((Runnable)source).start();
+		new Thread((Runnable)source).start();
 
 
 		new Thread((Runnable)client).start();

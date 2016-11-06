@@ -14,7 +14,7 @@ public class StartClient implements Runnable {
 
 	public WebSocketClient2 client2 = null;
 	public static RangeExp onParameter = new RangeExp(Parameters.onParam);
-	public static RangeExp offParameter = new RangeExp(Parameters.offParam);
+	public static Exp offParameter = new Exp(Parameters.offParam);
 
 	public StartClient() {
 			client2 = new WebSocketClient2();
@@ -43,7 +43,7 @@ public class StartClient implements Runnable {
 					}
 					else {
 						// https://github.com/tylertreat/comcast
-						String[] cmd = {"/bin/bash","-c","echo qqq_04| sudo -Sk /Users/Siddhartha/Documents/Academics/8thSem/go/bin/comcast --stop"};
+						String[] cmd = {"/bin/bash","-c","echo qqq_04| sudo -Sk /home/siddhartha/Downloads/GO/bin/comcast --device lo --stop"};
 //						
 //						Runtime.getRuntime ().exec ("sudo /Users/Siddhartha/Documents/Academics/8thSem/go/bin/comcast --device=eth0 --latency=250 --target-bw=1000 --default-bw=1000000 --packet-loss=100% --target-addr=192.168.0.101 --target-proto=tcp,udp,icmp --target-port=8090");
 						Runtime.getRuntime ().exec (cmd);
@@ -54,7 +54,7 @@ public class StartClient implements Runnable {
 				long param = (long) onParameter.next();
 				System.err.println("here " + param);
 				try {
-					Thread.sleep(7 * 1000);
+					Thread.sleep(param * 1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -68,7 +68,7 @@ public class StartClient implements Runnable {
 					}
 					else {
 						// https://github.com/tylertreat/comcast
-						String[] cmd = {"/bin/bash","-c","echo qqq_04| sudo -Sk /Users/Siddhartha/Documents/Academics/8thSem/go/bin/comcast --device=eth0 --latency=250 --target-bw=1000 --default-bw=1000000 --packet-loss=100% --target-addr=127.0.0.1 --target-proto=tcp,udp,icmp --target-port=8090"};
+						String[] cmd = {"/bin/bash","-c","echo qqq_04| sudo -Sk /home/siddhartha/Downloads/GO/bin/comcast --device=lo --latency=250 --target-bw=1000 --default-bw=1000000 --packet-loss=100% --target-addr=127.0.0.1 --target-proto=tcp,udp,icmp --target-port=8787"};
 //						Runtime.getRuntime ().exec ("sudo /Users/Siddhartha/Documents/Academics/8thSem/go/bin/comcast --stop");
 						Runtime.getRuntime ().exec (cmd);
 					}

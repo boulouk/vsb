@@ -94,7 +94,7 @@ public class WsServer2 {
 	public BlockingQueue<String> msgQueue = new LinkedBlockingQueue<String>();
 
 	public WsServer2(HashMap<Long, Long> endTimeMap) {
-		JWebSocketConfig.initForConsoleApp(new String[]{"-home", "/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/"});
+		JWebSocketConfig.initForConsoleApp(new String[]{"-home", "/home/siddhartha/Documents/jWebSocket-1.0/"});
 		//		JWebSocketConfig.initForConsoleApp(new String[]{"-home", "/Users/Siddhartha/Documents/Academics/8thSem/inria/git/evolution-service-bus/playgrounds/str/websockets-playground/"});
 		JWebSocketFactory.start();
 		TokenServer server = (TokenServer) JWebSocketFactory.getServer("ts0");
@@ -102,153 +102,153 @@ public class WsServer2 {
 		if(server!=null)
 			server.addListener(listener);
 		
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					Thread.sleep(6000);
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				while (true) {
-					try {
-						server.sendPacket(listener.getConnector(), new WebSocketPacket() {
-							
-							@Override
-							public void setUTF8(String aString) {
-								// TODO Auto-generated method stub
-								
-							}
-							
-							@Override
-							public void setTimeout(long aMilliseconds) {
-								// TODO Auto-generated method stub
-								
-							}
-							
-							@Override
-							public void setString(String aString, String aEncoding)
-									throws UnsupportedEncodingException {
-								// TODO Auto-generated method stub
-								
-							}
-							
-							@Override
-							public void setString(String aString) {
-								// TODO Auto-generated method stub
-								
-							}
-							
-							@Override
-							public void setFrameType(WebSocketFrameType aFrameType) {
-								// TODO Auto-generated method stub
-								
-							}
-							
-							@Override
-							public void setFragment(String aString, int aIdx) {
-								// TODO Auto-generated method stub
-								
-							}
-							
-							@Override
-							public void setCreationDate(Date aDate) {
-								// TODO Auto-generated method stub
-								
-							}
-							
-							@Override
-							public void setByteArray(byte[] aByteArray) {
-								// TODO Auto-generated method stub
-								
-							}
-							
-							@Override
-							public void setASCII(String aString) {
-								// TODO Auto-generated method stub
-								
-							}
-							
-							@Override
-							public void packFragments() {
-								// TODO Auto-generated method stub
-								
-							}
-							
-							@Override
-							public boolean isTimedOut() {
-								// TODO Auto-generated method stub
-								return false;
-							}
-							
-							@Override
-							public boolean isFragmented() {
-								// TODO Auto-generated method stub
-								return false;
-							}
-							
-							@Override
-							public boolean isComplete() {
-								// TODO Auto-generated method stub
-								return true;
-							}
-							
-							@Override
-							public void initFragmented(int aTotal) {
-								// TODO Auto-generated method stub
-								
-							}
-							
-							@Override
-							public String getUTF8() {
-								// TODO Auto-generated method stub
-								return "apple";
-							}
-							
-							@Override
-							public String getString(String aEncoding)
-									throws UnsupportedEncodingException {
-								// TODO Auto-generated method stub
-								return "apple";
-							}
-							
-							@Override
-							public String getString() {
-								// TODO Auto-generated method stub
-								return "apple";
-							}
-							
-							@Override
-							public WebSocketFrameType getFrameType() {
-								// TODO Auto-generated method stub
-								return WebSocketFrameType.TEXT;
-							}
-							
-							@Override
-							public Date getCreationDate() {
-								// TODO Auto-generated method stub
-								return null;
-							}
-							
-							@Override
-							public byte[] getByteArray() {
-								// TODO Auto-generated method stub
-								return "apple".getBytes();
-							}
-							
-							@Override
-							public String getASCII() {
-								// TODO Auto-generated method stub
-								return "apple";
-							}
-						});
-						Thread.sleep(250);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			};}).start();
+//		new Thread(new Runnable() {
+//			@Override
+//			public void run() {
+//				try {
+//					Thread.sleep(6000);
+//				} catch (InterruptedException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//				while (true) {
+//					try {
+//						server.sendPacket(listener.getConnector(), new WebSocketPacket() {
+//							
+//							@Override
+//							public void setUTF8(String aString) {
+//								// TODO Auto-generated method stub
+//								
+//							}
+//							
+//							@Override
+//							public void setTimeout(long aMilliseconds) {
+//								// TODO Auto-generated method stub
+//								
+//							}
+//							
+//							@Override
+//							public void setString(String aString, String aEncoding)
+//									throws UnsupportedEncodingException {
+//								// TODO Auto-generated method stub
+//								
+//							}
+//							
+//							@Override
+//							public void setString(String aString) {
+//								// TODO Auto-generated method stub
+//								
+//							}
+//							
+//							@Override
+//							public void setFrameType(WebSocketFrameType aFrameType) {
+//								// TODO Auto-generated method stub
+//								
+//							}
+//							
+//							@Override
+//							public void setFragment(String aString, int aIdx) {
+//								// TODO Auto-generated method stub
+//								
+//							}
+//							
+//							@Override
+//							public void setCreationDate(Date aDate) {
+//								// TODO Auto-generated method stub
+//								
+//							}
+//							
+//							@Override
+//							public void setByteArray(byte[] aByteArray) {
+//								// TODO Auto-generated method stub
+//								
+//							}
+//							
+//							@Override
+//							public void setASCII(String aString) {
+//								// TODO Auto-generated method stub
+//								
+//							}
+//							
+//							@Override
+//							public void packFragments() {
+//								// TODO Auto-generated method stub
+//								
+//							}
+//							
+//							@Override
+//							public boolean isTimedOut() {
+//								// TODO Auto-generated method stub
+//								return false;
+//							}
+//							
+//							@Override
+//							public boolean isFragmented() {
+//								// TODO Auto-generated method stub
+//								return false;
+//							}
+//							
+//							@Override
+//							public boolean isComplete() {
+//								// TODO Auto-generated method stub
+//								return true;
+//							}
+//							
+//							@Override
+//							public void initFragmented(int aTotal) {
+//								// TODO Auto-generated method stub
+//								
+//							}
+//							
+//							@Override
+//							public String getUTF8() {
+//								// TODO Auto-generated method stub
+//								return "apple";
+//							}
+//							
+//							@Override
+//							public String getString(String aEncoding)
+//									throws UnsupportedEncodingException {
+//								// TODO Auto-generated method stub
+//								return "apple";
+//							}
+//							
+//							@Override
+//							public String getString() {
+//								// TODO Auto-generated method stub
+//								return "apple";
+//							}
+//							
+//							@Override
+//							public WebSocketFrameType getFrameType() {
+//								// TODO Auto-generated method stub
+//								return WebSocketFrameType.TEXT;
+//							}
+//							
+//							@Override
+//							public Date getCreationDate() {
+//								// TODO Auto-generated method stub
+//								return null;
+//							}
+//							
+//							@Override
+//							public byte[] getByteArray() {
+//								// TODO Auto-generated method stub
+//								return "apple".getBytes();
+//							}
+//							
+//							@Override
+//							public String getASCII() {
+//								// TODO Auto-generated method stub
+//								return "apple";
+//							}
+//						});
+//						Thread.sleep(250);
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//				}
+//			};}).start();
 		//		while (JWebSocketInstance.getStatus()!=JWebSocketInstance.SHUTTING_DOWN)
 		//			try {
 		//				Thread.sleep(250);
@@ -259,7 +259,7 @@ public class WsServer2 {
 
 	public static void main(String[] args){
 		//		JWebSocketFactory.printCopyrightToConsole();
-		JWebSocketConfig.initForConsoleApp(new String[]{"-home", "/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/"});
+		JWebSocketConfig.initForConsoleApp(new String[]{"-home", "/home/siddhartha/Documents/jWebSocket-1.0/"});
 		//		JWebSocketConfig.initForConsoleApp(new String[]{"-home", "/Users/Siddhartha/Documents/Academics/8thSem/inria/git/evolution-service-bus/playgrounds/str/websockets-playground/"});
 		JWebSocketFactory.start();
 		TokenServer server = (TokenServer) JWebSocketFactory.getServer("ts0");
