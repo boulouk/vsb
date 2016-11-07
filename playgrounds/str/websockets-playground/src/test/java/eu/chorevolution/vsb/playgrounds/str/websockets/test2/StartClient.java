@@ -13,7 +13,7 @@ import eu.chorevolution.vsb.playgrounds.str.websockets.test.utils.RangeExp;
 public class StartClient implements Runnable {
 
 	public WebSocketClient2 client2 = null;
-	public static RangeExp onParameter = new RangeExp(Parameters.onParam);
+	public static Exp onParameter = new Exp(Parameters.onParam);
 	public static Exp offParameter = new Exp(Parameters.offParam);
 
 	public StartClient() {

@@ -214,19 +214,14 @@ public class WebSocketProtocolAbstraction {
 	 * @throws Exception
 	 */
 	public static WebSocketPacket protocolToRawPacket(int aVersion, InputStream aIS) throws Exception {
-		int r = 0;
-		r = 1;System.out.println("r=" + r);
 		// begin normal packet read
 		int lFlags = aIS.read();
-		r = 2;System.out.println("r=" + r);
 		if (lFlags == -1) {
 			return null;
 		}
 
 		// TODO: handle if stream gets closed within this method!
-		r=3;System.out.println("r=" + r);
 		ByteArrayOutputStream aBuff = new ByteArrayOutputStream();
-		r=4;System.out.println("r=" + r);
 		// determine fragmentation
 		// from Hybi Draft 04 it's the FIN flag < 04 its a more flag ;-)
 		boolean lFragmented = (aVersion >= 4
@@ -238,7 +233,6 @@ public class WebSocketProtocolAbstraction {
 		// ignore upper 4 bits for now
 		int lOpcode = lFlags & 0x0F;
 		WebSocketFrameType lFrameType = WebSocketProtocolAbstraction.opcodeToFrameType(aVersion, lOpcode);
-		r=5;System.out.println("r=" + r);
 		if (lFrameType == WebSocketFrameType.INVALID) {
 			// Could not determine packet type, ignore the packet.
 			// Maybe we need a setting to decide, if such packets should abort the connection?
@@ -248,24 +242,18 @@ public class WebSocketProtocolAbstraction {
 			 */
 		} else {
 			// Ignore first bit. Payload length is next seven bits, unless its value is greater than 125.
-			r=6;System.out.println("r=" + r);
 			long lPayloadLen = read(aIS);
-			r=7;System.out.println("r=" + r);
 			// TODO: officially unmasked frames may not be accepted anymore, since hybi draft #10
 			lMasked = (lPayloadLen & 0x80) == 0x80;
 			lPayloadLen &= 0x7F;
 
 			if (lPayloadLen == 126) {
 				// following two bytes are acutal payload length (16-bit unsigned integer)
-				r=8;System.out.println("r=" + r);
 				lPayloadLen = read(aIS) & 0xFF;
-				r=9;System.out.println("r=" + r);
 				lPayloadLen = (lPayloadLen << 8) | (read(aIS) & 0xFF);
 			} else if (lPayloadLen == 127) {
 				// following eight bytes are actual payload length (64-bit unsigned integer)
-				r=10;System.out.println("r=" + r);
 				lPayloadLen = read(aIS) & 0xFF;
-				r=11;System.out.println("r=" + r);
 				lPayloadLen = (lPayloadLen << 8) | (read(aIS) & 0xFF);
 				lPayloadLen = (lPayloadLen << 8) | (read(aIS) & 0xFF);
 				lPayloadLen = (lPayloadLen << 8) | (read(aIS) & 0xFF);
@@ -286,7 +274,6 @@ public class WebSocketProtocolAbstraction {
 				// payload length may be extremely long, so we read in loop rather
 				// than construct one byte[] array and fill it with read() method,
 				// because java does not allow longs as array size
-				r=12;System.out.println("r=" + r);
 				if (lMasked) {
 					int j = 0;
 					while (lPayloadLen-- > 0) {
@@ -294,20 +281,14 @@ public class WebSocketProtocolAbstraction {
 						j++;
 						j &= 3;
 					}
-					r=13;System.out.println("r=" + r);
 				} else {
-					r=14;System.out.println("r=" + r);
 					while (lPayloadLen-- > 0) {
 						aBuff.write(read(aIS));
 					}
-					r=15;System.out.println("r=" + r);
 				}
 			}
 		}
-		r=16;System.out.println("r=" + r);
 		WebSocketPacket lRes = new RawPacket(lFrameType, aBuff.toByteArray());
-		r=17;
-		System.out.println("r=" + r);
 		return lRes;
 	}
 

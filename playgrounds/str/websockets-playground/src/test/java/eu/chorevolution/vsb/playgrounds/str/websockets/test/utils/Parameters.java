@@ -18,9 +18,9 @@ public class Parameters {
     //1,5 hour
 //    static long duration = 5400000;
 //    1 hour
-//    public static long experimentDuration = 3600000;
+    public static long experimentDuration = 3600000;
 //    30 min
-    public static long experimentDuration = 1800000;
+//    public static long experimentDuration = 1800000;
 //    5 min
     //static long duration = 300000;
 //    3 min
