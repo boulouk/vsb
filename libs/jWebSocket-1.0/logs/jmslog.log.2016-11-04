@@ -1,0 +1,20 @@
+2016-11-04 17:24:27,039: Creating a new instance of CacheManager using the diskStorePath "/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/cache" which is already used by an existing CacheManager.
+The source of the configuration was net.sf.ehcache.config.generator.ConfigurationSource$InputStreamConfigurationSource@4e5c6185.
+The diskStore path for this CacheManager will be set to /Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/cache/ehcache_auto_created_1478260467039.
+To avoid this warning consider using the CacheManager factory methods to create a singleton CacheManager or specifying a separate ehcache configuration (ehcache.xml) for each CacheManager instance.
+2016-11-04 17:26:50,645: Creating a new instance of CacheManager using the diskStorePath "/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/cache" which is already used by an existing CacheManager.
+The source of the configuration was net.sf.ehcache.config.generator.ConfigurationSource$InputStreamConfigurationSource@5272b1f9.
+The diskStore path for this CacheManager will be set to /Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/cache/ehcache_auto_created_1478260610645.
+To avoid this warning consider using the CacheManager factory methods to create a singleton CacheManager or specifying a separate ehcache configuration (ehcache.xml) for each CacheManager instance.
+2016-11-04 17:33:00,150: Creating a new instance of CacheManager using the diskStorePath "/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/cache" which is already used by an existing CacheManager.
+The source of the configuration was net.sf.ehcache.config.generator.ConfigurationSource$InputStreamConfigurationSource@517ed523.
+The diskStore path for this CacheManager will be set to /Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/cache/ehcache_auto_created_1478260980150.
+To avoid this warning consider using the CacheManager factory methods to create a singleton CacheManager or specifying a separate ehcache configuration (ehcache.xml) for each CacheManager instance.
+2016-11-04 17:42:32,580: Creating a new instance of CacheManager using the diskStorePath "/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/cache" which is already used by an existing CacheManager.
+The source of the configuration was net.sf.ehcache.config.generator.ConfigurationSource$InputStreamConfigurationSource@349a57d6.
+The diskStore path for this CacheManager will be set to /Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/cache/ehcache_auto_created_1478261552580.
+To avoid this warning consider using the CacheManager factory methods to create a singleton CacheManager or specifying a separate ehcache configuration (ehcache.xml) for each CacheManager instance.
+2016-11-04 18:29:39,175: Creating a new instance of CacheManager using the diskStorePath "/Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/cache" which is already used by an existing CacheManager.
+The source of the configuration was net.sf.ehcache.config.generator.ConfigurationSource$InputStreamConfigurationSource@1b75919d.
+The diskStore path for this CacheManager will be set to /Users/Siddhartha/Documents/Academics/7th Sem/placements/apac/jWebSocket-1.0/cache/ehcache_auto_created_1478264379175.
+To avoid this warning consider using the CacheManager factory methods to create a singleton CacheManager or specifying a separate ehcache configuration (ehcache.xml) for each CacheManager instance.
