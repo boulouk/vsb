@@ -53,7 +53,7 @@ public class NetworkToggle implements Runnable {
 					}
 					else {
 						// https://github.com/tylertreat/comcast
-						String[] cmd = {"/bin/bash","-c","echo qqq_04| sudo -Sk /Users/Siddhartha/Documents/Academics/8thSem/go/bin/comcast --device=lo --latency=250 --target-bw=1000 --default-bw=1000000 --packet-loss=100% --target-addr=127.0.0.1 --target-proto=tcp,udp,icmp --target-port=8787"};
+						String[] cmd = {"/bin/bash","-c","echo qqq_04| sudo -Sk /Users/Siddhartha/Documents/Academics/8thSem/go/bin/comcast --device=lo --latency=250 --target-bw=1000 --default-bw=1000000 --packet-loss=100% --target-addr=127.0.0.1 --target-proto=tcp,udp,icmp --target-port=5683"};
 //						Runtime.getRuntime ().exec ("sudo /Users/Siddhartha/Documents/Academics/8thSem/go/bin/comcast --stop");
 						Runtime.getRuntime ().exec (cmd);
 					}
