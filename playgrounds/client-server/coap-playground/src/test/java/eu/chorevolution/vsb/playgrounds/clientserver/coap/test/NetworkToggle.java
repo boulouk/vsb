@@ -19,7 +19,6 @@ public class NetworkToggle implements Runnable {
 	public void run() {
 		boolean localFlag = true;
 		while (StartExperiment.experimentRunning) {
-			System.out.println("ge");
 			if(localFlag == true) {
 				System.err.println("UP!!");
 				localFlag = false;

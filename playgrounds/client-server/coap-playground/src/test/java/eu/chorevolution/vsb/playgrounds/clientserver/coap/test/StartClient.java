@@ -16,7 +16,6 @@ public class StartClient {
 
 	public StartClient(HashMap<Long, Long> endTimeMap) {
 		client = new ObserverClient(endTimeMap);
-		System.out.println("fewfc");
 		if(StartExperiment.DEBUG) { 
 			new Thread(new MessageReader(endTimeMap)).start();
 		}

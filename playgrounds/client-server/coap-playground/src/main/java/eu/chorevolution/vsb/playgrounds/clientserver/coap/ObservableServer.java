@@ -19,7 +19,14 @@ public class ObservableServer extends CoapResource {
 	
 	boolean firstCall = true;
 	
-	void sendMsg(boolean firstCall, CoapExchange exchange) {
+	public ObservableServer(String name) {
+		super(name);
+		setObservable(true); // enable observing
+		setObserveType(Type.NON); // configure the notification type to CONs
+		getAttributes().setObservable(); // mark observable in the Link-Format
+	}
+	
+	void sendMsg(CoapExchange exchange) {
 		String msg = "Msg " + counter;
 		if(StartExperiment.DEBUG) {
 			synchronized (StartExperiment.startTimeMap) {
@@ -33,20 +40,12 @@ public class ObservableServer extends CoapResource {
 		counter++;
 	}
 
-	public ObservableServer(String name) {
-		super(name);
-		setObservable(true); // enable observing
-		setObserveType(Type.NON); // configure the notification type to CONs
-		getAttributes().setObservable(); // mark observable in the Link-Format
-	}
-
 	private class UpdateTask implements Runnable {
 		@Override
 		public void run() {
-			System.out.println("apple");
 			while (StartExperiment.experimentRunning) {
 				try {
-					Thread.sleep(2 * 1000);
+					Thread.sleep((long)waitDuration.next() * 1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -59,7 +58,7 @@ public class ObservableServer extends CoapResource {
 	@Override
 	public void handleGET(CoapExchange exchange) {
 		exchange.setMaxAge(1000); // the Max-Age value should match the update interval
-		sendMsg(firstCall, exchange);
+		sendMsg(exchange);
 		if(firstCall) {
 			firstCall = false;
 			new Thread(new UpdateTask()).run();
