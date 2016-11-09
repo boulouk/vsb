@@ -25,6 +25,8 @@ public class ObserverClient {
 	public ObserverClient(HashMap<Long, Long> endTimeMap) {
 		this.endTimeMap = endTimeMap;
 		client = new CoapClient("coap://127.0.0.1:5683/hello");
+		client.useNONs();
+		client.setTimeout(1000000000);
 		new Thread(new ServerListener(endTimeMap)).start();
 	}
 
