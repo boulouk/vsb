@@ -18,6 +18,7 @@ import eu.chorevolution.vsb.gmdl.utils.Operation;
 import eu.chorevolution.vsb.gmdl.utils.Scope;
 import eu.chorevolution.vsb.gmdl.utils.enums.OperationType;
 import eu.chorevolution.vsb.gmdl.utils.enums.ProtocolType;
+import eu.chorevolution.vsb.gmdl.utils.enums.QosType;
 import eu.chorevolution.vsb.gmdl.utils.enums.RoleType;
 import eu.chorevolution.vsb.gmdl.utils.enums.Verb;
 
@@ -161,7 +162,7 @@ public class BcSoapGeneratorDTSGoogleTest {
 //		scope1.setUri("/mes/get_metadata_in_area?collection=weather&{period}");
 		scope1.setUri("/maps/api/directions/json?origin={origin}&destination={destination}&key={key}");
 
-		Operation twoWayOperation1 = new Operation("operation_1", scope1, OperationType.TWO_WAY_SYNC);
+		Operation twoWayOperation1 = new Operation("operation_1", OperationType.TWO_WAY_SYNC, QosType.RELIABLE, scope1);
 		twoWayOperation1.addGetData(origin);
 		twoWayOperation1.addGetData(destination);
 		twoWayOperation1.addGetData(key);

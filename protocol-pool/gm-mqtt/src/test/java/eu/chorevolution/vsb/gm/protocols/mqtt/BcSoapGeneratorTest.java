@@ -14,6 +14,7 @@ import eu.chorevolution.vsb.gmdl.utils.Operation;
 import eu.chorevolution.vsb.gmdl.utils.Scope;
 import eu.chorevolution.vsb.gmdl.utils.enums.OperationType;
 import eu.chorevolution.vsb.gmdl.utils.enums.ProtocolType;
+import eu.chorevolution.vsb.gmdl.utils.enums.QosType;
 import eu.chorevolution.vsb.gmdl.utils.enums.RoleType;
 import eu.chorevolution.vsb.gmdl.utils.enums.Verb;
 
@@ -47,7 +48,7 @@ public class BcSoapGeneratorTest {
     scope1.setName("postTrafficLight");
     scope1.setVerb(Verb.POST);
     scope1.setUri("/traffic-lights");
-    Operation oneWayOperation = new Operation("operation_1", scope1,OperationType.ONE_WAY);
+    Operation oneWayOperation = new Operation("operation_1", OperationType.ONE_WAY, QosType.RELIABLE, scope1);
     Data<?> getData1 = light;
     oneWayOperation.addGetData(getData1);
     serviceDefinition.addOperation(oneWayOperation);
@@ -57,7 +58,7 @@ public class BcSoapGeneratorTest {
     scope2.setName("getTrafficLight");
     scope2.setVerb(Verb.GET);
     scope2.setUri("/traffic-lights/{id}");
-    Operation twoWayOperation = new Operation("operation_2",scope2,OperationType.TWO_WAY_SYNC);
+    Operation twoWayOperation = new Operation("operation_2", OperationType.TWO_WAY_SYNC, QosType.RELIABLE, scope2);
     Data<?> getData2 = id;
     twoWayOperation.addGetData(getData2);
     Data<?> postData = light;

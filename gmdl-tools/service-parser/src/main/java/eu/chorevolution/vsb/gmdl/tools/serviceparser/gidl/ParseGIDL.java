@@ -134,7 +134,7 @@ public class ParseGIDL {
 			}
 			else if(dataType instanceof ComplexType) {
 				String dataTypeClassStr = "object";
-				if(((SimpleType) dataType).getOccurences() == OccurrencesTypes.UNBOUNDED) {
+				if(((ComplexType) dataType).getOccurences() == OccurrencesTypes.UNBOUNDED) {
 					dataTypeClassStr = "List<" + dataTypeClassStr +">"; 
 				}
 				data = new Data(((ComplexType)dataType).getName(), dataTypeClassStr, true, "application/json", con, true);
@@ -163,7 +163,7 @@ public class ParseGIDL {
 			}
 			else if(dataType instanceof ComplexType) {
 				String dataTypeClassStr = "object";
-				if(((SimpleType) dataType).getOccurences() == OccurrencesTypes.UNBOUNDED) {
+				if(((ComplexType) dataType).getOccurences() == OccurrencesTypes.UNBOUNDED) {
 					dataTypeClassStr = "List<" + dataTypeClassStr +">"; 
 				}
 				childData = new Data(((ComplexType)dataType).getName(), dataTypeClassStr, true, "application/json", null, true);

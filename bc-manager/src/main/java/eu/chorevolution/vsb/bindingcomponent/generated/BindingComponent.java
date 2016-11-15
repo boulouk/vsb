@@ -26,7 +26,7 @@ public class BindingComponent {
         intNine = Integer.parseInt("9");
         String interfaceDescFilePath;
         interfaceDescFilePath = ((((new File(BcManagerRestService.class.getClassLoader().getResource("example.json").toExternalForm().substring(intNine)).getParentFile().getParentFile().getParentFile().getParentFile().getAbsolutePath()+ File.separator)+ new String("config"))+ File.separator)+ new String("serviceDescription.gxdl"));
-        gmServiceRepresentation = ServiceDescriptionParser.getRepresentationFromGMDL(interfaceDescFilePath);
+        gmServiceRepresentation = ServiceDescriptionParser.getRepresentationFromGIDL(interfaceDescFilePath);
         int num_interfaces = gmServiceRepresentation.getInterfaces().size();
         subcomponent = new BcGmSubcomponent[num_interfaces][2];
         for (int i = 0; (i<gmServiceRepresentation.getInterfaces().size()); i += 1) {

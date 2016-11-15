@@ -14,6 +14,7 @@ import eu.chorevolution.vsb.gmdl.utils.Operation;
 import eu.chorevolution.vsb.gmdl.utils.Scope;
 import eu.chorevolution.vsb.gmdl.utils.enums.OperationType;
 import eu.chorevolution.vsb.gmdl.utils.enums.ProtocolType;
+import eu.chorevolution.vsb.gmdl.utils.enums.QosType;
 import eu.chorevolution.vsb.gmdl.utils.enums.RoleType;
 import eu.chorevolution.vsb.gmdl.utils.enums.Verb;
 
@@ -106,7 +107,7 @@ public class BcSoapGeneratorWeatherTest {
 		scope1.setVerb(Verb.GET);
 		scope1.setUri("/mes/get_metadata_in_area?collection=weather&{period}");
 
-		Operation twoWayOperation1 = new Operation("operation_1", scope1, OperationType.TWO_WAY_SYNC);
+		Operation twoWayOperation1 = new Operation("operation_1", OperationType.TWO_WAY_SYNC, QosType.RELIABLE, scope1);
 		twoWayOperation1.addGetData(period);
 		twoWayOperation1.setPostData(rootClass);
 
@@ -121,7 +122,7 @@ public class BcSoapGeneratorWeatherTest {
 		scope2.setVerb(Verb.GET);
 		scope2.setUri("/mes/get_metadata_in_area?collection=weather&{period}&{lat}&{lon}&{radius}");
 
-		Operation twoWayOperation2 = new Operation("operation_2", scope2, OperationType.TWO_WAY_SYNC);
+		Operation twoWayOperation2 = new Operation("operation_2", OperationType.TWO_WAY_SYNC, QosType.RELIABLE, scope2);
 		twoWayOperation2.addGetData(period);
 		twoWayOperation2.addGetData(latitude);
 		twoWayOperation2.addGetData(longitude);

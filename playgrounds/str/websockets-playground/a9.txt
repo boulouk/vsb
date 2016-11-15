@@ -1,30 +1,28 @@
-2016-11-05 23:47:29,291 DEBUG - TokenServer: Processing token '{}' from '01.60183.0 (127.0.0.1:60183)'...
-r=1
-Msg 20 --> 6570710
-java.net.SocketException: Operation timed out
-	at java.net.SocketInputStream.socketRead0(Native Method)
-	at java.net.SocketInputStream.read(SocketInputStream.java:150)
-	at java.net.SocketInputStream.read(SocketInputStream.java:121)
-	at java.net.SocketInputStream.read(SocketInputStream.java:203)
-	at org.jwebsocket.kit.WebSocketProtocolAbstraction.protocolToRawPacket(WebSocketProtocolAbstraction.java:220)
-	at org.jwebsocket.client.java.BaseWebSocketClient$WebSocketReceiver.processHybi(BaseWebSocketClient.java:1000)
-	at org.jwebsocket.client.java.BaseWebSocketClient$WebSocketReceiver.run(BaseWebSocketClient.java:912)
-Exception in thread "jWebSocket-Client 18" java.lang.NullPointerException
-	at org.jwebsocket.client.java.BaseWebSocketClient$WebSocketReceiver.processHybi(BaseWebSocketClient.java:1027)
-	at org.jwebsocket.client.java.BaseWebSocketClient$WebSocketReceiver.run(BaseWebSocketClient.java:912)
-Nov 05, 2016 11:48:25 PM eu.chorevolution.vsb.playgrounds.str.websockets.WebSocketClient2 send
-SEVERE: null
-org.jwebsocket.kit.WebSocketException: Error while sending socket data: 
-	at org.jwebsocket.client.java.BaseWebSocketClient.sendInternal(BaseWebSocketClient.java:445)
-	at org.jwebsocket.client.java.BaseWebSocketClient.sendInTransaction(BaseWebSocketClient.java:375)
-	at org.jwebsocket.client.java.BaseWebSocketClient.send(BaseWebSocketClient.java:384)
-	at eu.chorevolution.vsb.playgrounds.str.websockets.WebSocketClient2.send(WebSocketClient2.java:46)
-	at eu.chorevolution.vsb.playgrounds.str.websockets.test2.StartSourceApplication.sendMsg(StartSourceApplication.java:32)
-	at eu.chorevolution.vsb.playgrounds.str.websockets.test2.StartSourceApplication.run(StartSourceApplication.java:39)
-	at java.lang.Thread.run(Thread.java:745)
-Caused by: java.net.SocketException: Broken pipe
-	at java.net.SocketOutputStream.socketWrite0(Native Method)
-	at java.net.SocketOutputStream.socketWrite(SocketOutputStream.java:109)
-	at java.net.SocketOutputStream.write(SocketOutputStream.java:141)
-	at org.jwebsocket.client.java.BaseWebSocketClient.sendInternal(BaseWebSocketClient.java:440)
-	... 6 more
+1. comments section integration with other media bodies - win win for us an existing media companies
+2. within the article have interactive question
+3. media company or tech company with heavy use of nlp
+4. long articles or short ones, how much backstory/ background
+5. both side debates entire paras or extracting imp points and displaying them on top linking them to explanations below
+6. bring top leader views
+7. why not a full on media company that can collate and aggregate views 
+8. local languages, why werent rural trump supporters seen online, exchange of info b/w rural and urban population
+9. You can also convert users or friends over to your side. “If I decide to switch my position because of a friend’s reason, they get social credit for that,” Mahan said. “That’s our highest signal-to-noise ratio.”
+10. have one on one debate competitions (min upvote posts first before able to do that)
+11. voice for rural areas
+12. Exposing stances on controversial issues can cause points of contentions with friends, family, and colleagues. Many are happy to quietly vote for their beliefs, but might not want to trumpet them in perpetuity online.
+ - anonymize
+13. If users are willing, they’re likely already able to do this elsewhere. Politics enthusiasts frequently take to Twitter, which has the scale to give them a large audience, and easy ways to get the message amplified through retweets. Broad opinion sharing networks like State have failed to capture a significant user base.
+14.  Brigade had announced that it was partnering with a “carefully curated” set of organizations: Rainforest Action Network, Americans for Tax Reform, the Drug Policy Alliance, Represent.Us, Generation Opportunity, Forecast the Facts, FreedomWorks and Iraq and Afghanistan Veterans of America.
+15.  Brigade had announced that it was partnering with a “carefully curated” set of organizations: Rainforest Action Network, Americans for Tax Reform, the Drug Policy Alliance, Represent.Us, Generation Opportunity, Forecast the Facts, FreedomWorks and Iraq and Afghanistan Veterans of America.
+16. n/w effects, more people, the better it will be for everyone
+17. municipal level problems : steel flyover in bangalore? kaizala, ms hackathon app, convey pproblems to munipilatiy
+18. civic social n/w? civic lives have become decoupled from their social lives
+19.  information inefficiency — people don’t know who their elected officials are — and that’s true
+make politics more transparent
+20. The one thing I would say about the advertising is that we believe we can craft certain types of advertising products and experiences that are creative to the user experience and that’s a big guiding principle for us. And let me just give you one thing, I’m sure you hear that from every company, so let me just give you one piece which is, it’s something we’re very focused on at Causes, actually, and we’ve had a lot of success with. What we were able to do, we were able to do, we worked with about seventy Fortune 500 brands, and the goal was to connect, in that case, consumers and donors with brands that shared their values. So if you believed in minimum wage reform, we could put you in touch with Macy’s who passed minimum wage reform.* If you’re concerned about texting and driving, we can talk to you about AT&T and the work they’re doing on texting and driving. And what we found was, looking at everything from surveys and qualitative data, to conversion rates, share rates, and quantitative data, those campaigns did really, really well and users enjoyed them, because they agreed with what they were doing.
+Q:	So is that the theory of change? You’re trying to aggregate interest and demand around the issues people care about? And then that aggregated interest will then interface with offline institutions in some way?
+
+
+
+
+https://www.project-syndicate.org/about

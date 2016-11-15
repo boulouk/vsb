@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gidl:GIDLModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gidl="http://eu.chorevolution/modelingnotations/gidl" hostAddress="https://maps.google.com/" protocol="REST">
+  <hasInterfaces role="provider">
+    <hasOperations name="getMetadataInArea" type="two_way_sync" qos="reliable">
+      <hasScope name="routeRequest" verb="GET" uri="/maps/api/directions/json?origin={arg0}&amp;destination={arg1}&amp;key=AIzaSyBhfNR1PHo8EsuxjLr3EO-sNnfoUDh4ilw"/>
+      <inputData name="input" context="path">
+        <hasDataType xsi:type="gidl:SimpleType" name="arg0" occurences="one" type="string"/>
+      </inputData>
+      <inputData name="input" context="path">
+        <hasDataType xsi:type="gidl:SimpleType" name="arg1" occurences="one" type="string"/>
+      </inputData>
+      <outputData name="output" context="body">
+        <hasDataType xsi:type="gidl:ComplexType" name="route" occurences="one">
+          <hasDataType xsi:type="gidl:ComplexType" name="geocoded_waypoints" occurences="one">
+            <hasDataType xsi:type="gidl:SimpleType" name="geocoder_status" occurences="one" type="string"/>
+            <hasDataType xsi:type="gidl:SimpleType" name="place_id" occurences="one" type="string"/>
+            <hasDataType xsi:type="gidl:SimpleType" name="types" occurences="one" type="string"/>
+          </hasDataType>
+          <hasDataType xsi:type="gidl:ComplexType" name="routes" occurences="one">
+            <hasDataType xsi:type="gidl:ComplexType" name="bounds" occurences="one">
+              <hasDataType xsi:type="gidl:ComplexType" name="northeast" occurences="one">
+                <hasDataType xsi:type="gidl:SimpleType" name="lat" occurences="one" type="decimal"/>
+                <hasDataType xsi:type="gidl:SimpleType" name="lng" occurences="one" type="decimal"/>
+              </hasDataType>
+              <hasDataType xsi:type="gidl:ComplexType" name="southwest" occurences="one">
+                <hasDataType xsi:type="gidl:SimpleType" name="lat" occurences="one" type="decimal"/>
+                <hasDataType xsi:type="gidl:SimpleType" name="lng" occurences="one" type="decimal"/>
+              </hasDataType>
+            </hasDataType>
+            <hasDataType xsi:type="gidl:SimpleType" name="copyrights" occurences="one" type="string"/>
+            <hasDataType xsi:type="gidl:ComplexType" name="legs" occurences="one">
+              <hasDataType xsi:type="gidl:ComplexType" name="distance" occurences="one">
+                <hasDataType xsi:type="gidl:SimpleType" name="text" occurences="one" type="string"/>
+                <hasDataType xsi:type="gidl:SimpleType" name="value" occurences="one" type="decimal"/>
+              </hasDataType>
+              <hasDataType xsi:type="gidl:ComplexType" name="duration" occurences="one">
+                <hasDataType xsi:type="gidl:SimpleType" name="text" occurences="one" type="string"/>
+                <hasDataType xsi:type="gidl:SimpleType" name="value" occurences="one" type="decimal"/>
+              </hasDataType>
+              <hasDataType xsi:type="gidl:SimpleType" name="end_address" occurences="one" type="string"/>
+              <hasDataType xsi:type="gidl:ComplexType" name="end_location" occurences="one">
+                <hasDataType xsi:type="gidl:SimpleType" name="lat" occurences="one" type="decimal"/>
+                <hasDataType xsi:type="gidl:SimpleType" name="lng" occurences="one" type="decimal"/>
+              </hasDataType>
+              <hasDataType xsi:type="gidl:SimpleType" name="start_address" occurences="one" type="string"/>
+              <hasDataType xsi:type="gidl:ComplexType" name="start_location" occurences="one">
+                <hasDataType xsi:type="gidl:SimpleType" name="lat" occurences="one" type="decimal"/>
+                <hasDataType xsi:type="gidl:SimpleType" name="lng" occurences="one" type="decimal"/>
+              </hasDataType>
+              <hasDataType xsi:type="gidl:ComplexType" name="steps" occurences="one">
+                <hasDataType xsi:type="gidl:ComplexType" name="distance" occurences="one">
+                  <hasDataType xsi:type="gidl:SimpleType" name="text" occurences="one" type="string"/>
+                  <hasDataType xsi:type="gidl:SimpleType" name="value" occurences="one" type="decimal"/>
+                </hasDataType>
+                <hasDataType xsi:type="gidl:ComplexType" name="duration" occurences="one">
+                  <hasDataType xsi:type="gidl:SimpleType" name="text" occurences="one" type="string"/>
+                  <hasDataType xsi:type="gidl:SimpleType" name="value" occurences="one" type="decimal"/>
+                </hasDataType>
+                <hasDataType xsi:type="gidl:ComplexType" name="end_location" occurences="one">
+                  <hasDataType xsi:type="gidl:SimpleType" name="lat" occurences="one" type="decimal"/>
+                  <hasDataType xsi:type="gidl:SimpleType" name="lng" occurences="one" type="decimal"/>
+                </hasDataType>
+                <hasDataType xsi:type="gidl:SimpleType" name="html_instructions" occurences="one" type="string"/>
+                <hasDataType xsi:type="gidl:SimpleType" name="maneuver" occurences="one" type="string"/>
+                <hasDataType xsi:type="gidl:ComplexType" name="polyline" occurences="one">
+                  <hasDataType xsi:type="gidl:SimpleType" name="points" occurences="one" type="string"/>
+                </hasDataType>
+                <hasDataType xsi:type="gidl:ComplexType" name="start_location" occurences="one">
+                  <hasDataType xsi:type="gidl:SimpleType" name="lat" occurences="one" type="decimal"/>
+                  <hasDataType xsi:type="gidl:SimpleType" name="lng" occurences="one" type="decimal"/>
+                </hasDataType>
+                <hasDataType xsi:type="gidl:SimpleType" name="travel_mode" occurences="one" type="string"/>
+              </hasDataType>
+              <hasDataType xsi:type="gidl:SimpleType" name="traffic_speed_entry" occurences="one" type="decimal"/>
+              <hasDataType xsi:type="gidl:ComplexType" name="via_waypoint" occurences="one">
+              </hasDataType>
+            </hasDataType>
+            <hasDataType xsi:type="gidl:ComplexType" name="overview_polyline" occurences="one">
+              <hasDataType xsi:type="gidl:SimpleType" name="points" occurences="one" type="string"/>
+            </hasDataType>
+            <hasDataType xsi:type="gidl:SimpleType" name="summary" occurences="one" type="string"/>
+            <hasDataType xsi:type="gidl:ComplexType" name="warnings" occurences="one">
+            </hasDataType>
+            <hasDataType xsi:type="gidl:ComplexType" name="waypoint_order" occurences="one">
+            </hasDataType>
+          </hasDataType>
+          <hasDataType xsi:type="gidl:SimpleType" name="status" occurences="one" type="string"/>
+        </hasDataType>
+      </outputData>
+    </hasOperations>
+  </hasInterfaces>
+</gidl:GIDLModel>

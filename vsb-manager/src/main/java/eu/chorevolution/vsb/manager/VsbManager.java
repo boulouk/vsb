@@ -55,6 +55,7 @@ import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import eu.chorevolution.vsb.artifact.generators.WarGenerator;
 import eu.chorevolution.vsb.bc.manager.BcManagerRestService;
+import eu.chorevolution.vsb.bc.manager.VsbOutput;
 import eu.chorevolution.vsb.bindingcomponent.copy.generated.BindingComponent;
 import eu.chorevolution.vsb.gm.protocols.dpws.BcDPWSGenerator;
 import eu.chorevolution.vsb.gm.protocols.generators.BcSubcomponentGenerator;
@@ -77,7 +78,7 @@ public class VsbManager {
 
 	public static void main(String[] args) {
 		VsbManager vsbm = new VsbManager();
-		byte[] warByteArray = vsbm.generateWar(BcManagerRestService.class.getClassLoader().getResource("RestSensor.gmdl").toExternalForm().substring(5), ProtocolType.MQTT);
+		VsbOutput warByteArray = vsbm.generateWar(BcManagerRestService.class.getClassLoader().getResource("weather2.gidl").toExternalForm().substring(5), ProtocolType.MQTT);
 		// do something with the array
 	}
 
@@ -103,11 +104,10 @@ public class VsbManager {
 	}
 
 
-	public byte[] generateWar(String interfaceDescriptionPath, ProtocolType busProtocol) {
+	public VsbOutput generateWar(String interfaceDescriptionPath, ProtocolType busProtocol) {
 
 		setConstants(interfaceDescriptionPath);
 
-		// temporarily disabled
 		 generateBindingComponent(interfaceDescriptionPath, busProtocol);
 
 		// TODO: instantiate the right generator based on the bcConfig
@@ -138,7 +138,7 @@ public class VsbManager {
 		warGenerator.addDependencyFiles(new File(".").getAbsolutePath() + File.separator + ".." + File.separator + "protocol-pool" + File.separator + "gm-soap" + File.separator + "pom.xml");
 		warGenerator.addDependencyFiles(new File(".").getAbsolutePath() + File.separator + ".." + File.separator + "protocol-pool" + File.separator + "gm-coap" + File.separator + "pom.xml");
 		warGenerator.addDependencyFiles(new File(".").getAbsolutePath() + File.separator + ".." + File.separator + "protocol-pool" + File.separator + "gm-dpws" + File.separator + "pom.xml");
-		return warGenerator.generate();
+		return warGenerator.generate(busProtocol==ProtocolType.SOAP);
 
 //		 deleteGeneratedFiles();
 

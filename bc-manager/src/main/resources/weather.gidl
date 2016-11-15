@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gidl:GIDLModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gidl="http://eu.chorevolution/modelingnotations/gidl" hostAddress="http://93.62.202.227/" protocol="REST">
+  <hasInterfaces role="provider">
+    <hasOperations name="getMetadataInArea" type="two_way_sync" qos="reliable">
+      <hasScope name="getMetadataInArea" verb="GET" uri="mes/get_metadata_in_area?collection={collection}&amp;period={period}&amp;lat={lat}&amp;lon={lon}&amp;tag={tag}&amp;radius={radius}"/>
+      <inputData name="input" context="query">
+        <hasDataType xsi:type="gidl:SimpleType" name="period" occurences="one" type="integer"/>
+      </inputData>
+      <inputData name="input" context="query">
+        <hasDataType xsi:type="gidl:SimpleType" name="collection" occurences="one" type="string"/>
+      </inputData>
+      <inputData name="input" context="query">
+        <hasDataType xsi:type="gidl:SimpleType" name="lat" occurences="one" type="double"/>
+      </inputData>
+      <inputData name="input" context="query">
+        <hasDataType xsi:type="gidl:SimpleType" name="lon" occurences="one" type="string"/>
+      </inputData>
+      <inputData name="input" context="query">
+        <hasDataType xsi:type="gidl:SimpleType" name="tag" occurences="one" type="string"/>
+      </inputData>
+      <inputData name="input" context="query">
+        <hasDataType xsi:type="gidl:SimpleType" name="radius" occurences="one" type="string"/>
+      </inputData>
+      <outputData name="output" context="body">
+        <hasDataType xsi:type="gidl:ComplexType" name="docs" occurences="unbounded">
+          <hasDataType xsi:type="gidl:SimpleType" name="__CLASS__" occurences="one" type="string"/>
+          <hasDataType xsi:type="gidl:SimpleType" name="pressure" occurences="one" type="string"/>
+          <hasDataType xsi:type="gidl:ComplexType" name="location" occurences="one">
+            <hasDataType xsi:type="gidl:SimpleType" name="type" occurences="one" type="string"/>
+            <hasDataType xsi:type="gidl:SimpleType" name="coordinates" occurences="unbounded" type="string"/>
+          </hasDataType>
+          <hasDataType xsi:type="gidl:SimpleType" name="status" occurences="one" type="integer"/>
+          <hasDataType xsi:type="gidl:SimpleType" name="temperature" occurences="one" type="string"/>
+          <hasDataType xsi:type="gidl:SimpleType" name="collection" occurences="one" type="string"/>
+          <hasDataType xsi:type="gidl:SimpleType" name="id" occurences="one" type="string"/>
+          <hasDataType xsi:type="gidl:SimpleType" name="tag" occurences="one" type="string"/>
+          <hasDataType xsi:type="gidl:SimpleType" name="_id" occurences="one" type="string"/>
+          <hasDataType xsi:type="gidl:SimpleType" name="creation_date" occurences="one" type="string"/>
+          <hasDataType xsi:type="gidl:SimpleType" name="rain" occurences="one" type="string"/>
+          <hasDataType xsi:type="gidl:SimpleType" name="longitude" occurences="one" type="string"/>
+          <hasDataType xsi:type="gidl:SimpleType" name="observation_time" occurences="one" type="string"/>
+          <hasDataType xsi:type="gidl:SimpleType" name="humidity" occurences="one" type="integer"/>
+          <hasDataType xsi:type="gidl:SimpleType" name="latitude" occurences="one" type="string"/>
+        </hasDataType>
+      </outputData>
+      <outputData name="output" context="body">
+        <hasDataType xsi:type="gidl:SimpleType" name="status" occurences="one" type="string"/>
+      </outputData>
+    </hasOperations>
+  </hasInterfaces>
+</gidl:GIDLModel>
