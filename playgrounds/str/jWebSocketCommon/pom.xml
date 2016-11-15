@@ -9,7 +9,7 @@
     <artifactId>str</artifactId>
     <version>0.0.1-SNAPSHOT</version> 
   </parent>
-  <modelVersion>0.0.1-SNAPSHOT</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
   <groupId>eu.chorevolution.vsb</groupId>
   <artifactId>jWebSocketCommon</artifactId>
   <name>jWebSocketCommon</name>
