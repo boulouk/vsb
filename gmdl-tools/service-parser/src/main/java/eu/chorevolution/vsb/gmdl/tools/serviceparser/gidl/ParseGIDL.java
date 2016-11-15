@@ -133,7 +133,7 @@ public class ParseGIDL {
 				data = new Data(((SimpleType) dataType).getName(), dataTypeClassStr, true, "application/json", con, true);
 			}
 			else if(dataType instanceof ComplexType) {
-				String dataTypeClassStr = "object";
+				String dataTypeClassStr = ((ComplexType)dataType).getName().toUpperCase();
 				if(((ComplexType) dataType).getOccurences() == OccurrencesTypes.UNBOUNDED) {
 					dataTypeClassStr = "List<" + dataTypeClassStr +">"; 
 				}
